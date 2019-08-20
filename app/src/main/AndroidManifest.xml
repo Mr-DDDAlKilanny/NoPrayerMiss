@@ -3,17 +3,35 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="kilanny.noprayermiss">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- <uses-feature android:name="FEATURE_LOCATION" android:required="true" /> -->
     <dist:module dist:instant="true" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.ChooseAlarmStopMethodActivity"></activity>
+        <activity android:name=".activities.EditAlarmActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,6 +40,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.ConfigOnboardingActivity"
+            android:label="@string/prayer_time_config"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name="com.metinkale.prayer.utils.TimeZoneChangedReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

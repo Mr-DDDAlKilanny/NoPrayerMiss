@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditAlarmActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/firstCard"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/space"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:layout_marginStart="@dimen/space"
+                    android:layout_marginLeft="@dimen/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:paddingEnd="10dp"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/clock" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Alarm Stop Method" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="@dimen/space"
+                        android:layout_marginEnd="@dimen/space"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@android:color/darker_gray"
+                        android:scaleType="centerInside"
+                        android:src="@android:drawable/ic_menu_more" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/secondCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space"
+                app:layout_constraintTop_toBottomOf="@id/firstCard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/lay1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtTimes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time_s" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroupBeforeAfter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/space"
+                            android:layout_marginRight="@dimen/space"
+                            android:layout_toStartOf="@id/btnSelect"
+                            android:layout_toLeftOf="@id/btnSelect"
+                            android:layout_toEndOf="@id/txtTimes"
+                            android:layout_toRightOf="@id/txtTimes"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioBefore"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/before" />
+
+                            <RadioButton
+                                android:id="@+id/radioAfter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/after" />
+                        </RadioGroup>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnSelect"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/select" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lay2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lay1"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkFajr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/fajr" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkSun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sun" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkZuhr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/zuhr" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lay2"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkAsr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/asr" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkMaghrib"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/maghrib" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkIshaa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ishaa" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/thirdCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space"
+                app:layout_constraintTop_toBottomOf="@id/secondCard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtRepeat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repeat_days" />
+
+                    <LinearLayout
+                        android:id="@+id/lay3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtRepeat"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkOneTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="One Time" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkFriday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/friday" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkSaturday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/saturday" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkSunday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sunday" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lay3"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkMonday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/monday" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkTuesday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/tuesday" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkWednesday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wednesday" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkThursday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/thursday" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fourthCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space"
+                app:layout_constraintTop_toBottomOf="@id/thirdCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/alarm_tune" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnSelectTune"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="@string/default_tune" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="@dimen/space_half"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/space_half"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@android:color/black"
+                            android:scaleType="centerCrop"
+                            android:src="@android:drawable/ic_lock_silent_mode_off" />
+
+                        <com.warkiz.widget.IndicatorSeekBar
+                            android:id="@+id/seekBarSoundLevel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="3"
+                            app:isb_indicator_text_color="@android:color/white"
+                            app:isb_indicator_text_size="18sp"
+                            app:isb_max="100"
+                            app:isb_min="1"
+                            app:isb_only_thumb_draggable="false"
+                            app:isb_progress="80"
+                            app:isb_seek_smoothly="true"
+                            app:isb_show_indicator="rounded_rectangle"
+                            app:isb_show_tick_marks_type="oval"
+                            app:isb_show_tick_texts="true"
+                            app:isb_thumb_size="20dp"
+                            app:isb_tick_marks_size="13dp"
+                            app:isb_tick_texts_size="15sp"
+                            app:isb_ticks_count="6"
+                            app:isb_track_background_size="2dp"
+                            app:isb_track_progress_size="4dp" />
+                        <!--Icons made by
+                        https://www.flaticon.com/authors/google
+                        Google from https://www.flaticon.com/
+                        Flaticon www.flaticon.com is licensed by
+                        http://creativecommons.org/licenses/by/3.0
+                        Creative Commons BY 3.0 CC 3.0 BY -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/cell_phone_vibration" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchVibration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_half"
+                                android:layout_marginLeft="@dimen/space_half" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fifthCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space"
+                app:layout_constraintTop_toBottomOf="@id/fourthCard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtSnooze"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/snooze" />
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/seekBarSnooze"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtSnooze"
+                        android:layout_gravity="center"
+                        app:isb_indicator_text_color="@android:color/white"
+                        app:isb_indicator_text_size="18sp"
+                        app:isb_max="30"
+                        app:isb_min="0"
+                        app:isb_only_thumb_draggable="false"
+                        app:isb_progress="3"
+                        app:isb_seek_smoothly="true"
+                        app:isb_show_indicator="rounded_rectangle"
+                        app:isb_show_tick_marks_type="oval"
+                        app:isb_show_tick_texts="true"
+                        app:isb_thumb_size="20dp"
+                        app:isb_tick_marks_size="13dp"
+                        app:isb_tick_texts_size="15sp"
+                        app:isb_ticks_count="10"
+                        app:isb_track_background_size="2dp"
+                        app:isb_track_progress_size="4dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtAlarmLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/seekBarSnooze"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Alarm Label (Optional)" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/txtAlarmLabelContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtAlarmLabel" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@android:string/ok" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@android:string/cancel" />
+    </LinearLayout>
+</RelativeLayout>

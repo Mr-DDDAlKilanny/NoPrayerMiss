@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.AlarmStopMethodFragment">
+    <RelativeLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnAlarmLogo"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:src="@drawable/cell_phone_vibration"
+            android:scaleType="fitCenter"
+            android:layout_width="256dp"
+            android:layout_height="256dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/bottomLayout"
+        android:background="@android:color/black"
+        android:alpha="0.5"
+        android:weightSum="5"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:layout_weight="4"
+            android:textSize="20sp"
+            android:textColor="@color/teal_icons"
+            android:id="@+id/txtTitle"
+            android:text="طريقة إيقاف المنبه هي طريقة "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_x6">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:src="@android:drawable/ic_media_play"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/space_x6"
+            android:layout_height="@dimen/space_x6" />
+    </RelativeLayout>
+</RelativeLayout>

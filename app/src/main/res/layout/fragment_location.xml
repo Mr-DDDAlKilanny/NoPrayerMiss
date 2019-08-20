@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_weight="2"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/request_app_permissinos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/auto_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/btnDetectLocationWithGps"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/detect_with_gps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/btnDetectLocationWithNetwork"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/detect_with_network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:layout_weight="1"
+        android:visibility="invisible"
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/option_manual_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/manualLng"
+        android:inputType="number|numberSigned|numberDecimal"
+        android:hint="@string/longitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_weight="1"
+        android:inputType="number|numberSigned|numberDecimal"
+        android:id="@+id/manualLat"
+        android:hint="@string/latitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/btnManualOk"
+        android:text="@string/set_manual_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/txtLocationAlreadySet"
+        android:visibility="invisible"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="15sp"
+        android:paddingTop="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/already_set_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <include layout="@layout/view_prev_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
