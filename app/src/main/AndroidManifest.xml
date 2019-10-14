@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="kilanny.noprayermiss">
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- <uses-feature android:name="FEATURE_LOCATION" android:required="true" /> -->
-    <dist:module dist:instant="true" />
+    package="kilanny.muslimalarm">
 
     <application
         android:name=".App"
@@ -27,7 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChooseAlarmStopMethodActivity"></activity>
+        <activity
+            android:name=".activities.SelectRingtuneActivity"
+            android:label="@string/title_activity_select_ringtune"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.TimeSelectActivity" />
+        <activity android:name=".activities.TwoNumbersConfigActivity" />
+        <activity
+            android:name=".activities.ShowAlarmActivity"
+            android:configChanges="orientation"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true" />
+        <activity
+            android:name=".activities.BarcodeStopConfigActivity"
+            android:label="@string/title_activity_barcode_stop_config"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.ChooseAlarmStopMethodActivity" />
         <activity android:name=".activities.EditAlarmActivity" />
         <activity
             android:name=".activities.MainActivity"
@@ -44,11 +44,46 @@
             android:name=".activities.ConfigOnboardingActivity"
             android:label="@string/prayer_time_config"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.CaptureBarcodeActivity" />
 
         <receiver
             android:name="com.metinkale.prayer.utils.TimeZoneChangedReceiver"
             android:enabled="true"
             android:exported="true" />
+        <receiver
+            android:name=".BootCompletedBroadcastReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".AlarmBroadcastReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="kilanny.muslimalarm.ACTION_ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+
+    <dist:module dist:instant="true" />
 
 </manifest>

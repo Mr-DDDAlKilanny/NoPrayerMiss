@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import kilanny.noprayermiss.App;
-import kilanny.noprayermiss.R;
-import kilanny.noprayermiss.data.AppSettings;
+import kilanny.muslimalarm.App;
+import kilanny.muslimalarm.R;
+import kilanny.muslimalarm.data.AppSettings;
 
 public class HijriDate {
     public static final int MUHARRAM = 1;

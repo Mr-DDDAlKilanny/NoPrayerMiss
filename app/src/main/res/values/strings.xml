@@ -1,35 +1,37 @@
 <resources>
-    <string name="app_name">NoPrayerMiss</string>
+    <string name="app_name">Muslim Alarm</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
+
     <string name="menu_alarms">Alarms</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_Settings">Settings</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="tab_text_1">Tunes</string>
 
-    <string name="tab_text_1">Prayer Times</string>
-    <string name="tab_text_2">Alarms</string>
+    <string name="tab_text_2">Loud Tunes</string>
+    <string name="tab_text_3">Files</string>
     <string name="fajr">Fajr</string>
     <string name="sun">Sunrise</string>
     <string name="zuhr">Zuhr</string>
     <string name="asr">Asr</string>
     <string name="maghrib">Maghrib</string>
     <string name="ishaa">Ishaa</string>
-    <string name="request_app_permissinos">Welcome to NoPrayerMiss App! The app needs Location permission, for prayer time calculation using your location. Please allow access to your location if prompted.</string>
+    <string name="request_app_permissinos">Welcome to Muslim Alarm App! The app needs Location permission, for prayer time calculation using your location. Please allow access to your location if prompted.</string>
     <string name="location_net">Network (Internet)</string>
     <string name="gps">GPS</string>
     <string name="rejected_permission">You have rejected accessing to your location. The app cannot work without it. Restart the app to show the permission request again or enable this permission from application settings</string>
     <string name="cannot_get_location">Cannot get your location. Go to phone settings and enable location in order to calculate prayer times</string>
+    <string name="config_title">Please take a moment to configure the Salaat times to your requirements.</string>
 
     <!-- Configure app screen -->
-    <string name="config_title">Please take a moment to configure the Salaat times to your requirements.</string>
     <string name="explain_default_config">
         By default Salaat times are configured using Muslim World League calculation
         method, Shafii Juristic for Asr time calculations and makes no adjustment
@@ -41,15 +43,15 @@
     <string name="title_onboarding_calc_method">Configure Prayer Times</string>
     <string name="button_configure_now">Configure settings now \u2192</string>
     <string name="button_use_default">Use default settings \u2192</string>
-
-
     <string name="button_prev">\u2190 Previous</string>
+
+
     <string name="button_next">Next \u2192</string>
     <string name="button_done">Done</string>
+    <string name="calc_method">Calculation Method</string>
 
 
     <!-- Onboarding Calc method -->
-    <string name="calc_method">Calculation Method</string>
     <string name="calc_method_explain">
         Please select the calculation method for Salaat in your area.
         Muslim World League should work for most people.
@@ -59,23 +61,23 @@
         Shafii is the standard most often used. Please select the method that best suits you.
         If you are not sure, leave Shafii selected, you can always change it later.
     </string>
-
     <string name="calc_method_karachi">KARACHI - University of Islamic Sciences</string>
+
     <string name="calc_method_isna">ISNA - Islamic Society of North America</string>
     <string name="calc_method_mwl">MWL - Muslim World League</string>
     <string name="calc_method_makkah">MAKKAH - Umm al-Qura</string>
     <string name="calc_method_egypt">EGYPT - Egyptian General Authority of Survey</string>
     <string name="calc_method_tehran">TEHRAN - Institute of Geophysics, University of Tehran</string>
     <string name="calc_method_jafari">JAFARI - Ithna Ashari</string>
-
     <string name="asr_method_shafii">Shafii (Standard)</string>
-    <string name="asr_method_hanfi">Hanfi</string>
 
+    <string name="asr_method_hanfi">Hanfi</string>
     <string name="time_title">Time format</string>
+
     <string name="time_12">12 hours (Example: 01:00 pm)</string>
     <string name="time_24">24 hours (Example: 13:00)</string>
-
     <string name="high_latitude">High latitude adjustment</string>
+
     <string name="high_latitude_explain">
         For people living in higher latitudes, the prayer times can be incorrect.
         If the prayer times seem incorrect, try changing this value.\n\n
@@ -103,10 +105,11 @@
     <string name="use_my_last_location">Use my last location</string>
     <string name="please_specify_location">Please specify location first</string>
     <string name="prayer_time_config">Prayer Time Configurations</string>
+    <string name="prayer_times">Prayer Times</string>
+    <string name="hmonth1">Muharram</string>
 
 
     <!-- Hijri Months -->
-    <string name="hmonth1">Muharram</string>
     <string name="hmonth2">Safar</string>
     <string name="hmonth3">Rabi al-awwal</string>
     <string name="hmonth4">Rabi al-achir</string>
@@ -118,9 +121,9 @@
     <string name="hmonth10">Shawwal</string>
     <string name="hmonth11">Dhu l-Qaʿda</string>
     <string name="hmonth12">Dhū l-Hijja</string>
+    <string name="gmonth1">January</string>
 
     <!-- Holy Days -->
-    <string name="gmonth1">January</string>
     <string name="gmonth2">February</string>
     <string name="gmonth3">March</string>
     <string name="gmonth4">April</string>
@@ -132,51 +135,141 @@
     <string name="gmonth10">October</string>
     <string name="gmonth11">November</string>
     <string name="gmonth12">December</string>
-
     <string name="systemLanguage">en</string>
+
     <string name="delete_alarm">Delete the alarm</string>
     <string name="skip_next_alarm">Skip next alarm</string>
+    <string name="unskip_next_alarm">Cancel skip of next alarm</string>
     <string name="preview_alarm">Preview Alarm</string>
     <string name="duplicate_alarm">Duplicate Alarm</string>
     <string name="one_time">One time</string>
     <string name="everyday">Everyday</string>
-
     <string name="friday">Friday</string>
+
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
-
     <string name="allDaysExpect1Day">Everyday expect %1$s</string>
+
     <string name="allDaysExpect2Days">Everyday expect %1$s and %2$s</string>
     <string name="not_connected">You are not connected to the internet</string>
     <string name="beforeTimeBy">- %1$d m</string>
     <string name="afterTimeBy">+ %1$d m</string>
     <string name="afterNDays">After %1$d days</string>
-    <string name="afterNHours">After %1$d hours</string>
-    <string name="afterNMinutes">After %1$d min.</string>
+    <string name="afterNHours">After %1$s hours</string>
+    <string name="afterNMinutes">After %1$s min.</string>
+    <string name="afterNHoursAndNMinutes">After %1$s hours, %2$s min.</string>
+    <string name="afterNDaysAndNHours">After %1$s days, %2$s hours</string>
     <string name="all_times">All times</string>
     <string name="all_prayers">All prayers</string>
     <string name="time_s">Time(s):</string>
     <string name="select">Select</string>
-    <string name="before">Before</string>
-    <string name="after">After</string>
+    <string name="beforeTime">Before Time</string>
+    <string name="afterTime">After Time</string>
     <string name="repeat_days">Repeat Days</string>
     <string name="alarm_tune">Alarm Tune</string>
     <string name="default_tune">Default Tune</string>
-    <string name="snooze">Snooze (Zero means no snooze)</string>
-    <string-array name="languages">
-        <item>ar|100</item>
-        <item>en|100</item>
-    </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="snooze_settings">Snooze Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="math_problems">Math Problems</string>
     <string name="barcode">Barcode</string>
     <string name="vibration">Vibration</string>
     <string name="Default">Default</string>
     <string name="phone_shaking">Phone Shaking</string>
+    <string name="title_activity_shake_config">ShakeConfigActivity</string>
+    <string name="title_activity_barcode_stop_config">BarcodeStopConfigActivity</string>
+    <string name="please_add_a_barcode_to_use_to_stop_alarm">Please add a barcode to use to stop alarm</string>
+    <string name="barcode_added">Barcode added</string>
+    <string name="barcode_captured">Barcode captured!</string>
+    <string name="do_you_want_to_save_it">Do you want to save it now?</string>
+    <string name="capture_barcode">Capture Barcode</string>
+    <string name="exit_preview">Exit Preview</string>
+    <string name="your_device_not_support_feature">Your device does not support this feature</string>
+    <string name="problem_difficulty">Problem Difficulty Level</string>
+    <string name="num_problems">Number of Problems</string>
+    <string name="alarm_label_optional">Alarm Label (Optional)</string>
+    <string name="snooze_period_minutes">Snooze period (in minutes). Zero means no snooze</string>
+    <string name="max_snooze_count">Max snooze count. Zero means unlimited snoozes</string>
+    <string name="title_activity_select_ringtune">SelectRingtuneActivity</string>
+    <string name="delete_barcode">Delete Barcode</string>
+    <string name="are_you_sure_delete_barcode">Are you sure you want to delete the selected barcode?</string>
+    <string name="are_you_sure_delete_alarm">Are you sure you want to delete the selected alarm?</string>
+    <string name="edit_barcode">Edit Barcode</string>
+    <string name="you_entered_empty">You entered empty value</string>
+    <string name="please_select_barcode">Please select a barcode first</string>
+    <string name="to_preview_barcode_use">To preview barcode alarm, first choose which barcode used to stop the alarm</string>
+    <string name="difficulty_shake">Difficulty of shake</string>
+    <string name="num_shakes">Number of shakes</string>
+    <string name="config_shakes">Configure Shakes</string>
+    <string name="config_math_problems">Configure Math Problems</string>
+    <string name="config_snooze">Configure Snooze</string>
+    <string name="select_barcode">Select Barcode</string>
+    <string name="select_camera">Select Camera</string>
+    <string name="flash">Flash</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="front_facing">Front Facing</string>
+    <string name="rear_facing">Rear Facing</string>
+    <string name="camera_id">Camera ID:</string>
+    <string name="err_choose_one_time">If you choose One Time, you cannot choose other options also. Try again</string>
+    <string name="must_select_one_day">You must select repeat days, or One Time for no repeat</string>
+    <string name="when">When?</string>
+    <string name="err_select_prayer">You must select one or more prayer times</string>
+    <string name="for_prayer_times">For Prayer Times</string>
+    <string name="alarm_stop_method">Alarm Stop Method</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="edit_alarm">Edit Alarm</string>
+    <string name="alarm_label">Alarm Label</string>
+    <string name="failled_to_play_file">Failed to play file: %1$s</string>
+    <string name="select_alarm_tune">Select Alarm Tune</string>
+    <string name="tune_no">Tune #%1$d</string>
+    <string name="err_tune_not_selected">You didn\'t select any tune. Please try again or tab cancel to exit without selecting any tune</string>
+    <string name="write_title_of_alarm">Write a title for alarm...</string>
+    <string name="must_select_tune">You must select a tune</string>
+    <string name="less_than_minute">In less than minute</string>
+    <string name="please_give_permissions">Please give permissions for app in order to work normally</string>
+    <string name="go">Go</string>
+    <string name="need_sound_permission">This app needs permission in order to be able to change sound volume level. Click ok to show settings and provide permission</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="no_not_ask">No, don\'t ask again</string>
+    <string name="changes_sound_no_affect">Changes to sound level will not affect.</string>
+    <string name="provide_permission">Provide Permission</string>
+    <string name="incorrect_barcode">Incorrect Barcode. Please try again</string>
+    <string name="alarm_is_snoozed_tab">Alarm is snoozed.\nTab to dismiss</string>
+    <string-array name="prayer_times">
+        <item>@string/fajr</item>
+        <item>@string/sun</item>
+        <item>@string/zuhr</item>
+        <item>@string/asr</item>
+        <item>@string/maghrib</item>
+        <item>@string/ishaa</item>
+    </string-array>
+    <string-array name="languages">
+        <item>ar|100</item>
+        <item>en|100</item>
+    </string-array>
+    <string-array name="repeat_days">
+        <item>@string/one_time</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+    </string-array>
+    <string-array name="onOff">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+    <string-array name="math_level_example">
+        <item>5 + 6</item>
+        <item>13 + 44</item>
+        <item>36 + 93 + 17</item>
+        <item>(53 x 4) + 11</item>
+        <item>(53 x 34) + 151</item>
+        <item>(755 x 57) + 6623</item>
+    </string-array>
 </resources>

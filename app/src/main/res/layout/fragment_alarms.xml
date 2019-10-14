@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.AlarmsHomeFragment">
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_above="@id/permissionCheckLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/permissionCheckLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt1"
+            android:text="@string/please_give_permissions"
+            android:layout_toLeftOf="@id/btnPermissions"
+            android:layout_toStartOf="@id/btnPermissions"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnPermissions"
+            android:text="@string/go"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/listView"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_recent_history" />
-
-</FrameLayout>
+</RelativeLayout>

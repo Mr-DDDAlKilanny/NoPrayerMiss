@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import kilanny.noprayermiss.App;
+import kilanny.muslimalarm.App;
 
 public class InternalBroadcastReceiver extends BroadcastReceiver {
     private static final String ACTION_ON_START = "com.metikale.prayer.ON_START";

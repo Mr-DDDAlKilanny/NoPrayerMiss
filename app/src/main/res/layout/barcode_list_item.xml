@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/radioSelected"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:src="@drawable/barcode"
+        android:id="@+id/imgLogo"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/radioSelected"
+        android:layout_toEndOf="@id/radioSelected"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtContent"
+        android:text="Example"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/space_half"
+        android:layout_marginStart="@dimen/space_half"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/imgLogo"
+        android:layout_toEndOf="@id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnEdit"
+        android:src="@android:drawable/ic_menu_edit"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/btnDelete"
+        android:layout_toLeftOf="@id/btnDelete"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnDelete"
+        android:src="@android:drawable/ic_menu_delete"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
+</RelativeLayout>

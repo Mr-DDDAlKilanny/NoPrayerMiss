@@ -21,15 +21,8 @@ import androidx.core.os.LocaleListCompat;
 
 import com.metinkale.prayer.HijriDate;
 
-import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
-import org.joda.time.ReadableInstant;
-import org.joda.time.ReadablePartial;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -38,10 +31,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import kilanny.noprayermiss.App;
-import kilanny.noprayermiss.R;
-import kilanny.noprayermiss.data.AppSettings;
-import kilanny.noprayermiss.util.PrayTime;
+import kilanny.muslimalarm.App;
+import kilanny.muslimalarm.R;
+import kilanny.muslimalarm.data.AppSettings;
+import kilanny.muslimalarm.util.PrayTime;
 
 import static android.content.Context.UI_MODE_SERVICE;
 

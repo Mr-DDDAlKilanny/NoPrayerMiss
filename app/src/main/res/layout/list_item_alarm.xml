@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:padding="@dimen/space"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/chkAlarmEnabled"
             android:layout_gravity="center"
@@ -21,14 +22,17 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/prayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/alarmDays"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/alarmTime"
                 android:layout_width="wrap_content"
@@ -41,6 +45,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/alarmTypeIcon"
                 android:layout_width="32dp"
@@ -56,6 +61,6 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:layout_gravity="center"
-            android:background="@null"/>
+            android:background="@null" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
