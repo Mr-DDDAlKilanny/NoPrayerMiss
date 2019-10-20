@@ -1,4 +1,4 @@
-package kilanny.muslimalarm.fragments;
+package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -22,6 +22,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.Locale;
 
 import kilanny.muslimalarm.OnOnboardingOptionSelectedListener;
 import kilanny.muslimalarm.R;
@@ -48,7 +50,17 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_location, container, false);
+        final View layoutManualLocation = root.findViewById(R.id.layoutManualLocation);
 
+        root.findViewById(R.id.btnManualLocation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (layoutManualLocation.getVisibility() == View.INVISIBLE)
+                    layoutManualLocation.setVisibility(View.VISIBLE);
+                else
+                    layoutManualLocation.setVisibility(View.INVISIBLE);
+            }
+        });
         root.findViewById(R.id.prev).setOnClickListener(this);
         root.findViewById(R.id.next).setOnClickListener(this);
 
@@ -71,8 +83,16 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
             }
         });
         AppSettings settings = AppSettings.getInstance(getContext());
-        if (settings.getDouble(settings.getKeyFor(AppSettings.Key.LAT_FOR,     0)) > -1)
+        if (settings.getDouble(settings.getKeyFor(AppSettings.Key.LAT_FOR, 0)) > -1) {
             root.findViewById(R.id.txtLocationAlreadySet).setVisibility(View.VISIBLE);
+            layoutManualLocation.setVisibility(View.VISIBLE);
+            EditText txtLat = root.findViewById(R.id.manualLat);
+            EditText txtLng = root.findViewById(R.id.manualLng);
+            txtLat.setText(String.format(Locale.ENGLISH, "%f",
+                    settings.getDouble(settings.getKeyFor(AppSettings.Key.LAT_FOR, 0))));
+            txtLng.setText(String.format(Locale.ENGLISH, "%f",
+                    settings.getDouble(settings.getKeyFor(AppSettings.Key.LNG_FOR, 0))));
+        }
         return mView = root;
     }
 
@@ -159,9 +179,10 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
                         dialogInterface.dismiss();
                         Location location = locationManager.getLastKnownLocation(
                                 LocationManager.GPS_PROVIDER);
-                        if (location == null)
-                            Toast.makeText(getContext(), getContext().getString(R.string.gps_not_enable), Toast.LENGTH_LONG).show();
-                        else
+                        if (location == null) {
+                            Toast.makeText(getContext(), getContext().getString(R.string.gps_no_last_location), Toast.LENGTH_LONG).show();
+                            findUsingGps(locationManager);
+                        } else
                             setLocation(location.getLongitude(), location.getLatitude());
                     }
                 })
@@ -170,14 +191,18 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        ProgressBar progressBar = mView.findViewById(R.id.progress);
-                        progressBar.setVisibility(View.VISIBLE);
-                        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,
-                                OnboardingLocationFragment.this, getContext().getMainLooper());
+                        findUsingGps(locationManager);
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    private void findUsingGps(LocationManager locationManager) {
+        ProgressBar progressBar = mView.findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,
+                OnboardingLocationFragment.this, getContext().getMainLooper());
     }
 
     private void btnNetwork() {

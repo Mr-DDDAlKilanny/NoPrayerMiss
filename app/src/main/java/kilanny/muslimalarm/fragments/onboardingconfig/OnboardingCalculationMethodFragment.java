@@ -1,4 +1,4 @@
-package kilanny.muslimalarm.fragments;
+package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,9 +23,9 @@ import kilanny.muslimalarm.data.AppSettings;
  */
 public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_CALC_IDX = "param1";
 
-    private int mParam1;
+    private int mCalculationIdx;
 
     private OnOnboardingOptionSelectedListener mListener;
 
@@ -35,14 +35,13 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param calcIdx Parameter 1.
      * @return A new instance of fragment OnboardingFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static OnboardingCalculationMethodFragment newInstance(int param1) {
+    public static OnboardingCalculationMethodFragment newInstance(int calcIdx) {
         OnboardingCalculationMethodFragment fragment = new OnboardingCalculationMethodFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, param1);
+        args.putInt(ARG_CALC_IDX, calcIdx);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +54,7 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM1);
+            mCalculationIdx = getArguments().getInt(ARG_CALC_IDX);
         }
     }
 
@@ -84,7 +83,7 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
         options[6] = (TextView) view.findViewById(R.id.jafri);
 
         AppSettings settings = AppSettings.getInstance(getActivity());
-        int method = settings.getCalcMethodSetFor(mParam1);
+        int method = settings.getCalcMethodSetFor(mCalculationIdx);
 
         for (TextView t : options) {
             int val =  Integer.valueOf((String) t.getTag());
@@ -123,7 +122,7 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
         for (TextView t : options) {
             if (t.getId() == v.getId()) {
                 AppSettings settings = AppSettings.getInstance(getActivity());
-                settings.setCalcMethodFor(mParam1, Integer.valueOf((String) t.getTag()));
+                settings.setCalcMethodFor(mCalculationIdx, Integer.valueOf((String) t.getTag()));
                 t.setSelected(true);
                 mListener.onOptionSelected();
             } else {

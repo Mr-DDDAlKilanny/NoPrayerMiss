@@ -188,7 +188,7 @@ public class ChooseAlarmStopMethodActivity extends AppCompatActivity
                     mAlarm.dismissAlarmBarcodeId = null;
                 break;
             case REQUEST_CODE_CONFIG_SHAKE:
-                if (resultCode == TwoNumbersConfigActivity.RESULT_CODE_OK) {
+                if (resultCode == TwoNumbersConfigActivity.RESULT_CODE_OK && data != null) {
                     mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_SHAKE;
                     mAlarm.dismissAlarmTypeData1 = data.getIntExtra(
                             TwoNumbersConfigActivity.RESULT_NUM1, 0);
@@ -199,7 +199,7 @@ public class ChooseAlarmStopMethodActivity extends AppCompatActivity
                 }
                 break;
             case REQUEST_CODE_CONFIG_MATH:
-                if (resultCode == TwoNumbersConfigActivity.RESULT_CODE_OK) {
+                if (resultCode == TwoNumbersConfigActivity.RESULT_CODE_OK && data != null) {
                     mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_MATH;
                     mAlarm.dismissAlarmTypeData1 = data.getIntExtra(
                             TwoNumbersConfigActivity.RESULT_NUM1, 0);
@@ -210,7 +210,7 @@ public class ChooseAlarmStopMethodActivity extends AppCompatActivity
                 }
                 break;
             case REQUEST_CODE_CONFIG_BARCODE:
-                if (resultCode == BarcodeStopConfigActivity.RESULT_CODE_OK) {
+                if (resultCode == BarcodeStopConfigActivity.RESULT_CODE_OK && data != null) {
                     mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_BARCODE;
                     mAlarm.dismissAlarmTypeData1 = null;
                     mAlarm.dismissAlarmTypeData2 = null;

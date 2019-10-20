@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import kilanny.muslimalarm.AlarmBroadcastReceiver;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.activities.ShowAlarmActivity;
 import kilanny.muslimalarm.data.Alarm;
@@ -108,34 +107,27 @@ public class Utils {
     }
 
     public static NextAlarmInfo getNextAlarmDate(Context context, Alarm alarm) {
-        return getNextAlarmDate(context, alarm, alarm.skippedAlarmTime == null ?
-                new Date() : new Date(alarm.skippedAlarmTime + 1000));
-    }
-
-    private static NextAlarmInfo getNextAlarmDate(Context context, Alarm alarm, Date from) {
         if (!alarm.enabled) {
             throw new IllegalArgumentException("alarm is not enabled");
         }
         if (alarm.snoozedToTime != null && alarm.snoozedToTime >= System.currentTimeMillis())
             return new NextAlarmInfo(alarm, new Date(alarm.snoozedToTime), 0, true);
+        Date from = alarm.skippedAlarmTime == null ?
+                new Date() : new Date(alarm.skippedAlarmTime);
         AppSettings settings = AppSettings.getInstance(context);
-        Map<String, String> times = PrayTime.getPrayerTimes(context, 0,
-                settings.getLatFor(0), settings.getLngFor(0),
-                PrayTime.TIME_24, new Date()); //TODO: calculate pray times on their alarm day
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(from);
         int dw = getDayOfWeek(calendar);
         String[] timeNames = {
                 "Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"
         };
-        String[] sFajr = times.get(timeNames[0]).split(":");
-        int ifajr = Integer.parseInt(sFajr[0]) * 60 + Integer.parseInt(sFajr[1]);
-        String[] sIsha = times.get(timeNames[5]).split(":");
-        int isha = Integer.parseInt(sIsha[0]) * 60 + Integer.parseInt(sIsha[1]);
-        if (isha < ifajr) {
-            //TODO: What if a prayer is in the next day?
-            // This code assumes Fajr and Isha in the same day
-        }
+        //String[] sFajr = times.get(timeNames[0]).split(":");
+        //int ifajr = Integer.parseInt(sFajr[0]) * 60 + Integer.parseInt(sFajr[1]);
+        //String[] sIsha = times.get(timeNames[5]).split(":");
+        //int isha = Integer.parseInt(sIsha[0]) * 60 + Integer.parseInt(sIsha[1]);
+        //if (isha < ifajr) {
+        //TODO: What if a prayer (e.g. Isha) is in the next day?
+        //}
         int ct = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 //        if (ct > isha) {
 //            calendar.add(Calendar.DATE, 1);
@@ -147,12 +139,15 @@ public class Utils {
 //        }
         if (alarm.weekDayFlags == Weekday.NO_REPEAT) {
             for (int o = 0; o < 2; ++o) {
+                Map<String, String> times = PrayTime.getPrayerTimes(context, 0,
+                        settings.getLatFor(0), settings.getLngFor(0),
+                        PrayTime.TIME_24, new DateTime(from).plusDays(o).toDate());
                 for (int i = 0; i < timeNames.length; ++i) {
                     String[] tmp = times.get(timeNames[i]).split(":");
                     int t = Integer.parseInt(tmp[0]) * 60 + Integer.parseInt(tmp[1])
                             + alarm.timeAlarmDiffMinutes;
                     int f = 1 << (5 - i);
-                    if ((alarm.oneTimeLeftAlarmsTimeFlags & f) != 0 && (o > 0 || t >= ct))
+                    if ((alarm.oneTimeLeftAlarmsTimeFlags & f) != 0 && (o > 0 || t > ct))
                         return new NextAlarmInfo(alarm,
                                 getTimeAsDate(calendar, o, times.get(timeNames[i]), alarm.timeAlarmDiffMinutes),
                                 f);
@@ -167,12 +162,14 @@ public class Utils {
         for (int j = 0; j < 7 + 1; ++j) {
             int jdw = idw - j;
             if (jdw < 0) jdw += 7;
-            jdw = 1 << jdw;
-            if ((alarm.weekDayFlags & jdw) != 0) {
+            if ((alarm.weekDayFlags & (1 << jdw)) != 0) {
+                Map<String, String> times = PrayTime.getPrayerTimes(context, 0,
+                        settings.getLatFor(0), settings.getLngFor(0),
+                        PrayTime.TIME_24, new DateTime(from).plusDays(j).toDate());
                 for (int i = 0; i < timeNames.length; ++i) {
                     int f = 1 << (5 - i);
                     if ((alarm.timeFlags & f) != 0 &&
-                            (j > 0 || ct <= timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes)) {
+                            (j > 0 || ct < timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes)) {
                         return new NextAlarmInfo(alarm,
                                 getTimeAsDate(calendar, j, times.get(timeNames[i]), alarm.timeAlarmDiffMinutes),
                                 f);
@@ -207,8 +204,6 @@ public class Utils {
                 this.onDone.apply(tResult);
         }
     }
-
-    ;
 
     public static <TInput, TResult> void runInBackground(
             Function<TInput, TResult> work, @Nullable Function<TResult, Void> onDone, TInput input) {

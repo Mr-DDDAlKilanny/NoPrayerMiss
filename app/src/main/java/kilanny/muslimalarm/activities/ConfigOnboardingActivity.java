@@ -17,11 +17,12 @@ import androidx.viewpager.widget.ViewPager;
 import kilanny.muslimalarm.OnOnboardingOptionSelectedListener;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
-import kilanny.muslimalarm.fragments.OnboardingAdjustmentHighLatitudesFragment;
-import kilanny.muslimalarm.fragments.OnboardingAsrCalculationMethodFragment;
-import kilanny.muslimalarm.fragments.OnboardingCalculationMethodFragment;
-import kilanny.muslimalarm.fragments.OnboardingLocationFragment;
-import kilanny.muslimalarm.fragments.OnboardingTimeFormatFragment;
+import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingAdjustmentHighLatitudesFragment;
+import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingAsrCalculationMethodFragment;
+import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingCalculationMethodFragment;
+import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingLocationFragment;
+import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingTimeFormatFragment;
+import kilanny.muslimalarm.util.Utils;
 
 public class ConfigOnboardingActivity extends AppCompatActivity
         implements OnOnboardingOptionSelectedListener {
@@ -100,6 +101,7 @@ public class ConfigOnboardingActivity extends AppCompatActivity
             } else {
                 getParent().setResult(RESULT_OK, data);
             }
+            Utils.scheduleAndDeletePreviousBackground(getApplicationContext());
             finish();
         } else {
             mPager.setCurrentItem(mPager.getCurrentItem() + 1);

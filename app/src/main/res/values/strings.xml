@@ -32,14 +32,7 @@
     <string name="config_title">Please take a moment to configure the Salaat times to your requirements.</string>
 
     <!-- Configure app screen -->
-    <string name="explain_default_config">
-        By default Salaat times are configured using Muslim World League calculation
-        method, Shafii Juristic for Asr time calculations and makes no adjustment
-        for people living in higher latitudes.\n\n
-        Other calculation methods include: Karachi, ISNA, Makkah, Egypt, Tehran, Jafri\n\n
-        You can choose to use the default settings (don\'t worry you can change them later), or
-        configure the Salaat times to your requirements below.
-    </string>
+    <string name="explain_default_config">By default Salaat times are configured using Muslim World League calculation method, Shafii Juristic for Asr time calculations and makes no adjustment for people living in higher latitudes.   Other calculation methods include: Karachi, ISNA, Makkah, Egypt, Tehran, Jafri   You can choose to use the default settings (don\'t worry you can change them later), or configure the Salaat times to your requirements below.</string>
     <string name="title_onboarding_calc_method">Configure Prayer Times</string>
     <string name="button_configure_now">Configure settings now \u2192</string>
     <string name="button_use_default">Use default settings \u2192</string>
@@ -78,12 +71,7 @@
     <string name="time_24">24 hours (Example: 13:00)</string>
     <string name="high_latitude">High latitude adjustment</string>
 
-    <string name="high_latitude_explain">
-        For people living in higher latitudes, the prayer times can be incorrect.
-        If the prayer times seem incorrect, try changing this value.\n\n
-        During the summer months One-Seventh method produces a later Fajr time than
-        Angle based method. If you perfer Angle based method, please change below.
-    </string>
+    <string name="high_latitude_explain">For people living in higher latitudes, the prayer times can be incorrect. If the prayer times seem incorrect, try changing this value.   During the summer months One-Seventh method produces a later Fajr time than Angle based method. If you perfer Angle based method, please change below.</string>
     <string name="high_lat_none">None</string>
     <string name="high_lat_midnight">Midnight</string>
     <string name="high_lat_one_seventh">One-seventh of night</string>
@@ -98,6 +86,7 @@
     <string name="already_set_location">There is a location already set. If you do not want to change it, tab on NEXT button below.</string>
     <string name="please_enter_lng_lat">Please enter longitude and latitude</string>
     <string name="gps_not_enable">GPS is not enabled. Please enable it from device settings</string>
+    <string name="gps_no_last_location">Cannot get your last location. Will try to find your location now</string>
     <string name="network_location_not_enable">Network location is not enabled. Please enable it from device settings</string>
     <string name="use_gps_anyway">Use GPS anyway</string>
     <string name="gps_long_time">GPS can take 2–3 minutes to find location. It also needs to be outdoors. The find can be faster if you chose to get your last known location. What do you choose?</string>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -65,8 +66,9 @@ public class MainActivity extends AppCompatActivity
                 AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
                 alarm.snoozedCount = 0;
                 alarm.snoozedToTime = null;
-                alarm.oneTimeLeftAlarmsTimeFlags = alarm.timeFlags;
                 alarm.skippedTimeFlag = 0;
+                alarm.skippedAlarmTime = null;
+                alarm.oneTimeLeftAlarmsTimeFlags = alarm.timeFlags;
                 if (isNew) {
                     alarmDao.insert(alarm);
                 } else {
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
         AppSettings settings = AppSettings.getInstance(this);
 

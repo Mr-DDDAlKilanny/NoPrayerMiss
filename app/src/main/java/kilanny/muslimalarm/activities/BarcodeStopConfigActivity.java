@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -22,15 +21,11 @@ import androidx.fragment.app.Fragment;
 
 import android.view.View;
 
-import java.util.concurrent.ExecutionException;
-
 import kilanny.muslimalarm.R;
-import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.Barcode;
 import kilanny.muslimalarm.fragments.BarcodeStopConfigFragment;
 import kilanny.muslimalarm.fragments.BarcodeStopEmptyListFragment;
-import kilanny.muslimalarm.fragments.ShowAlarmFragment;
 import kilanny.muslimalarm.util.Utils;
 
 public class BarcodeStopConfigActivity extends AppCompatActivity

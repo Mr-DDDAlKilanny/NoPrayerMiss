@@ -42,7 +42,6 @@ public class PrayerTimesHomeFragment extends Fragment {
      *
      * @return A new instance of fragment PrayerTimesHomeFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static PrayerTimesHomeFragment newInstance() {
         PrayerTimesHomeFragment fragment = new PrayerTimesHomeFragment();
         return fragment;

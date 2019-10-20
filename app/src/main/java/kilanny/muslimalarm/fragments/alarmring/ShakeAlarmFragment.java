@@ -1,4 +1,4 @@
-package kilanny.muslimalarm.fragments;
+package kilanny.muslimalarm.fragments.alarmring;
 
 import android.content.Context;
 import android.hardware.Sensor;

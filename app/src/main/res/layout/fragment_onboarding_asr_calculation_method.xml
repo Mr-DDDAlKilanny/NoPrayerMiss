@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/min_card_height"
     android:orientation="vertical"
-    tools:context=".fragments.OnboardingAsrCalculationMethodFragment">
+    tools:context=".fragments.onboardingconfig.OnboardingAsrCalculationMethodFragment">
 
     <include
         android:id="@+id/title"

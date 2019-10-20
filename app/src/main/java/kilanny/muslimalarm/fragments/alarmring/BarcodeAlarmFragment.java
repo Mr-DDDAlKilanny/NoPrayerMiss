@@ -1,8 +1,7 @@
-package kilanny.muslimalarm.fragments;
+package kilanny.muslimalarm.fragments.alarmring;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

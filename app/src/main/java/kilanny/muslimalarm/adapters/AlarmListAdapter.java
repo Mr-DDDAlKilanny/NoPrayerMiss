@@ -129,19 +129,27 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         chkAlarmEnabled.setChecked(alarm.enabled);
         chkAlarmEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                if (mIsPendingOperation)
-                    return;
-                mIsPendingOperation = true;
+            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
+                compoundButton.setEnabled(false);
                 Utils.runInBackground(new Function<Context, Pair<Context, Alarm[]>>() {
                     @Override
                     public Pair<Context, Alarm[]> apply(Context input) {
+                        // if any other operations running wait them first
+                        while (mIsPendingOperation) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        mIsPendingOperation = true;
                         alarm.enabled = b;
                         if (b) {
-                            alarm.skippedTimeFlag = 0;
                             alarm.oneTimeLeftAlarmsTimeFlags = alarm.timeFlags;
                             alarm.snoozedCount = 0;
                             alarm.snoozedToTime = null;
+                            alarm.skippedTimeFlag = 0;
+                            alarm.skippedAlarmTime = null;
                         }
                         AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
                         alarmDao.update(alarm);
@@ -151,6 +159,7 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                     @Override
                     public Void apply(Pair<Context, Alarm[]> input) {
                         mIsPendingOperation = false;
+                        compoundButton.setEnabled(true);
                         clear();
                         addAll(input.second);
                         notifyDataSetChanged();
@@ -259,22 +268,23 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mIsPendingOperation = true;
-                        Utils.runInBackground(new Function<Void, Void>() {
+                        Utils.runInBackground(new Function<Pair<Context, Alarm>, Pair<Pair<Context, Alarm>, Alarm[]>>() {
                             @Override
-                            public Void apply(Void input) {
-                                AppDb.getInstance(getContext()).alarmDao()
-                                        .delete(mClickedAlarm);
-                                return null;
+                            public Pair<Pair<Context, Alarm>, Alarm[]> apply(Pair<Context, Alarm> input) {
+                                AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
+                                alarmDao.delete(input.second);
+                                return new Pair<>(new Pair<>(input.first, input.second), alarmDao.getAll());
                             }
-                        }, new Function<Void, Void>() {
+                        }, new Function<Pair<Pair<Context, Alarm>, Alarm[]>, Void>() {
                             @Override
-                            public Void apply(Void input) {
-                                remove(mClickedAlarm);
+                            public Void apply(Pair<Pair<Context, Alarm>, Alarm[]> input) {
+                                remove(input.first.second);
                                 notifyDataSetChanged();
+                                Utils.scheduleAndDeletePrevious(input.first.first, input.second);
                                 mIsPendingOperation = false;
                                 return null;
                             }
-                        }, null);
+                        }, new Pair<>(getContext(), mClickedAlarm));
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -290,6 +300,8 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                 alarm.id = 0;
                 alarm.snoozedCount = 0;
                 alarm.snoozedToTime = null;
+                alarm.skippedTimeFlag = 0;
+                alarm.skippedAlarmTime = null;
                 AppDb.getInstance(input).alarmDao().insert(alarm);
                 return null;
             }

@@ -27,11 +27,16 @@ package kilanny.muslimalarm.util;
 
 import android.content.Context;
 
+import org.joda.time.DateTime;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import kilanny.muslimalarm.data.AppSettings;
@@ -466,7 +471,6 @@ public class PrayTime {
 
     // convert double hours to 12h format
     public String floatToTime12(double time, boolean noSuffix) {
-
         if (Double.isNaN(time)) {
             return InvalidTime;
         }
@@ -474,33 +478,10 @@ public class PrayTime {
         time = fixhour(time + 0.5 / 60); // add 0.5 minutes to round
         int hours = (int) Math.floor(time);
         double minutes = Math.floor((time - hours) * 60);
-        String suffix, result;
-        if (hours >= 12) {
-            suffix = "pm";
-        } else {
-            suffix = "am";
-        }
-        hours = ((((hours + 12) - 1) % (12)) + 1);
-        /*hours = (hours + 12) - 1;
-        int hrs = (int) hours % 12;
-        hrs += 1;*/
-
-        if ((hours >= 0 && hours <= 9) && (minutes >= 0 && minutes <= 9)) {
-            result = hours + ":0" + Math.round(minutes);
-        } else if ((hours >= 0 && hours <= 9)) {
-            result = hours + ":" + Math.round(minutes);
-        } else if ((minutes >= 0 && minutes <= 9)) {
-            result = hours + ":0" + Math.round(minutes);
-        } else {
-            result = hours + ":" + Math.round(minutes);
-        }
-
-        if (!noSuffix) {
-            result += " " + suffix;
-        }
-
-        return result;
-
+        DateFormat outputFormat = new SimpleDateFormat("hh:mm " + (noSuffix ? "" : "aa"),
+                Locale.getDefault());
+        return outputFormat.format(new DateTime(2019, 10, 19,
+                (int) hours, (int) Math.round(minutes), 0).toDate());
     }
 
     // convert double hours to 12h format with no suffix
@@ -574,7 +555,7 @@ public class PrayTime {
     // convert times array to given time format
     private ArrayList<String> adjustTimesFormat(double[] times) {
 
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         if (this.getTimeFormat() == FLOATING) {
             for (double time : times) {
@@ -714,8 +695,6 @@ public class PrayTime {
     public static LinkedHashMap<String, String> getPrayerTimes(Context context, int index, double lat,
                                                                double lng, int timeFormat, Date now) {
         AppSettings settings = AppSettings.getInstance(context);
-        double latitude = lat;
-        double longitude = lng;
 
         //Get time zone instance
         TimeZone defaultTz = TimeZone.getDefault();
@@ -745,7 +724,7 @@ public class PrayTime {
         cal.setTime(now);
 
         ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal,
-                latitude, longitude, timezone);
+                lat, lng, timezone);
         ArrayList<String> prayerNames = prayers.getTimeNames();
         LinkedHashMap<String, String> result = new LinkedHashMap<>();
 

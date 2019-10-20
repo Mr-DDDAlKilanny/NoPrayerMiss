@@ -33,11 +33,11 @@ import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AlarmDao;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.Weekday;
-import kilanny.muslimalarm.fragments.AlarmRingingFragment;
-import kilanny.muslimalarm.fragments.BarcodeAlarmFragment;
-import kilanny.muslimalarm.fragments.MathAlarmFragment;
-import kilanny.muslimalarm.fragments.ShakeAlarmFragment;
-import kilanny.muslimalarm.fragments.ShowAlarmFragment;
+import kilanny.muslimalarm.fragments.alarmring.AlarmRingingFragment;
+import kilanny.muslimalarm.fragments.alarmring.BarcodeAlarmFragment;
+import kilanny.muslimalarm.fragments.alarmring.MathAlarmFragment;
+import kilanny.muslimalarm.fragments.alarmring.ShakeAlarmFragment;
+import kilanny.muslimalarm.fragments.alarmring.ShowAlarmFragment;
 import kilanny.muslimalarm.util.Utils;
 
 public class ShowAlarmActivity extends AppCompatActivity implements
@@ -62,11 +62,11 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (isVisible) {
             finish();
             return;
         }
-        super.onCreate(savedInstanceState);
         // Hiding the title bar has to happen before the view is created
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_show_alarm);
@@ -130,7 +130,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         isVisible = true;
-        startRinging();
+        if (!mediaPlayer.isPlaying())
+            startRinging();
     }
 
     private void startRinging() {
@@ -147,6 +148,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
         if (mAlarm.vibrationEnabled && mVibrator != null) {
             Log.v("showAlarm", "Vibrating...");
+            //TODO: permission for vibration; not working on redmi 4a
             mVibrator.vibrate(
                     new long[]{5000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000}, 0);
             mIsVibrating = true;
@@ -246,6 +248,12 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     @Override
     public void onDismissed(final boolean isDone) {
         stopRinging();
+        isVisible = false;
+        try {
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mOldUserSoundVolume, 0);
+        } catch (SecurityException ex) {
+            ex.printStackTrace();
+        }
         if (mDismissTimer != null) {
             mDismissTimer.cancel();
             mDismissTimer = null;
@@ -256,6 +264,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
             @Override
             public Pair<Context, Alarm[]> apply(Pair<Context, Alarm> input) {
                 AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
+                input.second.skippedTimeFlag = 0;
+                input.second.skippedAlarmTime = null;
                 if (isDone) {
                     input.second.snoozedCount = 0;
                     input.second.snoozedToTime = null;
@@ -266,8 +276,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
                             input.second.enabled = false;
                         }
                     }
-                    alarmDao.update(input.second);
                 }
+                alarmDao.update(input.second);
                 return new Pair<>(input.first, alarmDao.getAll());
             }
         }, new Function<Pair<Context, Alarm[]>, Void>() {
@@ -279,17 +289,6 @@ public class ShowAlarmActivity extends AppCompatActivity implements
         }, new Pair<>(getApplicationContext(), mAlarm));
 
         finish();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        isVisible = false;
-        try {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mOldUserSoundVolume, 0);
-        } catch (SecurityException ex) {
-            ex.printStackTrace();
-        }
     }
 
     @Override

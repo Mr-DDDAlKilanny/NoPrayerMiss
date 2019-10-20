@@ -1,4 +1,4 @@
-package kilanny.muslimalarm.fragments;
+package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.app.Activity;
 import android.os.Bundle;
