@@ -39,15 +39,16 @@ public class MainActivity extends AppCompatActivity
 
     private PrayerTimesHomeFragment prayerTimesHomeFragment;
     private AlarmsHomeFragment alarmsHomeFragment;
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_EDIT_ALARM:
             case REQUEST_ADD_ALARM:
-                if (resultCode == EditAlarmActivity.RESULT_CODE_OK && data != null) {
+                if (resultCode == EditAlarmOnboardingActivity.RESULT_CODE_OK && data != null) {
                     onAlarmEdited(requestCode == REQUEST_ADD_ALARM,
-                            (Alarm) data.getParcelableExtra(EditAlarmActivity.RESULT_ALARM));
+                            (Alarm) data.getParcelableExtra(EditAlarmOnboardingActivity.RESULT_ALARM));
                 }
                 break;
             case REQUEST_ONBOARDING:
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity
                 alarm.skippedTimeFlag = 0;
                 alarm.skippedAlarmTime = null;
                 alarm.oneTimeLeftAlarmsTimeFlags = alarm.timeFlags;
+                alarm.enabled = true;
                 if (isNew) {
                     alarmDao.insert(alarm);
                 } else {
@@ -97,8 +99,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        //TODO: show message first
         if (!AppSettings.getInstance(getApplicationContext()).isDefaultSet())
             startOnboardingFor(0);
+        else
+            mActionBarDrawerToggle.syncState();
     }
 
     @Override
@@ -109,11 +114,10 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(mActionBarDrawerToggle);
 
-        toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
@@ -203,14 +207,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddNewAlarm() {
-        startActivityForResult(new Intent(this, EditAlarmActivity.class),
+        startActivityForResult(new Intent(this, EditAlarmOnboardingActivity.class),
                 REQUEST_ADD_ALARM);
     }
 
     @Override
     public void onEditAlarm(Alarm alarm) {
-        Intent intent = new Intent(this, EditAlarmActivity.class);
-        intent.putExtra(EditAlarmActivity.ARG_ALARM, alarm);
+        Intent intent = new Intent(this, EditAlarmOnboardingActivity.class);
+        intent.putExtra(EditAlarmOnboardingActivity.ARG_ALARM, alarm);
         startActivityForResult(intent, REQUEST_EDIT_ALARM);
     }
 }

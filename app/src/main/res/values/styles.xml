@@ -39,7 +39,7 @@
 
     <style name="Widget.Button.NextPrev" parent="android:Widget">
         <item name="android:textColor">@color/button_text_light</item>
-        <!--<item name="android:padding">@dimen/space</item>-->
+        <!--<item nameResId="android:padding">@dimen/space</item>-->
         <item name="android:layout_height">@dimen/space_x5</item>
         <item name="android:layout_width">@dimen/space_x20</item>
         <item name="android:gravity">center</item>
@@ -52,7 +52,7 @@
 
     <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- Customize color of navigation drawer icon and back arrow -->
-        <!--<item name="colorControlNormal">#FF0000</item>-->
+        <!--<item nameResId="colorControlNormal">#FF0000</item>-->
     </style>
 
     <style name="Widget.CardTitle" parent="android:Widget">

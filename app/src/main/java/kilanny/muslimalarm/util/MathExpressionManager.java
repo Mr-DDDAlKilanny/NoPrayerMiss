@@ -8,13 +8,19 @@ public final class MathExpressionManager {
 
     private MathExpressionManager() { }
 
+    /**
+     * Generates an expression whose evaluation result is an integer greater than zero
+     *
+     * @param level
+     * @return
+     */
     public static String generateExpression(int level) {
         if (level < 1 || level > 7)
             throw new IllegalArgumentException();
         Random random = new Random();
         switch (level) {
             case 1:
-                return random.nextInt(10) + "+" + random.nextInt(10);
+                return (1 + random.nextInt(9)) + "+" + random.nextInt(10);
             case 2:
                 return Math.max(10, random.nextInt(100))
                         + "+" + Math.max(10, random.nextInt(100));
@@ -34,8 +40,8 @@ public final class MathExpressionManager {
                 return "(" + Math.max(100, random.nextInt(1000))
                         + "x" + Math.max(10, random.nextInt(100))
                         + ")+" + Math.max(1000, random.nextInt(10000));
-                default:
-                    throw new IllegalArgumentException();
+            default:
+                throw new IllegalArgumentException();
         }
     }
 

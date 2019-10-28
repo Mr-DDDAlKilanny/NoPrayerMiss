@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/btnExit"
-            android:text="Exit"
+            android:text="@string/exit"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@android:color/white"
@@ -31,12 +31,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/space_x20"
             android:layout_below="@id/txtTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="200dp"
+            android:layout_height="50dp" />
 
         <Button
             android:id="@+id/btnSnooze"
-            android:text="Snooze"
+            android:text="@string/snooze"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@android:color/white"
@@ -44,7 +44,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/space_x2"
             android:layout_below="@id/btnExit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="200dp"
+            android:layout_height="50dp" />
     </RelativeLayout>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package kilanny.muslimalarm.adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.arch.core.util.Function;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import kilanny.muslimalarm.R;
@@ -38,15 +39,6 @@ import kilanny.muslimalarm.util.Utils;
 public class AlarmListAdapter extends ArrayAdapter<Alarm>
         implements PopupMenu.OnMenuItemClickListener {
 
-    private static final int[] times = {
-            R.string.fajr,
-            R.string.sun,
-            R.string.zuhr,
-            R.string.asr,
-            R.string.maghrib,
-            R.string.ishaa
-    };
-
     private final SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
     private final Function<Alarm, Void> onAlarmEdit;
     private final Function<Void, Void> onNeedRefresh;
@@ -58,6 +50,16 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         super(context, R.layout.list_item_alarm);
         this.onAlarmEdit = onAlarmEdit;
         this.onNeedRefresh = onNeedRefresh;
+    }
+
+    private static void setTextThru(AppCompatTextView textView, boolean isThru) {
+        if (isThru) {
+            textView.setPaintFlags(
+                    textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            textView.setPaintFlags(
+                    textView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        }
     }
 
     @NonNull
@@ -78,7 +80,12 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             rowView.findViewById(R.id.btnDismiss).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, ShowAlarmActivity.class));
+                    Intent intent = new Intent(context, ShowAlarmActivity.class);
+                    intent.putExtra(ShowAlarmActivity.ARG_ALARM, alarm);
+                    intent.putExtra(ShowAlarmActivity.ARG_IS_PREVIEW, false);
+                    intent.putExtra(ShowAlarmActivity.ARG_ALARM_TIME,
+                            alarm.weekDayFlags == Weekday.NO_REPEAT ? alarm.timeFlags : 0);
+                    context.startActivity(intent);
                 }
             });
             return rowView;
@@ -92,36 +99,39 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             }
         });
         final AppCompatTextView alarmTime = rowView.findViewById(R.id.alarmTime);
+        AppCompatTextView alarmTimeAfterSkip = rowView.findViewById(R.id.alarmTimeAfterSkip);
         if (alarm.enabled) {
+            int timeFlagSkip, timeFlagAct = 0;
+            Date dateSkip, dateAct = null;
+            boolean isSkipped = alarm.skippedAlarmTime != null &&
+                    alarm.skippedAlarmTime >= System.currentTimeMillis();
             Utils.NextAlarmInfo info = Utils.getNextAlarmDate(context, alarm);
-            String time;
-            switch (info.timeFlag) {
-                case Alarm.TIME_FAJR:
-                    time = context.getString(R.string.fajr);
-                    break;
-                case Alarm.TIME_SUNRISE:
-                    time = context.getString(R.string.sun);
-                    break;
-                case Alarm.TIME_DHUHR:
-                    time = context.getString(R.string.zuhr);
-                    break;
-                case Alarm.TIME_ASR:
-                    time = context.getString(R.string.asr);
-                    break;
-                case Alarm.TIME_MAGHRIB:
-                    time = context.getString(R.string.maghrib);
-                    break;
-                case Alarm.TIME_ISHAA:
-                    time = context.getString(R.string.ishaa);
-                    break;
-                default:
-                    time = "";
+            if (isSkipped) {
+                timeFlagSkip = alarm.skippedTimeFlag;
+                dateSkip = new Date(alarm.skippedAlarmTime);
+                timeFlagAct = info.timeFlag;
+                dateAct = info.date;
+            } else {
+                timeFlagSkip = info.timeFlag;
+                dateSkip = info.date;
             }
-            alarmTime.setText(String.format("%s (%s) - %s", time,
-                    timeF.format(info.date),
-                    Utils.getLeftTimeToDate(context, info.date)));
+            alarmTime.setText(String.format("%s (%s) - %s",
+                    Utils.getTimeName(context, timeFlagSkip),
+                    timeF.format(dateSkip),
+                    Utils.getLeftTimeToDate(context, dateSkip)));
+            setTextThru(alarmTime, isSkipped);
+            if (isSkipped) {
+                alarmTimeAfterSkip.setVisibility(View.VISIBLE);
+                alarmTimeAfterSkip.setText(String.format("%s (%s) - %s",
+                        Utils.getTimeName(context, timeFlagAct),
+                        timeF.format(dateAct),
+                        Utils.getLeftTimeToDate(context, dateAct)));
+            } else {
+                alarmTimeAfterSkip.setVisibility(View.GONE);
+            }
         } else {
             alarmTime.setText(null);
+            alarmTimeAfterSkip.setVisibility(View.GONE);
         }
 
         AppCompatCheckBox chkAlarmEnabled = rowView.findViewById(R.id.chkAlarmEnabled);
@@ -170,47 +180,11 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             }
         });
 
-        String[] prayerNames = context.getResources().getStringArray(R.array.prayer_times);
-        StringBuilder b = new StringBuilder();
-        for (int i = 0; i < 6; ++i) {
-            if ((alarm.timeFlags & (1 << i)) != 0)
-                b.insert(0, ',').insert(1, prayerNames[5 - i]);
-        }
-        if (b.length() > 0) b.deleteCharAt(0);
         AppCompatTextView prayerName = rowView.findViewById(R.id.prayerName);
-        prayerName.setText(b.toString());
+        prayerName.setText(Utils.getPrayerNames(context, alarm));
 
-        String[] days = context.getResources().getStringArray(R.array.repeat_days);
-        b.delete(0, b.length());
-        if (alarm.weekDayFlags == Weekday.NO_REPEAT)
-            b.append(days[0]);
-        else if (alarm.weekDayFlags == 127)
-            b.append(context.getString(R.string.everyday));
-        else {
-            ArrayList<Integer> not = new ArrayList<>();
-            for (int i = 0; i < days.length; ++i) {
-                int f = 1 << i;
-                if ((alarm.weekDayFlags & f) == 0)
-                    not.add(7 - i);
-            }
-            if (not.size() >= 3) {
-                for (int i = 0; i < days.length; ++i) {
-                    int f = 1 << i;
-                    if ((alarm.weekDayFlags & f) != 0)
-                        b.append(days[7 - i]).append(',');
-                }
-                b.delete(b.length() - 1, 1);
-            } else if (not.size() == 2) {
-                b.append(context.getString(R.string.allDaysExpect2Days,
-                        days[not.get(0)],
-                        days[not.get(1)]));
-            } else {
-                b.append(context.getString(R.string.allDaysExpect1Day,
-                        days[not.get(0)]));
-            }
-        }
         AppCompatTextView alarmDays = rowView.findViewById(R.id.alarmDays);
-        alarmDays.setText(b.toString());
+        alarmDays.setText(Utils.getAlarmDays(context, alarm));
 
         int res = R.drawable.clock;
         switch (alarm.dismissAlarmType) {
@@ -241,7 +215,8 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                 MenuItem itemSkip = menu.findItem(R.id.mnuSkipNextAlarm);
                 if (mClickedAlarm.enabled) {
                     itemSkip.setEnabled(true);
-                    if (mClickedAlarm.skippedTimeFlag == 0) {
+                    if (mClickedAlarm.skippedTimeFlag == 0
+                            || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
                         itemSkip.setTitle(R.string.skip_next_alarm);
                     } else {
                         itemSkip.setTitle(R.string.unskip_next_alarm);
@@ -321,7 +296,8 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             @Override
             public Pair<Context, Alarm[]> apply(Context input) {
                 if (mClickedAlarm.weekDayFlags == Weekday.NO_REPEAT) {
-                    if (mClickedAlarm.skippedTimeFlag == 0) {
+                    if (mClickedAlarm.skippedTimeFlag == 0
+                            || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
                         Utils.NextAlarmInfo next = Utils.getNextAlarmDate(input, mClickedAlarm);
                         mClickedAlarm.skippedTimeFlag = next.timeFlag;
                         mClickedAlarm.oneTimeLeftAlarmsTimeFlags &= ~next.timeFlag;
@@ -332,7 +308,8 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                         mClickedAlarm.skippedTimeFlag = 0;
                     }
                 } else {
-                    if (mClickedAlarm.skippedTimeFlag == 0) {
+                    if (mClickedAlarm.skippedTimeFlag == 0
+                            || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
                         Utils.NextAlarmInfo next = Utils.getNextAlarmDate(input, mClickedAlarm);
                         mClickedAlarm.skippedTimeFlag = next.timeFlag;
                         mClickedAlarm.skippedAlarmTime = next.date.getTime();

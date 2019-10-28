@@ -1,7 +1,5 @@
 package kilanny.muslimalarm.fragments;
 
-import android.database.Cursor;
-import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +66,7 @@ public class SelectRingtuneFragment extends Fragment {
         SelectTuneAdapter adapter = null;
         switch (mType) {
             case TYPE_TUNES:
-                adapter = new SelectTuneAdapter(getContext(), getTunes());
+                adapter = new SelectTuneAdapter(getContext(), Tune.getTunes());
                 break;
             case TYPE_LOUD_TUNES:
                 break;
@@ -78,22 +76,5 @@ public class SelectRingtuneFragment extends Fragment {
         ListView listView = view.findViewById(R.id.listView);
         listView.setAdapter(adapter);
         return view;
-    }
-
-    private Tune[] getTunes() {
-        RingtoneManager manager = new RingtoneManager(getContext());
-        manager.setType(RingtoneManager.TYPE_RINGTONE);
-        Cursor cursor = manager.getCursor();
-        Tune[] res = new Tune[cursor.getCount()];
-        int idx = 0;
-        while (cursor.moveToNext()) {
-            Tune tune = new Tune();
-            tune.name = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
-            tune.path = manager.getRingtoneUri(cursor.getPosition()).toString();
-            tune.selected = tune.playing = false;
-            res[idx++] = tune;
-        }
-        cursor.close();
-        return res;
     }
 }

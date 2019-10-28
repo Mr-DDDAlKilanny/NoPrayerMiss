@@ -24,7 +24,6 @@ import android.widget.CompoundButton;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.warkiz.widget.IndicatorSeekBar;
@@ -33,6 +32,7 @@ import com.warkiz.widget.SeekParams;
 
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.Alarm;
+import kilanny.muslimalarm.data.Tune;
 import kilanny.muslimalarm.data.Weekday;
 import kilanny.muslimalarm.dialogs.NumberPickerDialog;
 
@@ -199,12 +199,13 @@ public class EditAlarmActivity extends AppCompatActivity
 
     private void onSelectRingtune() {
         hasChangedTune = false;
-        final String[] names = new String[Alarm.SOUNDS.length];
-        for (int i = 0; i < names.length; ++i)
-            names[i] = getString(R.string.tune_no, i + 1);
+        final Tune[] tunes = Tune.getTunes();
+        final String[] names = new String[tunes.length];
         int selected = -1;
-        if (mAlarm.alarmTune != null) {
-            selected = Integer.parseInt(mAlarm.alarmTune);
+        for (int i = 0; i < names.length; ++i) {
+            names[i] = getString(tunes[i].nameResId);
+            if (tunes[i].rawResId == mAlarm.alarmTune)
+                selected = i;
         }
         final int prevSelected = selected;
         new AlertDialog.Builder(this)
@@ -215,15 +216,15 @@ public class EditAlarmActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialogInterface, int i) {
                         stopMediaPlayer();
                         mediaPlayer = MediaPlayer.create(EditAlarmActivity.this,
-                                Alarm.SOUNDS[i]);
+                                tunes[i].rawResId);
                         mediaPlayer.start();
-                        mAlarm.alarmTune = i + "";
+                        mAlarm.alarmTune = tunes[i].rawResId;
                     }
                 })
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (mAlarm.alarmTune == null) {
+                        if (mAlarm.alarmTune == 0) {
                             new AlertDialog.Builder(EditAlarmActivity.this)
                                     .setTitle(R.string.select_alarm_tune)
                                     .setMessage(R.string.err_tune_not_selected)
@@ -247,7 +248,7 @@ public class EditAlarmActivity extends AppCompatActivity
                     public void onDismiss(DialogInterface dialogInterface) {
                         stopMediaPlayer();
                         if (!hasChangedTune)
-                            mAlarm.alarmTune = prevSelected == -1 ? null : prevSelected + "";
+                            mAlarm.alarmTune = prevSelected == -1 ? 0 : tunes[prevSelected].rawResId;
                     }
                 })
                 .show();
@@ -258,7 +259,7 @@ public class EditAlarmActivity extends AppCompatActivity
             Snackbar.make(view, R.string.err_select_prayer, Snackbar.LENGTH_LONG).show();
             return false;
         }
-        if (mAlarm.alarmTune == null) {
+        if (mAlarm.alarmTune == 0) {
             Snackbar.make(view, R.string.must_select_tune, Snackbar.LENGTH_LONG).show();
             return false;
         }

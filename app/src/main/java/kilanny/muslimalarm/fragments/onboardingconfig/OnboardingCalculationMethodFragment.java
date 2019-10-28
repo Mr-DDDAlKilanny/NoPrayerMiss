@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import kilanny.muslimalarm.OnOnboardingOptionSelectedListener;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
 

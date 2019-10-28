@@ -1,5 +1,6 @@
 package kilanny.muslimalarm.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.util.Function;
 import androidx.preference.PreferenceManager;
@@ -11,6 +12,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.os.Vibrator;
 import android.util.Log;
 import android.util.Pair;
@@ -46,6 +48,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
     public static final String ARG_IS_PREVIEW = "isPreview";
     public static final String ARG_ALARM = "alarm";
+    public static final String ARG_ALARM_TIME = "alarmTime";
     private static boolean isVisible = false;
 
     private boolean mIsPreview, mIsVibrating;
@@ -89,10 +92,11 @@ public class ShowAlarmActivity extends AppCompatActivity implements
             }
             if (mAlarm == null)
                 throw new RuntimeException("An alarm must be passed to this activity");
+        } else {
+            currentAlarmFTime = getIntent().getIntExtra(ARG_ALARM_TIME, 0);
         }
         mProgressBar = findViewById(R.id.progrssBar);
-        int selected = Integer.parseInt(mAlarm.alarmTune);
-        mediaPlayer = MediaPlayer.create(this, Alarm.SOUNDS[selected]);
+        mediaPlayer = MediaPlayer.create(this, mAlarm.alarmTune);
         mediaPlayer.setLooping(true);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -124,6 +128,15 @@ public class ShowAlarmActivity extends AppCompatActivity implements
                 }
             }, null, this);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        outState.putParcelable(ARG_ALARM, mAlarm);
+        outState.putBoolean(ARG_IS_PREVIEW, mIsPreview);
+        outState.putInt(ARG_ALARM_TIME, currentAlarmFTime);
+        //TODO: can this occur?
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

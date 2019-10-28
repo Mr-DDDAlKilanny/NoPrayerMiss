@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import kilanny.muslimalarm.OnOnboardingOptionSelectedListener;
+import kilanny.muslimalarm.fragments.onboardingconfig.OnOnboardingOptionSelectedListener;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
 import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingAdjustmentHighLatitudesFragment;

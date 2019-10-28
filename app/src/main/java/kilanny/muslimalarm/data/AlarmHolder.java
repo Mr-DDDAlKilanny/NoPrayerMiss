@@ -59,7 +59,7 @@ public class AlarmHolder extends RecyclerView.ViewHolder implements PopupMenu.On
     public void bind() {
         mCheckboxEnabled.setChecked(mAlarm.enabled);
 
-        // time name
+        // time nameResId
         String t;
         //TODO: display time with hours
         if (mAlarm.timeAlarmDiffMinutes > 0)

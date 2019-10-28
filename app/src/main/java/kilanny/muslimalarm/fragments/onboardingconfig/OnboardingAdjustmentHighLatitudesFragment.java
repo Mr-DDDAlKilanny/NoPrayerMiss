@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import kilanny.muslimalarm.OnOnboardingOptionSelectedListener;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
 

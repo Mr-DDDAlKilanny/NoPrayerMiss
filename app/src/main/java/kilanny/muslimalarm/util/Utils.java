@@ -24,6 +24,7 @@ import androidx.preference.PreferenceManager;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -111,7 +112,7 @@ public class Utils {
             throw new IllegalArgumentException("alarm is not enabled");
         }
         if (alarm.snoozedToTime != null && alarm.snoozedToTime >= System.currentTimeMillis())
-            return new NextAlarmInfo(alarm, new Date(alarm.snoozedToTime), 0, true);
+            return new NextAlarmInfo(alarm, new Date(alarm.snoozedToTime), 0);
         Date from = alarm.skippedAlarmTime == null ?
                 new Date() : new Date(alarm.skippedAlarmTime);
         AppSettings settings = AppSettings.getInstance(context);
@@ -181,6 +182,77 @@ public class Utils {
         throw new UnsupportedOperationException();
     }
 
+    public static String getPrayerNames(Context context, Alarm alarm) {
+        String[] prayerNames = context.getResources().getStringArray(R.array.prayer_times);
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < 6; ++i) {
+            if ((alarm.timeFlags & (1 << i)) != 0)
+                b.insert(0, ',').insert(1, prayerNames[5 - i]);
+        }
+        if (b.length() > 0) b.deleteCharAt(0);
+        return b.toString();
+    }
+
+    public static String getAlarmDays(Context context, Alarm alarm) {
+        String[] days = context.getResources().getStringArray(R.array.repeat_days);
+        StringBuilder b = new StringBuilder();
+        if (alarm.weekDayFlags == Weekday.NO_REPEAT)
+            b.append(days[0]);
+        else if (alarm.weekDayFlags == 127)
+            b.append(context.getString(R.string.everyday));
+        else {
+            ArrayList<Integer> not = new ArrayList<>();
+            for (int i = 0; i < days.length; ++i) {
+                int f = 1 << i;
+                if ((alarm.weekDayFlags & f) == 0)
+                    not.add(7 - i);
+            }
+            if (not.size() >= 3) {
+                for (int i = 0; i < days.length; ++i) {
+                    int f = 1 << i;
+                    if ((alarm.weekDayFlags & f) != 0)
+                        b.append(days[7 - i]).append(',');
+                }
+                b.delete(b.length() - 1, b.length());
+            } else if (not.size() == 2) {
+                b.append(context.getString(R.string.allDaysExpect2Days,
+                        days[not.get(0)],
+                        days[not.get(1)]));
+            } else {
+                b.append(context.getString(R.string.allDaysExpect1Day,
+                        days[not.get(0)]));
+            }
+        }
+        return b.toString();
+    }
+
+    public static String getTimeName(Context context, int timeFlag) {
+        String time;
+        switch (timeFlag) {
+            case Alarm.TIME_FAJR:
+                time = context.getString(R.string.fajr);
+                break;
+            case Alarm.TIME_SUNRISE:
+                time = context.getString(R.string.sun);
+                break;
+            case Alarm.TIME_DHUHR:
+                time = context.getString(R.string.zuhr);
+                break;
+            case Alarm.TIME_ASR:
+                time = context.getString(R.string.asr);
+                break;
+            case Alarm.TIME_MAGHRIB:
+                time = context.getString(R.string.maghrib);
+                break;
+            case Alarm.TIME_ISHAA:
+                time = context.getString(R.string.ishaa);
+                break;
+            default:
+                time = "";
+        }
+        return time;
+    }
+
     private static class BackgroundTask<TInput, TResult> extends AsyncTask<TInput, Void, TResult> {
 
         private final Function<TInput, TResult> work;
@@ -207,14 +279,17 @@ public class Utils {
 
     public static <TInput, TResult> void runInBackground(
             Function<TInput, TResult> work, @Nullable Function<TResult, Void> onDone, TInput input) {
-        new BackgroundTask<TInput, TResult>(work, onDone).execute(input);
+        new BackgroundTask<>(work, onDone).execute(input);
     }
 
     public static class NextAlarmInfo {
         public Alarm alarm;
         public Date date;
         public int timeFlag;
-        public boolean isSnoozed;
+
+        public boolean isSnoozed() {
+            return timeFlag == 0;
+        }
 
         public NextAlarmInfo() {
         }
@@ -223,14 +298,6 @@ public class Utils {
             this.alarm = alarm;
             this.date = date;
             this.timeFlag = timeFlag;
-            this.isSnoozed = false;
-        }
-
-        public NextAlarmInfo(Alarm alarm, Date date, int timeFlag, boolean isSnoozed) {
-            this.alarm = alarm;
-            this.date = date;
-            this.timeFlag = timeFlag;
-            this.isSnoozed = isSnoozed;
         }
     }
 
@@ -297,8 +364,7 @@ public class Utils {
                 Log.v("schNext", "No alarm enabled; skipping.");
                 return;
             }
-            // if we are snoozed, timeFlag will be == 0
-            int timeFlag = nearestAlarm.timeFlag > 0 ?
+            int timeFlag = !nearestAlarm.isSnoozed() ?
                     nearestAlarm.timeFlag : pref.getInt("nextAlarmTime", 0);
             pref.edit()
                     .putString("nextAlarmJson", nearestAlarm.alarm.toJson())

@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
 
-import kilanny.muslimalarm.OnOnboardingOptionSelectedListener;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.activities.ConfigOnboardingActivity;
 import kilanny.muslimalarm.data.AppSettings;

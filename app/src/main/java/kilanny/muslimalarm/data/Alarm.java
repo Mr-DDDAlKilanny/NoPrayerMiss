@@ -13,8 +13,6 @@ import androidx.room.PrimaryKey;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import kilanny.muslimalarm.R;
-
 @Entity(tableName = "alarm",
         foreignKeys = @ForeignKey(
                 entity = Barcode.class,
@@ -36,18 +34,6 @@ public class Alarm implements Parcelable {
     public static final int TIME_ASR = 1 << 2;
     public static final int TIME_MAGHRIB = 1 << 1;
     public static final int TIME_ISHAA = 1;
-
-    public static final int[] SOUNDS = {
-            R.raw.air_raid_alarm, R.raw.alarm, R.raw.alarm_1, R.raw.alarm_clock,
-            R.raw.alarm_clock_new_s5, R.raw.alarm_loud, R.raw.alarm_ring,
-            R.raw.alarm_rooster, R.raw.alarm_vs_turbo, R.raw.alarms, R.raw.animal_cow,
-            R.raw.animal_horse, R.raw.animal_sounds_cats, R.raw.car_alaram_2009,
-            R.raw.clock_alarm_samsung, R.raw.craw, R.raw.extreme_alarm, R.raw.loud_alarm,
-            R.raw.loud_alarm_clock, R.raw.loud_alarm_sound, R.raw.loud_alarm_tone,
-            R.raw.loud_continuous_beep, R.raw.loud_snoring, R.raw.monkey_sound,
-            R.raw.msg_foundx20, R.raw.old_alarm_clock_best, R.raw.puma_roar,
-            R.raw.real_alarm_tone, R.raw.ttwu7, R.raw.warning, R.raw.wolf
-    };
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -101,7 +87,7 @@ public class Alarm implements Parcelable {
     public String alarmLabel;
 
     @ColumnInfo(name = "alarm_tune")
-    public String alarmTune;
+    public int alarmTune;
 
     @ColumnInfo(name = "snoozed_to_time")
     public Long snoozedToTime;
@@ -152,7 +138,7 @@ public class Alarm implements Parcelable {
         enabled = in.readByte() != 0;
         vibrationEnabled = in.readByte() != 0;
         alarmLabel = in.readString();
-        alarmTune = in.readString();
+        alarmTune = in.readInt();
     }
 
     public Alarm copy() {
@@ -231,7 +217,7 @@ public class Alarm implements Parcelable {
         dest.writeByte((byte) (enabled ? 1 : 0));
         dest.writeByte((byte) (vibrationEnabled ? 1 : 0));
         dest.writeString(alarmLabel);
-        dest.writeString(alarmTune);
+        dest.writeInt(alarmTune);
     }
 
     @Override
@@ -265,8 +251,7 @@ public class Alarm implements Parcelable {
         alarm.snoozeCount = jsonObject.getInt("snoozeCount");
         alarm.enabled = jsonObject.getBoolean("enabled");
         alarm.vibrationEnabled = jsonObject.getBoolean("vibrationEnabled");
-        if (jsonObject.has("alarmTune"))
-            alarm.alarmTune = jsonObject.getString("alarmTune");
+        alarm.alarmTune = jsonObject.getInt("alarmTune");
         return alarm;
     }
 
