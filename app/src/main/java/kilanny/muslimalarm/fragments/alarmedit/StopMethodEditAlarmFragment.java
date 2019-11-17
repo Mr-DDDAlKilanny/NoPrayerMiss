@@ -140,7 +140,7 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
                 .replace(R.id.topRightLayout, fragments[1])
                 .replace(R.id.bottomLeftLayout, fragments[3])
                 .replace(R.id.bottomRightLayout, fragments[2])
-                .commit();
+                .commitAllowingStateLoss();
         return root;
     }
 

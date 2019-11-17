@@ -1,12 +1,14 @@
 package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import kilanny.muslimalarm.R;
@@ -96,7 +98,14 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onDestroyView() {
+        for (int i = 0; i < options.length; ++i)
+            options[i] = null;
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         try {
             mListener = (OnOnboardingOptionSelectedListener) activity;

@@ -328,5 +328,229 @@ public class AppSettings {
         return getBoolean(Key.HAS_DEFAULT_SET);
     }
 
+    public int getAzanAlarmSoundLevel() {
+        return getInt("azanAlarmSoundLevel", 100);
+    }
+
+    public void setAzanAlarmSoundLevel(int level) {
+        set("azanAlarmSoundLevel", level);
+    }
+
+    public int getIqamahAlarmSoundLevel() {
+        return getInt("iqamahAlarmSoundLevel", 100);
+    }
+
+    public void setIqamahAlarmSoundLevel(int level) {
+        set("iqamahAlarmSoundLevel", level);
+    }
+
+    public boolean isAzanAlarmsEnabled() {
+        return getBoolean("azanAlarmsEnabled", true);
+    }
+
+    public void setAzanAlarmsEnabled(boolean enabled) {
+        set("azanAlarmsEnabled", enabled);
+    }
+
+    public boolean isZuhrAzanAlarmEnabled() {
+        return getBoolean("zuhrAzanAlarmEnabled", true);
+    }
+
+    public void setZuhrAzanAlarmEnabled(boolean enabled) {
+        set("zuhrAzanAlarmEnabled", enabled);
+    }
+
+    public boolean isAsrAzanAlarmEnabled() {
+        return getBoolean("asrAzanAlarmEnabled", true);
+    }
+
+    public void setAsrAzanAlarmEnabled(boolean enabled) {
+        set("asrAzanAlarmEnabled", enabled);
+    }
+
+    public boolean isMagribAzanAlarmEnabled() {
+        return getBoolean("magribAzanAlarmEnabled", true);
+    }
+
+    public void setMafribAzanAlarmEnabled(boolean enabled) {
+        set("magribAzanAlarmEnabled", enabled);
+    }
+
+    public boolean isIshaAzanAlarmEnabled() {
+        return getBoolean("ishaAzanAlarmEnabled", true);
+    }
+
+    public void setIshaAzanAlarmEnabled(boolean enabled) {
+        set("ishaAzanAlarmEnabled", enabled);
+    }
+
+    public boolean isFajrAzanAlarmEnabled() {
+        return getBoolean("fajrAzanAlarmEnabled", true);
+    }
+
+    public void setFajrAzanAlarmEnabled(boolean enabled) {
+        set("fajrAzanAlarmEnabled", enabled);
+    }
+
+    public boolean isJumaahAzanAlarmEnabled() {
+        return getBoolean("jumaahAzanAlarmEnabled", true);
+    }
+
+    public void setJumaahAzanAlarmEnabled(boolean enabled) {
+        set("jumaahAzanAlarmEnabled", enabled);
+    }
+
+    public int getZuhrAzanAlarmOffsetMins() {
+        return getInt("zuhrAzanAlarmOffsetMins", 0);
+    }
+
+    public void setZuhrAzanAlarmOffsetMins(int OffsetMins) {
+        set("zuhrAzanAlarmOffsetMins", OffsetMins);
+    }
+
+    public int getAsrAzanAlarmOffsetMins() {
+        return getInt("asrAzanAlarmOffsetMins", 0);
+    }
+
+    public void setAsrAzanAlarmOffsetMins(int OffsetMins) {
+        set("asrAzanAlarmOffsetMins", OffsetMins);
+    }
+
+    public int getMagribAzanAlarmOffsetMins() {
+        return getInt("magribAzanAlarmOffsetMins", 0);
+    }
+
+    public void setMafribAzanAlarmOffsetMins(int OffsetMins) {
+        set("magribAzanAlarmOffsetMins", OffsetMins);
+    }
+
+    public int getgethaAzanAlarmOffsetMins() {
+        return getInt("gethaAzanAlarmOffsetMins", 0);
+    }
+
+    public void setgethaAzanAlarmOffsetMins(int OffsetMins) {
+        set("gethaAzanAlarmOffsetMins", OffsetMins);
+    }
+
+    public int getFajrAzanAlarmOffsetMins() {
+        return getInt("fajrAzanAlarmOffsetMins", 0);
+    }
+
+    public void setFajrAzanAlarmOffsetMins(int OffsetMins) {
+        set("fajrAzanAlarmOffsetMins", OffsetMins);
+    }
+
+    public int getJumaahAzanAlarmOffsetMins() {
+        return getInt("jumaahAzanAlarmOffsetMins", 0);
+    }
+
+    public void setJumaahAzanAlarmOffsetMins(int OffsetMins) {
+        set("jumaahAzanAlarmOffsetMins", OffsetMins);
+    }
+
+    public boolean isIqamahAlarmsEnabled() {
+        return getBoolean("iqamahAlarmsEnabled", true);
+    }
+
+    public void setIqamahAlarmsEnabled(boolean enabled) {
+        set("iqamahAlarmsEnabled", enabled);
+    }
+
+    public boolean isZuhrIqamahAlarmEnabled() {
+        return getBoolean("zuhrIqamahAlarmEnabled", true);
+    }
+
+    public void setZuhrIqamahAlarmEnabled(boolean enabled) {
+        set("zuhrIqamahAlarmEnabled", enabled);
+    }
+
+    public boolean isAsrIqamahAlarmEnabled() {
+        return getBoolean("asrIqamahAlarmEnabled", true);
+    }
+
+    public void setAsrIqamahAlarmEnabled(boolean enabled) {
+        set("asrIqamahAlarmEnabled", enabled);
+    }
+
+    public boolean isMagribIqamahAlarmEnabled() {
+        return getBoolean("magribIqamahAlarmEnabled", true);
+    }
+
+    public void setMafribIqamahAlarmEnabled(boolean enabled) {
+        set("magribIqamahAlarmEnabled", enabled);
+    }
+
+    public boolean isIshaIqamahAlarmEnabled() {
+        return getBoolean("ishaIqamahAlarmEnabled", true);
+    }
+
+    public void setIshaIqamahAlarmEnabled(boolean enabled) {
+        set("ishaIqamahAlarmEnabled", enabled);
+    }
+
+    public boolean isFajrIqamahAlarmEnabled() {
+        return getBoolean("fajrIqamahAlarmEnabled", true);
+    }
+
+    public void setFajrIqamahAlarmEnabled(boolean enabled) {
+        set("fajrIqamahAlarmEnabled", enabled);
+    }
+
+    public boolean isJumaahIqamahAlarmEnabled() {
+        return getBoolean("jumaahIqamahAlarmEnabled", true);
+    }
+
+    public void setJumaahIqamahAlarmEnabled(boolean enabled) {
+        set("jumaahIqamahAlarmEnabled", enabled);
+    }
+
+    public int getZuhrIqamahAlarmPeriodMins() {
+        return getInt("zuhrIqamahAlarmPeriodMins", 10);
+    }
+
+    public void setZuhrIqamahAlarmPeriodMins(int periodMins) {
+        set("zuhrIqamahAlarmPeriodMins", periodMins);
+    }
+
+    public int getAsrIqamahAlarmPeriodMins() {
+        return getInt("asrIqamahAlarmPeriodMins", 10);
+    }
+
+    public void setAsrIqamahAlarmPeriodMins(int periodMins) {
+        set("asrIqamahAlarmPeriodMins", periodMins);
+    }
+
+    public int getMagribIqamahAlarmPeriodMins() {
+        return getInt("magribIqamahAlarmPeriodMins", 10);
+    }
+
+    public void setMafribIqamahAlarmPeriodMins(int periodMins) {
+        set("magribIqamahAlarmPeriodMins", periodMins);
+    }
+
+    public int getIshaIqamahAlarmPeriodMins() {
+        return getInt("gethaIqamahAlarmPeriodMins", 10);
+    }
+
+    public void setIshaIqamahAlarmPeriodMins(int periodMins) {
+        set("gethaIqamahAlarmPeriodMins", periodMins);
+    }
+
+    public int getFajrIqamahAlarmPeriodMins() {
+        return getInt("fajrIqamahAlarmPeriodMins", 10);
+    }
+
+    public void setFajrIqamahAlarmPeriodMins(int periodMins) {
+        set("fajrIqamahAlarmPeriodMins", periodMins);
+    }
+
+    public int getJumaahIqamahAlarmPeriodMins() {
+        return getInt("jumaahIqamahAlarmPeriodMins", 10);
+    }
+
+    public void setJumaahIqamahAlarmPeriodMins(int periodMins) {
+        set("jumaahIqamahAlarmPeriodMins", periodMins);
+    }
+
 
 }

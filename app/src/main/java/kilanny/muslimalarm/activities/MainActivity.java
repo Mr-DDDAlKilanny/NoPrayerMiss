@@ -3,11 +3,15 @@ package kilanny.muslimalarm.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +22,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.material.navigation.NavigationView;
 
 import kilanny.muslimalarm.R;
@@ -27,6 +33,7 @@ import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.AppSettings;
 import kilanny.muslimalarm.fragments.AlarmsHomeFragment;
 import kilanny.muslimalarm.fragments.PrayerTimesHomeFragment;
+import kilanny.muslimalarm.util.AnalyticsTrackers;
 import kilanny.muslimalarm.util.Utils;
 
 public class MainActivity extends AppCompatActivity
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private PrayerTimesHomeFragment prayerTimesHomeFragment;
     private AlarmsHomeFragment alarmsHomeFragment;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
+    private ShowcaseView mShowcaseView = null;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -47,8 +55,12 @@ public class MainActivity extends AppCompatActivity
             case REQUEST_EDIT_ALARM:
             case REQUEST_ADD_ALARM:
                 if (resultCode == EditAlarmOnboardingActivity.RESULT_CODE_OK && data != null) {
-                    onAlarmEdited(requestCode == REQUEST_ADD_ALARM,
-                            (Alarm) data.getParcelableExtra(EditAlarmOnboardingActivity.RESULT_ALARM));
+                    Alarm alarm = data.getParcelableExtra(EditAlarmOnboardingActivity.RESULT_ALARM);
+                    if (alarm != null) {
+                        boolean isNew = requestCode == REQUEST_ADD_ALARM;
+                        onAlarmEdited(isNew, alarm);
+                        AnalyticsTrackers.getInstance(this).logModifyAlarm(alarm, isNew);
+                    }
                 }
                 break;
             case REQUEST_ONBOARDING:
@@ -96,14 +108,42 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, REQUEST_ONBOARDING);
     }
 
+    private ImageButton getNavButtonView(Toolbar toolbar) {
+        for (int i = 0; i < toolbar.getChildCount(); i++)
+            if (toolbar.getChildAt(i) instanceof ImageButton)
+                return (ImageButton) toolbar.getChildAt(i);
+        return null;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         //TODO: show message first
-        if (!AppSettings.getInstance(getApplicationContext()).isDefaultSet())
+        AppSettings appSettings = AppSettings.getInstance(getApplicationContext());
+        if (!appSettings.isDefaultSet()) {
             startOnboardingFor(0);
-        else
-            mActionBarDrawerToggle.syncState();
+            return;
+        }
+
+        int count = appSettings.getInt("menuOpenShowCaseViewCount", 0);
+        if (count < 3) {
+            TextPaint paintTitle = new TextPaint();
+            paintTitle.setColor(Color.rgb(255, 0, 0));
+            paintTitle.setTextSize(85);
+            TextPaint paintText = new TextPaint();
+            paintText.setColor(Color.rgb(98, 8, 8));
+            paintText.setTextSize(45);
+
+            mShowcaseView = new ShowcaseView.Builder(this)
+                    .setTarget(new ViewTarget(getNavButtonView((Toolbar) findViewById(R.id.toolbar))))
+                    .setContentTitle(R.string.open_app_alarm_menu)
+                    .setContentTitlePaint(paintTitle)
+                    .setContentText(R.string.click_here_to_open_menu)
+                    .setContentTextPaint(paintText)
+                    .hideOnTouchOutside()
+                    .build();
+            appSettings.set("menuOpenShowCaseViewCount", count + 1);
+        }
     }
 
     @Override
@@ -116,7 +156,32 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         mActionBarDrawerToggle = new ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(mActionBarDrawerToggle);
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                if (mShowcaseView != null) {
+                    mShowcaseView.hide();
+                    mShowcaseView = null;
+                }
+                mActionBarDrawerToggle.onDrawerSlide(drawerView, slideOffset);
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                mActionBarDrawerToggle.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                mActionBarDrawerToggle.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                mActionBarDrawerToggle.onDrawerStateChanged(newState);
+            }
+        });
+        mActionBarDrawerToggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -152,7 +217,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -186,15 +251,16 @@ public class MainActivity extends AppCompatActivity
         }*/ else if (id == R.id.nav_tools) {
             startOnboardingFor(0);
             return true;
-        }/* else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_share) {
+            Utils.displayShareActivity(this);
+            return true;
+        } /*else if (id == R.id.nav_send) {
 
         }*/
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.mainContent, fragment)
-                .commit();
+                .commitAllowingStateLoss();
         // Highlight the selected item has been done by NavigationView
         item.setChecked(true);
         // Set action bar title

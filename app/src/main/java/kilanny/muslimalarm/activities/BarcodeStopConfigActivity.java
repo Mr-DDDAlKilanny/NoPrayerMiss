@@ -81,7 +81,7 @@ public class BarcodeStopConfigActivity extends AppCompatActivity
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content, fragment)
-                        .commit();
+                        .commitAllowingStateLoss();
                 return null;
             }
         }, this);
@@ -114,7 +114,7 @@ public class BarcodeStopConfigActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content, barcodeStopConfigFragment)
-                    .commit();
+                    .commitAllowingStateLoss();
         } else {
             barcodeStopConfigFragment.onBarcodeAdded();
         }

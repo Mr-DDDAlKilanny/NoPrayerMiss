@@ -21,6 +21,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/txtAlarmLabel"
+            android:text="Prayer Alarm !! Prayer Alarm !! Prayer Alarm !! Prayer Alarm !! Prayer Alarm !! Prayer Alarm !! Prayer Alarm !! Prayer Alarm !!"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/space_x3"
+            android:layout_below="@id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/btnExit"
             android:text="@string/exit"

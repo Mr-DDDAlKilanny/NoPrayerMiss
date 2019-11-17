@@ -28,18 +28,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import kilanny.muslimalarm.AlarmRingBroadcastReceiver;
 import kilanny.muslimalarm.R;
-import kilanny.muslimalarm.activities.ShowAlarmActivity;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AlarmDao;
 import kilanny.muslimalarm.data.AppDb;
+import kilanny.muslimalarm.data.AppSettings;
 import kilanny.muslimalarm.data.Weekday;
+import kilanny.muslimalarm.util.PrayTime;
 import kilanny.muslimalarm.util.Utils;
 
 public class AlarmListAdapter extends ArrayAdapter<Alarm>
         implements PopupMenu.OnMenuItemClickListener {
 
-    private final SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+    private final SimpleDateFormat timeF;
     private final Function<Alarm, Void> onAlarmEdit;
     private final Function<Void, Void> onNeedRefresh;
     private Alarm mClickedAlarm;
@@ -50,6 +52,12 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         super(context, R.layout.list_item_alarm);
         this.onAlarmEdit = onAlarmEdit;
         this.onNeedRefresh = onNeedRefresh;
+        int format = AppSettings.getInstance(context).getTimeFormatFor(0);
+        if (format != PrayTime.TIME_24)
+            timeF = new SimpleDateFormat("hh:mm " + (format == PrayTime.TIME_12_NS ? "" : "aa"),
+                    Locale.getDefault());
+        else
+            timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
     private static void setTextThru(AppCompatTextView textView, boolean isThru) {
@@ -80,12 +88,12 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             rowView.findViewById(R.id.btnDismiss).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, ShowAlarmActivity.class);
-                    intent.putExtra(ShowAlarmActivity.ARG_ALARM, alarm);
-                    intent.putExtra(ShowAlarmActivity.ARG_IS_PREVIEW, false);
-                    intent.putExtra(ShowAlarmActivity.ARG_ALARM_TIME,
+                    Intent intent = new Intent(context, AlarmRingBroadcastReceiver.class);
+                    intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
+                    intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, false);
+                    intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME,
                             alarm.weekDayFlags == Weekday.NO_REPEAT ? alarm.timeFlags : 0);
-                    context.startActivity(intent);
+                    context.sendBroadcast(intent);
                 }
             });
             return rowView;
@@ -182,6 +190,9 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
 
         AppCompatTextView prayerName = rowView.findViewById(R.id.prayerName);
         prayerName.setText(Utils.getPrayerNames(context, alarm));
+
+        AppCompatTextView timeOffset = rowView.findViewById(R.id.timeOffset);
+        timeOffset.setText(Utils.getTimeOffsetDescription(context, alarm.timeAlarmDiffMinutes));
 
         AppCompatTextView alarmDays = rowView.findViewById(R.id.alarmDays);
         alarmDays.setText(Utils.getAlarmDays(context, alarm));
@@ -343,10 +354,10 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                 onDuplicateAlarm();
                 break;
             case R.id.mnuPreviewAlarm:
-                Intent intent = new Intent(getContext(), ShowAlarmActivity.class);
-                intent.putExtra(ShowAlarmActivity.ARG_ALARM, mClickedAlarm);
-                intent.putExtra(ShowAlarmActivity.ARG_IS_PREVIEW, true);
-                getContext().startActivity(intent);
+                Intent intent = new Intent(getContext(), AlarmRingBroadcastReceiver.class);
+                intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, mClickedAlarm);
+                intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, true);
+                getContext().sendBroadcast(intent);
                 break;
             case R.id.mnuSkipNextAlarm:
                 onSkipNextAlarm();

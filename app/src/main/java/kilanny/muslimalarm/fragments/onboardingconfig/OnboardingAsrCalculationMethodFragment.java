@@ -1,11 +1,14 @@
 package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
@@ -28,8 +31,8 @@ public class OnboardingAsrCalculationMethodFragment  extends OnboardingBaseFragm
 
     private OnOnboardingOptionSelectedListener mListener;
 
-    TextView mShafii;
-    TextView mHanfi;
+    private TextView mShafii;
+    private TextView mHanfi;
 
     /**
      * Use this factory method to create a new instance of
@@ -86,7 +89,14 @@ public class OnboardingAsrCalculationMethodFragment  extends OnboardingBaseFragm
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onDestroyView() {
+        mHanfi = null;
+        mShafii = null;
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         try {
             mListener = (OnOnboardingOptionSelectedListener) activity;

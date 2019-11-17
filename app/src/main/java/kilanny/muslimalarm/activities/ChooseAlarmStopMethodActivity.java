@@ -84,7 +84,7 @@ public class ChooseAlarmStopMethodActivity extends AppCompatActivity
                 .replace(R.id.topRightLayout, fragments[1])
                 .replace(R.id.bottomLeftLayout, fragments[3])
                 .replace(R.id.bottomRightLayout, fragments[2])
-                .commit();
+                .commitAllowingStateLoss();
         setTitle(R.string.alarm_stop_method);
 
         findViewById(R.id.btnOk).setOnClickListener(new View.OnClickListener() {

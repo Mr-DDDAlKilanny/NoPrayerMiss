@@ -1,5 +1,6 @@
 package kilanny.muslimalarm.util;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -30,8 +31,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import kilanny.muslimalarm.AlarmRingBroadcastReceiver;
 import kilanny.muslimalarm.R;
-import kilanny.muslimalarm.activities.ShowAlarmActivity;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.AppSettings;
@@ -99,6 +100,38 @@ public class Utils {
             return context.getString(R.string.afterNDaysAndNHours,
                     String.format(Locale.ENGLISH, "%d", days),
                     String.format(Locale.ENGLISH, "%d", hours));
+        }
+    }
+
+    public static void displayShareActivity(Context context) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                context.getString(R.string.share_msg)
+                        + " https://play.google.com/store/apps/details?id=kilanny.muslimalarm");
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
+    }
+
+    public static String getTimeOffsetDescription(@NonNull Context context, int mins) {
+        if (mins == 0)
+            return context.getString(R.string.just_on_time);
+        String s = context.getString(mins > 0 ? R.string.after_time_by : R.string.before_time_by);
+        mins = Math.abs(mins);
+        if (mins < 60) {
+            return s + " " + context.getString(R.string.nMinutes,
+                    String.format(Locale.ENGLISH, "%d", mins));
+        } else {
+            int hours = mins / 60;
+            mins %= 60;
+            if (mins == 0) {
+                return s + " " + context.getString(R.string.nHours,
+                        String.format(Locale.ENGLISH, "%d", hours));
+            } else {
+                return s + " " + context.getString(R.string.nHoursAndNMinutes,
+                        String.format(Locale.ENGLISH, "%d", hours),
+                        String.format(Locale.ENGLISH, "%d", mins));
+            }
         }
     }
 
@@ -330,12 +363,14 @@ public class Utils {
         }, context);
     }
 
-    private static PendingIntent getAlarmPendingIntent(Context context, Alarm alarm) {
+    private static PendingIntent getAlarmPendingIntent(Context context, Alarm alarm, int timeFlag) {
         Intent intentToFire = new Intent();
-        intentToFire.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intentToFire.setClass(context, ShowAlarmActivity.class);
-        intentToFire.putExtra(ShowAlarmActivity.ARG_ALARM, alarm);
-        return PendingIntent.getActivity(context, 0,
+        //intentToFire.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+        //        | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intentToFire.setClass(context, AlarmRingBroadcastReceiver.class);
+        intentToFire.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
+        intentToFire.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME, timeFlag);
+        return PendingIntent.getBroadcast(context, 0,
                 intentToFire, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
@@ -350,11 +385,12 @@ public class Utils {
         }
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        int timeFlag;
         try {
             String json;
             if ((json = pref.getString("nextAlarmJson", null)) != null) {
                 Alarm oldAlarm = Alarm.fromJson(json);
-                alarmManager.cancel(getAlarmPendingIntent(context, oldAlarm));
+                alarmManager.cancel(getAlarmPendingIntent(context, oldAlarm, pref.getInt("nextAlarmTime", 0)));
             }
             if (nearestAlarm == null) {
                 pref.edit()
@@ -364,7 +400,7 @@ public class Utils {
                 Log.v("schNext", "No alarm enabled; skipping.");
                 return;
             }
-            int timeFlag = !nearestAlarm.isSnoozed() ?
+            timeFlag = !nearestAlarm.isSnoozed() ?
                     nearestAlarm.timeFlag : pref.getInt("nextAlarmTime", 0);
             pref.edit()
                     .putString("nextAlarmJson", nearestAlarm.alarm.toJson())
@@ -374,12 +410,27 @@ public class Utils {
             e.printStackTrace();
             if (nearestAlarm == null) {
                 Log.v("schNext", "No alarm enabled; skipping.");
-                return;
             }
+            return;
         }
         AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager,
                 AlarmManager.RTC_WAKEUP, nearestAlarm.date.getTime(),
-                getAlarmPendingIntent(context, nearestAlarm.alarm));
+                getAlarmPendingIntent(context, nearestAlarm.alarm, timeFlag));
         Log.v("schNext", "Scheduled next alarm at " + nearestAlarm.date);
+    }
+
+    /**
+     * http://stackoverflow.com/a/5921190/7429464
+     */
+    public static boolean isServiceRunning(Context context, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service :
+                manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

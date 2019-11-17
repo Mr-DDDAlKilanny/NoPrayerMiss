@@ -85,12 +85,12 @@ public class SelectSoundVibrationLabelEditAlarmFragment extends EditAlarmFragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_select_sound_vibration_label_edit_alarm, container, false);
+        mView = inflater.inflate(R.layout.fragment_select_sound_vibration_label_edit_alarm, container,
+                false);
         IndicatorSeekBar soundSeekBar = mView.findViewById(R.id.seekBarSoundLevel);
-        int progress = mAlarm.soundLevel;
-        if (progress < 1)
-            progress = 80;
-        soundSeekBar.setProgress(progress);
+        if (mAlarm.soundLevel < 1)
+            mAlarm.soundLevel = 80;
+        soundSeekBar.setProgress(mAlarm.soundLevel);
         soundSeekBar.setOnSeekChangeListener(this);
 
         SwitchCompat switchCompat = mView.findViewById(R.id.switchVibration);

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:drawable/alert_dark_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:src="@mipmap/ic_launcher"
+        android:padding="4dip"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/alarm_is_running_tab_to_dismiss"
+            style="@android:style/TextAppearance.StatusBar.EventContent.Title"
+            android:textColor="@android:color/white"
+            android:focusable="true"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/alarmTime"
+            android:text="Fajr"
+            android:textColor="@android:color/white"
+            style="@android:style/TextAppearance.StatusBar.EventContent"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/alarmLabel"
+            android:text="Hello World"
+            style="@android:style/TextAppearance.StatusBar.EventContent"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:maxLines="2"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

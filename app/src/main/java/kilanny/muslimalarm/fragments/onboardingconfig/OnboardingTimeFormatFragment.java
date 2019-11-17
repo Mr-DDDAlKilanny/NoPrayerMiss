@@ -27,8 +27,8 @@ public class OnboardingTimeFormatFragment extends OnboardingBaseFragment {
 
     protected OnOnboardingOptionSelectedListener mListener;
 
-    TextView m12h;
-    TextView m24h;
+    private TextView m12h;
+    private TextView m24h;
 
     /**
      * Use this factory method to create a new instance of
@@ -55,6 +55,13 @@ public class OnboardingTimeFormatFragment extends OnboardingBaseFragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        m12h = null;
+        m24h = null;
+        super.onDestroyView();
     }
 
     @Override

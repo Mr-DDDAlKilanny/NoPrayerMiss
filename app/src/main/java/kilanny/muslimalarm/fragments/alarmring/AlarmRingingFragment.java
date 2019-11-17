@@ -2,8 +2,10 @@ package kilanny.muslimalarm.fragments.alarmring;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -30,8 +32,10 @@ import kilanny.muslimalarm.R;
 public class AlarmRingingFragment extends ShowAlarmFragment {
 
     private static final String ARG_SHOW_SNOOZE = "showSnooze";
+    private static final String ARG_ALARM_LABEL = "alarmLabel";
 
     private boolean mShowSnooze;
+    private String mAlarmLabel;
     private AlarmRingingFragment.FragmentInteractionListener mListener;
     private Timer mUpdateTimeTimer;
 
@@ -45,10 +49,11 @@ public class AlarmRingingFragment extends ShowAlarmFragment {
      *
      * @return A new instance of fragment AlarmRingingFragment.
      */
-    public static AlarmRingingFragment newInstance(boolean showSnooze) {
+    public static AlarmRingingFragment newInstance(boolean showSnooze, String alarmLabel) {
         AlarmRingingFragment fragment = new AlarmRingingFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean(ARG_SHOW_SNOOZE, showSnooze);
+        bundle.putString(ARG_ALARM_LABEL, alarmLabel);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -58,11 +63,12 @@ public class AlarmRingingFragment extends ShowAlarmFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mShowSnooze = getArguments().getBoolean(ARG_SHOW_SNOOZE);
+            mAlarmLabel = getArguments().getString(ARG_ALARM_LABEL);
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         try {
             mListener = (AlarmRingingFragment.FragmentInteractionListener) activity;
@@ -88,6 +94,8 @@ public class AlarmRingingFragment extends ShowAlarmFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_alarm_ringing, container, false);
         final TextView txtTime = view.findViewById(R.id.txtTime);
+        TextView txtAlarmLabel = view.findViewById(R.id.txtAlarmLabel);
+        txtAlarmLabel.setText(mAlarmLabel);
         final DateFormat dateFormat = new SimpleDateFormat("HH : mm", Locale.ENGLISH);
         txtTime.setText(dateFormat.format(new Date()));
         final Handler handler = new Handler(view.getContext().getMainLooper());
@@ -106,7 +114,8 @@ public class AlarmRingingFragment extends ShowAlarmFragment {
         view.findViewById(R.id.btnExit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mUpdateTimeTimer.cancel();
+                if (mUpdateTimeTimer != null)
+                    mUpdateTimeTimer.cancel();
                 mUpdateTimeTimer = null;
                 mListener.onExitClick();
             }

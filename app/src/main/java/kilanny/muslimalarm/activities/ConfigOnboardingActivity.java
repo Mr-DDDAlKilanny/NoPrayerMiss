@@ -22,6 +22,7 @@ import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingAsrCalculationMe
 import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingCalculationMethodFragment;
 import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingLocationFragment;
 import kilanny.muslimalarm.fragments.onboardingconfig.OnboardingTimeFormatFragment;
+import kilanny.muslimalarm.util.AnalyticsTrackers;
 import kilanny.muslimalarm.util.Utils;
 
 public class ConfigOnboardingActivity extends AppCompatActivity
@@ -93,6 +94,7 @@ public class ConfigOnboardingActivity extends AppCompatActivity
 
     @Override
     public void onOptionSelected() {
+        AnalyticsTrackers.getInstance(this).logSetup(mPager.getCurrentItem());
         if (mPager.getCurrentItem() + 1 == mPagerAdapter.getCount()) {
             AppSettings.getInstance(this).set(AppSettings.Key.HAS_DEFAULT_SET, true);
             Intent data = new Intent();

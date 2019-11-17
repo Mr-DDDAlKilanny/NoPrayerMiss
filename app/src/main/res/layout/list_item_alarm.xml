@@ -18,13 +18,18 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/prayerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/timeOffset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

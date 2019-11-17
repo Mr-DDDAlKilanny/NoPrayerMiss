@@ -2,6 +2,7 @@ package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -96,7 +97,7 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
     }
 
     @Override
-    public void onAttach(Context activity) {
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         try {
             mListener = (OnOnboardingOptionSelectedListener) activity;
@@ -110,6 +111,12 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        mView = null;
+        super.onDestroyView();
     }
 
     @Override
@@ -178,10 +185,9 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
                         dialogInterface.dismiss();
                         Location location = locationManager.getLastKnownLocation(
                                 LocationManager.GPS_PROVIDER);
-                        if (location == null) {
+                        if (location == null)
                             Toast.makeText(getContext(), getContext().getString(R.string.gps_no_last_location), Toast.LENGTH_LONG).show();
-                            findUsingGps(locationManager);
-                        } else
+                        else
                             setLocation(location.getLongitude(), location.getLatitude());
                     }
                 })
@@ -190,18 +196,16 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        findUsingGps(locationManager);
+                        if (getContext() == null)
+                            return;
+                        ProgressBar progressBar = mView.findViewById(R.id.progress);
+                        progressBar.setVisibility(View.VISIBLE);
+                        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,
+                                OnboardingLocationFragment.this, getContext().getMainLooper());
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-    }
-
-    private void findUsingGps(LocationManager locationManager) {
-        ProgressBar progressBar = mView.findViewById(R.id.progress);
-        progressBar.setVisibility(View.VISIBLE);
-        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,
-                OnboardingLocationFragment.this, getContext().getMainLooper());
     }
 
     private void btnNetwork() {
@@ -236,7 +240,8 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
 
     @Override
     public void onLocationChanged(Location location) {
-        setLocation(location.getLongitude(), location.getLatitude());
+        if (isVisible())
+            setLocation(location.getLongitude(), location.getLatitude());
     }
 
     @Override
@@ -253,9 +258,11 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
 
     @Override
     public void onPermissionGranted() {
-        if (requestLocation == 0)
-            btnGps();
-        else if (requestLocation == 1)
-            btnNetwork();
+        if (isVisible()) {
+            if (requestLocation == 0)
+                btnGps();
+            else if (requestLocation == 1)
+                btnNetwork();
+        }
     }
 }
