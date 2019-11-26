@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.alarmring.BarcodeAlarmFragment">
 
+    <ImageView
+        android:layout_margin="@dimen/space"
+        android:id="@+id/imgIsSilent"
+        android:src="@android:drawable/ic_lock_silent_mode"
+        android:scaleType="centerCrop"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@+id/scannerView"
         android:layout_width="match_parent"

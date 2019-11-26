@@ -37,6 +37,7 @@ import kilanny.muslimalarm.activities.ShowAlarmActivity;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AlarmDao;
 import kilanny.muslimalarm.data.AppDb;
+import kilanny.muslimalarm.data.Tune;
 import kilanny.muslimalarm.data.Weekday;
 import kilanny.muslimalarm.util.AnalyticsTrackers;
 import kilanny.muslimalarm.util.Utils;
@@ -64,6 +65,7 @@ public class AlarmRingingService extends Service {
     private Date startDate;
     private Handler mHandler;
     private int mCountDownProgress;
+    private int mCountAttemptDismiss = 0;
     public Function<Integer, Void> onCountDownChanged;
 
     public AlarmRingingService() {
@@ -82,8 +84,10 @@ public class AlarmRingingService extends Service {
     }
 
     private Notification initNotification(String alarmLabel, String channelId) {
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                getStartActivityIntent(), 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                1,
+                getStartActivityIntent(),
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationBuilder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -154,7 +158,8 @@ public class AlarmRingingService extends Service {
         } catch (SecurityException ex) {
             ex.printStackTrace();
         }
-        mediaPlayer = MediaPlayer.create(this, mAlarm.alarmTune);
+        mediaPlayer = MediaPlayer.create(this,
+                Tune.findTuneOrDefault(mAlarm.alarmTune, 1).rawResId);
         mediaPlayer.setLooping(true);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         startRinging();
@@ -192,9 +197,12 @@ public class AlarmRingingService extends Service {
         mCountDownProgress = MAX_SECONDS_ATTEMPT;
     }
 
-    public void onAttemptingDismissAlarm() {
-        stopRinging();
-        cancelAttemptingDismissAlarm();
+    public boolean onAttemptingDismissAlarm() {
+        ++mCountAttemptDismiss;
+        boolean silent = mCountAttemptDismiss <= 3;
+        if (silent)
+            stopRinging();
+        cancelAttemptingDismissAlarm(false);
         mDismissTimer = new Timer();
         resetCountDown();
         mDismissTimer.scheduleAtFixedRate(new TimerTask() {
@@ -215,13 +223,15 @@ public class AlarmRingingService extends Service {
                     onCountDownChanged.apply(mCountDownProgress);
             }
         }, 1000, 1000);
+        return silent;
     }
 
-    public void cancelAttemptingDismissAlarm() {
+    public void cancelAttemptingDismissAlarm(boolean shouldStartRinging) {
         if (mDismissTimer != null) {
             mDismissTimer.cancel();
             mDismissTimer = null;
-            startRinging();
+            if (shouldStartRinging)
+                startRinging();
         }
     }
 

@@ -8,8 +8,8 @@ android {
         applicationId "kilanny.muslimalarm"
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.1"
+        versionCode 8
+        versionName "1.112"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {

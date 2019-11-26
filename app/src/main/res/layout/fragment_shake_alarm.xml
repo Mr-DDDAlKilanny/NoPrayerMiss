@@ -5,9 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".fragments.alarmring.ShakeAlarmFragment">
 
+    <ImageView
+        android:layout_margin="@dimen/space"
+        android:id="@+id/imgIsSilent"
+        android:background="@android:color/holo_red_dark"
+        android:src="@android:drawable/ic_lock_silent_mode_off"
+        android:scaleType="centerCrop"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/imgIsSilent"
         android:layout_centerHorizontal="true"
         android:text="@string/shake_the_device_to_stop_alarm"
         android:textSize="25sp"

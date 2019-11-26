@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -29,8 +30,10 @@ public class BarcodeAlarmFragment extends ShowAlarmFragment
         implements ZXingScannerView.ResultHandler {
 
     private static final String ARG_BARCODE = "barcode";
+    private static final String ARG_IS_SILENT = "isSilent";
 
     private String mBarcode;
+    private boolean mIsSilent;
     private ZXingScannerView mScannerView;
     private boolean started = false;
     private boolean mFlash = false;
@@ -49,10 +52,11 @@ public class BarcodeAlarmFragment extends ShowAlarmFragment
      *
      * @return A new instance of fragment BarcodeAlarmFragment.
      */
-    public static BarcodeAlarmFragment newInstance(String barcode) {
+    public static BarcodeAlarmFragment newInstance(String barcode, boolean isSilent) {
         BarcodeAlarmFragment fragment = new BarcodeAlarmFragment();
         Bundle args = new Bundle();
         args.putString(ARG_BARCODE, barcode);
+        args.putBoolean(ARG_IS_SILENT, isSilent);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,6 +67,7 @@ public class BarcodeAlarmFragment extends ShowAlarmFragment
         mNumberOfCameras = Camera.getNumberOfCameras();
         if (getArguments() != null) {
             mBarcode = getArguments().getString(ARG_BARCODE);
+            mIsSilent = getArguments().getBoolean(ARG_IS_SILENT);
         }
     }
 
@@ -71,6 +76,11 @@ public class BarcodeAlarmFragment extends ShowAlarmFragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_barcode_alarm, container, false);
+        ImageView imageView = root.findViewById(R.id.imgIsSilent);
+        imageView.setImageResource(mIsSilent ? android.R.drawable.ic_lock_silent_mode
+                : android.R.drawable.ic_lock_silent_mode_off);
+        imageView.setBackgroundResource(mIsSilent ? android.R.color.holo_green_light :
+                android.R.color.holo_red_dark);
         mScannerView = root.findViewById(R.id.scannerView);
         mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
         root.findViewById(R.id.toggle_camera_fab).setOnClickListener(new View.OnClickListener() {

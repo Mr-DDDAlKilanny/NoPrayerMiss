@@ -226,7 +226,7 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                 MenuItem itemSkip = menu.findItem(R.id.mnuSkipNextAlarm);
                 if (mClickedAlarm.enabled) {
                     itemSkip.setEnabled(true);
-                    if (mClickedAlarm.skippedTimeFlag == 0
+                    if (mClickedAlarm.skippedAlarmTime == null
                             || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
                         itemSkip.setTitle(R.string.skip_next_alarm);
                     } else {

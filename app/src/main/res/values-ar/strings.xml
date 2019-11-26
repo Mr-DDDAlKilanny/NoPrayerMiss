@@ -295,4 +295,6 @@
     <string name="battery_msg">قد لا يرن المنبه في الموعد بسبب إعدادات الطاقة في بعض الأجهزة. الرجاء التأكد من إعدادات التطبيق في بند البطارية أو الطاقة، وإلغاء أي قيود على التطبيق وإلا قد لا يرن المنبه!\nإذا كنت قد قمت بالفعل بالتأكد مسبقا، فاختر لا تسألني ثانية</string>
     <string name="alarm_is_running_tab_to_dismiss">المنبه قيد العمل! المس لإلغاءه</string>
     <string name="open_settings">فتح الإعدادات</string>
+    <string name="pls_start_from_icon">الرجاء فتح التطبيق من الأيقونة في الشاشة الرئيسية</string>
+    <string name="cannot_start_new_alarm_old_running">لا يمكن بدء منبه جديد لأنه يوجد منبه سابق قيد العمل حاليا. تأكد من شريط التنبيهات في أعلى الشاشة</string>
 </resources>

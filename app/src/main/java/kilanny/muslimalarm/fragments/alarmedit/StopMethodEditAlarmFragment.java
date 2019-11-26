@@ -20,10 +20,9 @@ import androidx.fragment.app.FragmentManager;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
+import kilanny.muslimalarm.AlarmRingBroadcastReceiver;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.activities.BarcodeStopConfigActivity;
-import kilanny.muslimalarm.activities.ChooseAlarmStopMethodActivity;
-import kilanny.muslimalarm.activities.ShowAlarmActivity;
 import kilanny.muslimalarm.activities.TwoNumbersConfigActivity;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.Tune;
@@ -40,21 +39,17 @@ import kilanny.muslimalarm.fragments.AlarmStopMethodFragment;
 public class StopMethodEditAlarmFragment extends EditAlarmFragment
         implements AlarmStopMethodFragment.OnFragmentInteractionListener {
 
-    private static final int REQUEST_CODE_PREVIEW_ALARM = 0;
     private static final int REQUEST_CODE_CONFIG_SHAKE = 1;
     private static final int REQUEST_CODE_CONFIG_MATH = 2;
     private static final int REQUEST_CODE_CONFIG_BARCODE = 3;
 
     private static final String STATE_ALARM_TYPE = "beforePreviewDismissAlarmType";
     private static final String STATE_ALARM_TUNE = "beforePreviewDismissTune";
-    private static final String STATE_ALARM_SOUND_LEVE = "beforePreviewDismissSoundLevel";
+    private static final String STATE_ALARM_SOUND_LEVEL = "beforePreviewDismissSoundLevel";
     private static final String STATE_IS_PREVIEW = "mIsPreview";
 
     private AlarmStopMethodFragment[] fragments;
     private boolean mIsPreview = false;
-    private int beforePreviewDismissAlarmType;
-    private int beforePreviewDismissTune;
-    private int beforePreviewDismissSoundLevel;
 
     public StopMethodEditAlarmFragment() {
         // Required empty public constructor
@@ -82,17 +77,12 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
         }
         if (savedInstanceState != null) {
             mIsPreview = savedInstanceState.getBoolean(STATE_IS_PREVIEW);
-            beforePreviewDismissAlarmType = savedInstanceState.getInt(STATE_ALARM_TYPE);
-            beforePreviewDismissTune = savedInstanceState.getInt(STATE_ALARM_TUNE);
-            beforePreviewDismissSoundLevel = savedInstanceState.getInt(STATE_ALARM_SOUND_LEVE);
+            mAlarm = savedInstanceState.getParcelable(ARG_ALARM);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(STATE_ALARM_TYPE, beforePreviewDismissAlarmType);
-        outState.putInt(STATE_ALARM_TUNE, beforePreviewDismissTune);
-        outState.putInt(STATE_ALARM_SOUND_LEVE, beforePreviewDismissSoundLevel);
         outState.putBoolean(STATE_IS_PREVIEW, mIsPreview);
         outState.putParcelable(ARG_ALARM, mAlarm);
         super.onSaveInstanceState(outState);
@@ -178,18 +168,6 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_CODE_PREVIEW_ALARM:
-                mAlarm.dismissAlarmType = beforePreviewDismissAlarmType;
-                mAlarm.alarmTune = beforePreviewDismissTune;
-                mAlarm.soundLevel = beforePreviewDismissSoundLevel;
-                if (mAlarm.dismissAlarmType == Alarm.DISMISS_ALARM_BARCODE
-                        || mAlarm.dismissAlarmType == Alarm.DISMISS_ALARM_DEFAULT) {
-                    mAlarm.dismissAlarmTypeData1 = null;
-                    mAlarm.dismissAlarmTypeData2 = null;
-                }
-                if (mAlarm.dismissAlarmType != Alarm.DISMISS_ALARM_BARCODE)
-                    mAlarm.dismissAlarmBarcodeId = null;
-                break;
             case REQUEST_CODE_CONFIG_SHAKE:
                 if (resultCode == TwoNumbersConfigActivity.RESULT_CODE_OK && data != null) {
                     mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_SHAKE;
@@ -222,10 +200,11 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
                     if (mIsPreview && getContext() != null) {
                         // show preview using the selected barcode
                         // then restore values back after preview
-                        Intent intent = new Intent(getContext(), ShowAlarmActivity.class);
-                        intent.putExtra(ShowAlarmActivity.ARG_IS_PREVIEW, true);
-                        intent.putExtra(ShowAlarmActivity.ARG_ALARM, mAlarm);
-                        startActivityForResult(intent, REQUEST_CODE_PREVIEW_ALARM);
+                        Intent intent = new Intent(getContext(), AlarmRingBroadcastReceiver.class);
+                        intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, true);
+                        intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, mAlarm);
+                        intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME, 0);
+                        getContext().sendBroadcast(intent);
                     } else {
                         for (int i = 0; i < fragments.length; ++i)
                             fragments[i].setSelected(i == 3);
@@ -240,27 +219,25 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
     public void onFragmentPreviewClick(AlarmStopMethodFragment sender) {
         final Context context = getContext();
         if (context == null) return;
-        beforePreviewDismissAlarmType = mAlarm.dismissAlarmType;
-        beforePreviewDismissTune = mAlarm.alarmTune;
-        beforePreviewDismissSoundLevel = mAlarm.soundLevel;
-        if (mAlarm.alarmTune == 0)
-            mAlarm.alarmTune = Tune.getTunes()[0].rawResId;
-        if (mAlarm.soundLevel == 0)
-            mAlarm.soundLevel = 75;
+        final Alarm alarm = mAlarm.copy();
+        if (alarm.alarmTune == 0)
+            alarm.alarmTune = Tune.getTunes()[0].id;
+        if (alarm.soundLevel == 0)
+            alarm.soundLevel = 75;
         mIsPreview = true;
         switch (sender.getImageDrawableId()) {
             case R.drawable.alarm:
-                mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_DEFAULT;
+                alarm.dismissAlarmType = Alarm.DISMISS_ALARM_DEFAULT;
                 break;
             case R.drawable.shake:
                 if (!isShakeAvailable(context))
                     return;
-                mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_SHAKE;
-                mAlarm.dismissAlarmTypeData1 = 15;
-                mAlarm.dismissAlarmTypeData2 = 2;
+                alarm.dismissAlarmType = Alarm.DISMISS_ALARM_SHAKE;
+                alarm.dismissAlarmTypeData1 = 15;
+                alarm.dismissAlarmTypeData2 = 2;
                 break;
             case R.drawable.barcode:
-                if (mAlarm.dismissAlarmType != Alarm.DISMISS_ALARM_BARCODE) {
+                if (alarm.dismissAlarmType != Alarm.DISMISS_ALARM_BARCODE) {
                     new AlertDialog.Builder(context)
                             .setTitle(getString(R.string.preview_alarm))
                             .setMessage(getString(R.string.to_preview_barcode_use))
@@ -271,9 +248,9 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
                                 public void onDismiss(DialogInterface dialogInterface) {
                                     Intent intent = new Intent(context,
                                             BarcodeStopConfigActivity.class);
-                                    if (mAlarm.dismissAlarmType == Alarm.DISMISS_ALARM_BARCODE)
+                                    if (alarm.dismissAlarmType == Alarm.DISMISS_ALARM_BARCODE)
                                         intent.putExtra(BarcodeStopConfigActivity.ARG_SELECTED_BARCODE_ID,
-                                                mAlarm.dismissAlarmBarcodeId.intValue());
+                                                alarm.dismissAlarmBarcodeId.intValue());
                                     startActivityForResult(intent, REQUEST_CODE_CONFIG_BARCODE);
                                 }
                             })
@@ -282,15 +259,16 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
                 }
                 break;
             case R.drawable.math:
-                mAlarm.dismissAlarmType = Alarm.DISMISS_ALARM_MATH;
-                mAlarm.dismissAlarmTypeData1 = 3;
-                mAlarm.dismissAlarmTypeData2 = 1;
+                alarm.dismissAlarmType = Alarm.DISMISS_ALARM_MATH;
+                alarm.dismissAlarmTypeData1 = 3;
+                alarm.dismissAlarmTypeData2 = 1;
                 break;
         }
-        Intent intent = new Intent(context, ShowAlarmActivity.class);
-        intent.putExtra(ShowAlarmActivity.ARG_IS_PREVIEW, true);
-        intent.putExtra(ShowAlarmActivity.ARG_ALARM, mAlarm);
-        startActivityForResult(intent, REQUEST_CODE_PREVIEW_ALARM);
+        Intent intent = new Intent(getContext(), AlarmRingBroadcastReceiver.class);
+        intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, true);
+        intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
+        intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME, 0);
+        getContext().sendBroadcast(intent);
     }
 
     @Override

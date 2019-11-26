@@ -446,27 +446,13 @@ public class PrayTime {
 
     // convert double hours to 24h format
     public String floatToTime24(double time) {
-
-        String result;
-
         if (Double.isNaN(time)) {
             return InvalidTime;
         }
-
         time = fixhour(time + 0.5 / 60.0); // add 0.5 minutes to round
         int hours = (int) Math.floor(time);
         double minutes = Math.floor((time - hours) * 60.0);
-
-        if ((hours >= 0 && hours <= 9) && (minutes >= 0 && minutes <= 9)) {
-            result = hours + ":0" + Math.round(minutes);
-        } else if ((hours >= 0 && hours <= 9)) {
-            result = hours + ":" + Math.round(minutes);
-        } else if ((minutes >= 0 && minutes <= 9)) {
-            result = hours + ":0" + Math.round(minutes);
-        } else {
-            result = hours + ":" + Math.round(minutes);
-        }
-        return result;
+        return String.format(Locale.ENGLISH, "%02d:%02d", hours, (int) Math.round(minutes));
     }
 
     // convert double hours to 12h format

@@ -357,4 +357,6 @@
     <string name="battery_opts">Battery Optimizations</string>
     <string name="battery_msg">On some devices, android prevents apps from running due to battery optimizations. Please make sure you disable optimizations for this app or you may not receive alarms!\nIf you checked previously the Settings, please choose Do Not Ask Again</string>
     <string name="open_settings">Open Settings</string>
+    <string name="pls_start_from_icon">Please start app from its icon</string>
+    <string name="cannot_start_new_alarm_old_running">Cannot start new alarm. An old alarm in running (check notification bar)</string>
 </resources>

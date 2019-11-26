@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.Locale;
 
@@ -31,12 +32,13 @@ public class ShakeAlarmFragment extends ShowAlarmFragment implements SensorEvent
 
     private static final String ARG_SHAKE_COUNT = "shakeCount";
     private static final String ARG_SHAKE_LEVEL = "shakeLevel";
-
+    private static final String ARG_IS_SILENT = "isSilent";
 
     private SensorManager mSensorManager;
 
     private AppCompatTextView mTxtShakedCount;
     private int mShakeCount, mShakedCount;
+    private boolean mIsSilent;
     private int mShakeThreshold = 800;
     private long lastUpdate;
     private float last_x, last_y, last_z;
@@ -54,11 +56,12 @@ public class ShakeAlarmFragment extends ShowAlarmFragment implements SensorEvent
      *
      * @return A new instance of fragment ShakeAlarmFragment.
      */
-    public static ShakeAlarmFragment newInstance(int shakeCount, int shakeLevel) {
+    public static ShakeAlarmFragment newInstance(int shakeCount, int shakeLevel, boolean isSilent) {
         ShakeAlarmFragment fragment = new ShakeAlarmFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SHAKE_COUNT, shakeCount);
         args.putInt(ARG_SHAKE_LEVEL, shakeLevel);
+        args.putBoolean(ARG_IS_SILENT, isSilent);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,6 +73,7 @@ public class ShakeAlarmFragment extends ShowAlarmFragment implements SensorEvent
             mShakeCount = getArguments().getInt(ARG_SHAKE_COUNT);
             int shakeLevel = getArguments().getInt(ARG_SHAKE_LEVEL);
             mShakeThreshold = 800 + (shakeLevel - 1) * 100;
+            mIsSilent = getArguments().getBoolean(ARG_IS_SILENT);
         }
     }
 
@@ -78,6 +82,11 @@ public class ShakeAlarmFragment extends ShowAlarmFragment implements SensorEvent
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shake_alarm, container, false);
+        ImageView imageView = view.findViewById(R.id.imgIsSilent);
+        imageView.setImageResource(mIsSilent ? android.R.drawable.ic_lock_silent_mode
+                : android.R.drawable.ic_lock_silent_mode_off);
+        imageView.setBackgroundResource(mIsSilent ? android.R.color.holo_green_light :
+                android.R.color.holo_red_dark);
         AppCompatTextView txtTotalShakes = view.findViewById(R.id.txtTotalShakes);
         txtTotalShakes.setText(String.format(Locale.ENGLISH, "/ %d", mShakeCount));
         mTxtShakedCount = view.findViewById(R.id.txtShakedCount);

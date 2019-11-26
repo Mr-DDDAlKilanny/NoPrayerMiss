@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.services.AlarmRingingService;
@@ -30,7 +31,9 @@ public class AlarmRingBroadcastReceiver extends BroadcastReceiver {
                 context.startForegroundService(intent);
             else
                 context.startService(intent);
-        } else
+        } else {
             Log.d("onReceive", "Ignored some request to start service, since it is running");
+            Toast.makeText(context, R.string.cannot_start_new_alarm_old_running, Toast.LENGTH_LONG).show();
+        }
     }
 }

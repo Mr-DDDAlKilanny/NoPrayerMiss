@@ -14,7 +14,7 @@
         <ImageView
             android:layout_margin="@dimen/space"
             android:id="@+id/imgIsSilent"
-            android:src="@drawable/alarm"
+            android:src="@android:drawable/ic_lock_silent_mode"
             android:scaleType="centerCrop"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"

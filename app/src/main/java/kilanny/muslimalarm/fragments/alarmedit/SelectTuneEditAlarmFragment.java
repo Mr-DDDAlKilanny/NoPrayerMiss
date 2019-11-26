@@ -67,8 +67,15 @@ public class SelectTuneEditAlarmFragment extends EditAlarmFragment {
         Tune[] tunes = Tune.getTunes();
         mAdapter = new SelectTuneAdapter(root.getContext(), tunes);
         listView.setAdapter(mAdapter);
+        boolean found = false;
         for (Tune tune : tunes)
             if (tune.rawResId == mAlarm.alarmTune) {
+                mAdapter.setSelectedTune(tune);
+                found = true;
+                break;
+            }
+        if (!found) for (Tune tune : tunes)
+            if (tune.id == mAlarm.alarmTune) {
                 mAdapter.setSelectedTune(tune);
                 break;
             }
@@ -78,7 +85,7 @@ public class SelectTuneEditAlarmFragment extends EditAlarmFragment {
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
         SelectTuneAdapter.stopPlayback();
-        mAlarm.alarmTune = mAdapter.getSelectedTune().rawResId;
+        mAlarm.alarmTune = mAdapter.getSelectedTune().id;
         mListener.onNext(mAlarm);
         callback.goToNextStep();
     }

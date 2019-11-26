@@ -136,8 +136,12 @@ public class Utils {
     }
 
     public static int timeAsMins(String time) {
-        String s[] = time.split(":");
-        return Integer.parseInt(s[0]) * 60 + Integer.parseInt(s[1]);
+        try {
+            String s[] = time.split(":");
+            return Integer.parseInt(s[0]) * 60 + Integer.parseInt(s[1]);
+        } catch (NumberFormatException ex) { //TODO: calculated pray time can be NaN
+            return -1;
+        }
     }
 
     public static NextAlarmInfo getNextAlarmDate(Context context, Alarm alarm) {
@@ -177,9 +181,7 @@ public class Utils {
                         settings.getLatFor(0), settings.getLngFor(0),
                         PrayTime.TIME_24, new DateTime(from).plusDays(o).toDate());
                 for (int i = 0; i < timeNames.length; ++i) {
-                    String[] tmp = times.get(timeNames[i]).split(":");
-                    int t = Integer.parseInt(tmp[0]) * 60 + Integer.parseInt(tmp[1])
-                            + alarm.timeAlarmDiffMinutes;
+                    int t = timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes;
                     int f = 1 << (5 - i);
                     if ((alarm.oneTimeLeftAlarmsTimeFlags & f) != 0 && (o > 0 || t > ct))
                         return new NextAlarmInfo(alarm,
@@ -365,12 +367,11 @@ public class Utils {
 
     private static PendingIntent getAlarmPendingIntent(Context context, Alarm alarm, int timeFlag) {
         Intent intentToFire = new Intent();
-        //intentToFire.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-        //        | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         intentToFire.setClass(context, AlarmRingBroadcastReceiver.class);
+        //TODO: putExtra here not delivered to receiver !?
         intentToFire.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
         intentToFire.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME, timeFlag);
-        return PendingIntent.getBroadcast(context, 0,
+        return PendingIntent.getBroadcast(context, 1,
                 intentToFire, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

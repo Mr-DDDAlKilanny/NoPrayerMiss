@@ -3,6 +3,7 @@ package kilanny.muslimalarm.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.stepstone.stepper.StepperLayout;
@@ -28,6 +29,7 @@ public class EditAlarmOnboardingActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_alarm_onboarding);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Alarm alarm = getIntent().getParcelableExtra(ARG_ALARM);
         if (alarm == null) {

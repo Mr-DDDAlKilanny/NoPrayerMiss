@@ -30,7 +30,7 @@
         <receiver
             android:name=".AlarmRingBroadcastReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <service
             android:name=".services.AlarmRingingService"
@@ -57,8 +57,6 @@
             android:name=".activities.BarcodeStopConfigActivity"
             android:label="@string/title_activity_barcode_stop_config"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ChooseAlarmStopMethodActivity" />
-        <activity android:name=".activities.EditAlarmActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation"
@@ -92,6 +90,8 @@
         </activity>
         <activity
             android:name=".activities.ConfigOnboardingActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/prayer_time_config"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.CaptureBarcodeActivity" />

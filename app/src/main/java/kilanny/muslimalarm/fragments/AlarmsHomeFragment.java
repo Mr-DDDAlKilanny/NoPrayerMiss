@@ -33,7 +33,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import kilanny.muslimalarm.R;
-import kilanny.muslimalarm.activities.EditAlarmActivity;
 import kilanny.muslimalarm.adapters.AlarmListAdapter;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AppDb;

@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:layout_width="20dp"
             android:layout_height="30dp"
-            android:src="@drawable/abc_ic_menu_overflow_material"
+            android:src="@drawable/ic_menu_overflow_material"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:layout_gravity="center"

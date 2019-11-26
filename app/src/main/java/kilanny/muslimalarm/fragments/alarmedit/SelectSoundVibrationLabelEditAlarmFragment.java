@@ -34,7 +34,6 @@ import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
 
 import kilanny.muslimalarm.R;
-import kilanny.muslimalarm.activities.EditAlarmActivity;
 import kilanny.muslimalarm.data.Alarm;
 
 /**

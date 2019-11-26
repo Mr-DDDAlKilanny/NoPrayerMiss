@@ -1,19 +1,19 @@
 package kilanny.muslimalarm.fragments.alarmring;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -32,9 +32,11 @@ public class MathAlarmFragment extends ShowAlarmFragment implements View.OnClick
 
     private static final String ARG_NUM_PROBLEMS = "numProblems";
     private static final String ARG_LEVEL = "level";
+    private static final String ARG_IS_SILENT = "isSilent";
 
     private int mNumProblems;
     private int mLevel;
+    private boolean mIsSilent;
     private int mSolved = 0;
     private int mAnswer;
     private TextView mTxtUserInput, mTxtProblemProgress, mTxtMathProblem;
@@ -52,11 +54,12 @@ public class MathAlarmFragment extends ShowAlarmFragment implements View.OnClick
      *
      * @return A new instance of fragment MathAlarmFragment.
      */
-    public static MathAlarmFragment newInstance(int numProblems, int level) {
+    public static MathAlarmFragment newInstance(int numProblems, int level, boolean isSilent) {
         MathAlarmFragment fragment = new MathAlarmFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUM_PROBLEMS, numProblems);
         args.putInt(ARG_LEVEL, level);
+        args.putBoolean(ARG_IS_SILENT, isSilent);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,11 +70,12 @@ public class MathAlarmFragment extends ShowAlarmFragment implements View.OnClick
         if (getArguments() != null) {
             mNumProblems = getArguments().getInt(ARG_NUM_PROBLEMS);
             mLevel = getArguments().getInt(ARG_LEVEL);
+            mIsSilent = getArguments().getBoolean(ARG_IS_SILENT);
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         try {
             mListener = (ShowAlarmFragment.FragmentInteractionListener) activity;
@@ -103,6 +107,11 @@ public class MathAlarmFragment extends ShowAlarmFragment implements View.OnClick
         view.findViewById(R.id.btnEight).setOnClickListener(this);
         view.findViewById(R.id.btnNine).setOnClickListener(this);
         view.findViewById(R.id.btnClear).setOnClickListener(this);
+        ImageView imageView = view.findViewById(R.id.imgIsSilent);
+        imageView.setImageResource(mIsSilent ? android.R.drawable.ic_lock_silent_mode
+                : android.R.drawable.ic_lock_silent_mode_off);
+        imageView.setBackgroundResource(mIsSilent ? android.R.color.holo_green_light :
+                android.R.color.holo_red_dark);
         mBtnAccept = view.findViewById(R.id.btnAccept);
         mBtnAccept.setOnClickListener(this);
         mTxtUserInput = view.findViewById(R.id.txtUserInput);

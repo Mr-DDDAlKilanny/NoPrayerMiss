@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -52,6 +53,15 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     private int currentAlarmFTime;
     private AlarmRingingService.LocalBinder mBinder;
 
+    private boolean checkServiceRunning() {
+        if (!Utils.isServiceRunning(this, AlarmRingingService.class)) {
+            Toast.makeText(this, R.string.pls_start_from_icon, Toast.LENGTH_LONG).show();
+            finish();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
@@ -62,6 +72,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //sometimes user can start this activity from history
+        if (!checkServiceRunning()) return;
         if (savedInstanceState == null)
             mIsPreview = getIntent().getBooleanExtra(ARG_IS_PREVIEW, false);
         else
@@ -118,6 +130,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        //sometimes user can start this activity from history
+        if (!checkServiceRunning()) return;
         bindService(new Intent(this, AlarmRingingService.class), this, BIND_ABOVE_CLIENT);
         cancelAttempt();
     }
@@ -137,7 +151,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     protected void onStop() {
         super.onStop();
         if (mBinder != null) {
-            mBinder.getService().cancelAttemptingDismissAlarm();
+            mBinder.getService().cancelAttemptingDismissAlarm(true);
         }
         unbindService(this);
     }
@@ -166,6 +180,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
         }
     }
 
+    @SuppressWarnings("JavaReflectionMemberAccess")
     @SuppressLint("WrongConstant")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -244,25 +259,6 @@ public class ShowAlarmActivity extends AppCompatActivity implements
             return;
         }
 
-        ShowAlarmFragment fragment = null;
-        switch (mAlarm.dismissAlarmType) {
-            case Alarm.DISMISS_ALARM_BARCODE:
-                fragment = BarcodeAlarmFragment.newInstance(mBarcode);
-                break;
-            case Alarm.DISMISS_ALARM_SHAKE:
-                fragment = ShakeAlarmFragment.newInstance(mAlarm.dismissAlarmTypeData1,
-                        mAlarm.dismissAlarmTypeData2);
-                break;
-            case Alarm.DISMISS_ALARM_MATH:
-                fragment = MathAlarmFragment.newInstance(mAlarm.dismissAlarmTypeData1,
-                        mAlarm.dismissAlarmTypeData2);
-                break;
-        }
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, fragment)
-                .commitAllowingStateLoss();
-
         mProgressBar.setProgress(mProgressBar.getMax());
         mProgressBar.setVisibility(View.VISIBLE);
         mBinder.getService().onCountDownChanged = new Function<Integer, Void>() {
@@ -280,7 +276,26 @@ public class ShowAlarmActivity extends AppCompatActivity implements
                 return null;
             }
         };
-        mBinder.getService().onAttemptingDismissAlarm();
+        boolean isSilent = mBinder.getService().onAttemptingDismissAlarm();
+
+        ShowAlarmFragment fragment = null;
+        switch (mAlarm.dismissAlarmType) {
+            case Alarm.DISMISS_ALARM_BARCODE:
+                fragment = BarcodeAlarmFragment.newInstance(mBarcode, isSilent);
+                break;
+            case Alarm.DISMISS_ALARM_SHAKE:
+                fragment = ShakeAlarmFragment.newInstance(mAlarm.dismissAlarmTypeData1,
+                        mAlarm.dismissAlarmTypeData2, isSilent);
+                break;
+            case Alarm.DISMISS_ALARM_MATH:
+                fragment = MathAlarmFragment.newInstance(mAlarm.dismissAlarmTypeData1,
+                        mAlarm.dismissAlarmTypeData2, isSilent);
+                break;
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .commitAllowingStateLoss();
     }
 
     @Override
@@ -293,7 +308,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
         Log.d("onServiceConnected", componentName.getClassName());
         mBinder = (AlarmRingingService.LocalBinder) iBinder;
-        mBinder.getService().cancelAttemptingDismissAlarm();
+        mBinder.getService().cancelAttemptingDismissAlarm(true);
     }
 
     @Override
