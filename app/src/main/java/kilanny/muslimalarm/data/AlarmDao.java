@@ -29,4 +29,7 @@ public interface AlarmDao {
 
     @Query("SELECT COUNT(*) FROM alarm")
     int count();
+
+    @Query("SELECT COUNT(*) FROM alarm WHERE dismiss_alarm_barcode_id = :barcodeId")
+    int countByBarcodeId(int barcodeId);
 }

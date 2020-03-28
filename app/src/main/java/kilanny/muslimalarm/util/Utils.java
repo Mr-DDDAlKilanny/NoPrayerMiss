@@ -237,7 +237,7 @@ public class Utils {
             b.append(context.getString(R.string.everyday));
         else {
             ArrayList<Integer> not = new ArrayList<>();
-            for (int i = 0; i < days.length; ++i) {
+            for (int i = 0; i < days.length - 1 /*Exclude NO_REPEAT*/; ++i) {
                 int f = 1 << i;
                 if ((alarm.weekDayFlags & f) == 0)
                     not.add(7 - i);

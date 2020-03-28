@@ -19,6 +19,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.arch.core.util.Function;
 
 import kilanny.muslimalarm.R;
+import kilanny.muslimalarm.data.AlarmDao;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.Barcode;
 import kilanny.muslimalarm.data.BarcodeDao;
@@ -82,7 +83,7 @@ public class BarcodeListAdapter extends ArrayAdapter<Barcode>
         rowView.findViewById(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onDeleteClick(item, view);
+                onDeleteClick(item);
             }
         });
         return rowView;
@@ -124,29 +125,40 @@ public class BarcodeListAdapter extends ArrayAdapter<Barcode>
                 .show();
     }
 
-    private void onDeleteClick(final Barcode item, final View view) {
-        new AlertDialog.Builder(view.getContext())
-                .setTitle(view.getContext().getString(R.string.delete_barcode))
-                .setMessage(view.getContext().getString(R.string.are_you_sure_delete_barcode))
+    private void onDeleteClick(final Barcode item) {
+        new AlertDialog.Builder(getContext())
+                .setTitle(getContext().getString(R.string.delete_barcode))
+                .setMessage(getContext().getString(R.string.are_you_sure_delete_barcode))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Utils.runInBackground(new Function<Context, Void>() {
+                        Utils.runInBackground(new Function<Context, Boolean>() {
                             @Override
-                            public Void apply(Context input) {
-                                BarcodeDao dao = AppDb.getInstance(input).barcodeDao();
-                                dao.delete(item);
-                                remove(item);
+                            public Boolean apply(Context input) {
+                                AppDb db = AppDb.getInstance(input);
+                                BarcodeDao barcodeDao = db.barcodeDao();
+                                AlarmDao alarmDao = db.alarmDao();
+                                if (alarmDao.countByBarcodeId(item.getId()) == 0) {
+                                    barcodeDao.delete(item);
+                                    return true;
+                                }
+                                return false;
+                            }
+                        }, new Function<Boolean, Void>() {
+                            @Override
+                            public Void apply(Boolean input) {
+                                if (input != null && input) {
+                                    remove(item);
+                                    notifyDataSetChanged();
+                                } else {
+                                    Toast.makeText(getContext(),
+                                            R.string.failed_delete_barcode_ref_records,
+                                            Toast.LENGTH_LONG).show();
+                                }
                                 return null;
                             }
-                        }, new Function<Void, Void>() {
-                            @Override
-                            public Void apply(Void input) {
-                                notifyDataSetChanged();
-                                return null;
-                            }
-                        }, view.getContext());
+                        }, getContext());
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)

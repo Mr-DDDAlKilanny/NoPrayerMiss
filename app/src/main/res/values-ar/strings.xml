@@ -297,4 +297,5 @@
     <string name="open_settings">فتح الإعدادات</string>
     <string name="pls_start_from_icon">الرجاء فتح التطبيق من الأيقونة في الشاشة الرئيسية</string>
     <string name="cannot_start_new_alarm_old_running">لا يمكن بدء منبه جديد لأنه يوجد منبه سابق قيد العمل حاليا. تأكد من شريط التنبيهات في أعلى الشاشة</string>
+    <string name="failed_delete_barcode_ref_records">لا يمكن حذف الباركود لوجود منبهات مرتبطة به</string>
 </resources>

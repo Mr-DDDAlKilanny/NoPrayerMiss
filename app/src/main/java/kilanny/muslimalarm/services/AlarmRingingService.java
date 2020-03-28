@@ -139,6 +139,7 @@ public class AlarmRingingService extends Service {
                     mAlarm = Alarm.fromJson(json);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    throw new RuntimeException("Invalid JSON", e);
                 }
             }
             if (mAlarm == null)
@@ -175,7 +176,7 @@ public class AlarmRingingService extends Service {
             mVibrator.cancel();
             mIsVibrating = false;
         }
-        if (mediaPlayer.isPlaying()) { // stop preview while solving math problems
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) { // stop preview while solving math problems
             mediaPlayer.pause();
             mediaPlayer.seekTo(0);
         }

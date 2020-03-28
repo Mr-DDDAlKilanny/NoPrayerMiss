@@ -68,7 +68,8 @@ public class ConfigOnboardingActivity extends AppCompatActivity
         switch (requestCode) {
             case PERMISSIONS_REQUEST: {
                 if (isAllPermissionsAccepted(grantResults)) {
-                    mPagerAdapter.locationFragment.onPermissionGranted();
+                    if (mPagerAdapter != null && mPagerAdapter.locationFragment != null)
+                        mPagerAdapter.locationFragment.onPermissionGranted();
                 } else {
                     new AlertDialog.Builder(this)
                             .setTitle(R.string.app_name)

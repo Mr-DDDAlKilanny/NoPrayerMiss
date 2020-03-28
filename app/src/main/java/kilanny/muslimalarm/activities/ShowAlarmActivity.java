@@ -62,6 +62,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
         return true;
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
@@ -234,13 +235,16 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
     @Override
     public void onResetSleepTimeout() {
-        mBinder.getService().resetCountDown();
-        mProgressBar.setProgress(mProgressBar.getMax());
+        if (mBinder != null) {
+            mBinder.getService().resetCountDown();
+            mProgressBar.setProgress(mProgressBar.getMax());
+        }
     }
 
     @Override
     public void onDismissed(boolean isDone) {
-        mBinder.getService().onDismissed(isDone);
+        if (mBinder != null)
+            mBinder.getService().onDismissed(isDone);
         finish();
     }
 
@@ -292,6 +296,10 @@ public class ShowAlarmActivity extends AppCompatActivity implements
                         mAlarm.dismissAlarmTypeData2, isSilent);
                 break;
         }
+        if (fragment == null) {
+            throw new IllegalArgumentException("mAlarm.dismissAlarmType contains unknown type: "
+                    + mAlarm.dismissAlarmType);
+        }
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, fragment)
@@ -300,8 +308,10 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
     @Override
     public void onSnoozeClick() {
-        mBinder.getService().onSnoozeAlarm();
-        onDismissed(false);
+        if (mBinder != null) {
+            mBinder.getService().onSnoozeAlarm();
+            onDismissed(false);
+        }
     }
 
     @Override

@@ -7,9 +7,8 @@
     <!--<attr nameResId="rowWithSeparatorBackground" format="reference" />-->
     <!--<attr nameResId="cellWithSeparatorBackground" format="reference" />-->
 
-    <attr name="image_drawable_id" format="integer|reference"/>
     <!-- the convention is "FragmentClassName_MembersInjector" -->
     <declare-styleable name="AlarmStopMethodFragment_MembersInjector">
-        <attr name="imageDrawableId"/>
+        <attr name="imageDrawableId" format="integer|reference" />
     </declare-styleable>
 </resources>
