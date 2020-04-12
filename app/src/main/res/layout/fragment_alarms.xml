@@ -6,11 +6,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.AlarmsHomeFragment">
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/listViewLayout"
         android:layout_above="@id/permissionCheckLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listView"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/emptyLayout"
@@ -89,7 +97,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/listView"
+        android:layout_alignBottom="@id/listViewLayout"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_recent_history" />
+        app:backgroundTint="@color/colorAccent"
+        app:srcCompat="@drawable/baseline_alarm_add_24" />
+
 </RelativeLayout>

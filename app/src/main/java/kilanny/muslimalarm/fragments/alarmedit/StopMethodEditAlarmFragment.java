@@ -221,7 +221,7 @@ public class StopMethodEditAlarmFragment extends EditAlarmFragment
         if (context == null) return;
         final Alarm alarm = mAlarm.copy();
         if (alarm.alarmTune == 0)
-            alarm.alarmTune = Tune.getTunes()[0].id;
+            alarm.alarmTune = Tune.getTunes(0)[0].id;
         if (alarm.soundLevel == 0)
             alarm.soundLevel = 75;
         mIsPreview = true;

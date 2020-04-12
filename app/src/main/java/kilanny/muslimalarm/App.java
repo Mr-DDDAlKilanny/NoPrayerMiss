@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.metinkale.prayer.InternalBroadcastReceiver;
 import com.metinkale.prayer.utils.AndroidTimeZoneProvider;
 import com.metinkale.prayer.utils.LocaleUtils;
@@ -62,6 +64,10 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+        }
 
         mDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(mCaughtExceptionHandler);

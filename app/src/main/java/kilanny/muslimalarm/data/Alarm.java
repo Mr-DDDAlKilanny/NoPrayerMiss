@@ -65,6 +65,9 @@ public class Alarm implements Parcelable {
     @ColumnInfo(name = "dismiss_alarm_barcode_id")
     public Integer dismissAlarmBarcodeId;
 
+    @ColumnInfo(name = "max_mins_ringing")
+    public Integer maxMinsRinging;
+
     @ColumnInfo(name = "alarm_diff_mins")
     public int timeAlarmDiffMinutes;
 
@@ -139,6 +142,11 @@ public class Alarm implements Parcelable {
         vibrationEnabled = in.readByte() != 0;
         alarmLabel = in.readString();
         alarmTune = in.readInt();
+        if (in.readByte() == 0) {
+            maxMinsRinging = null;
+        } else {
+            maxMinsRinging = in.readInt();
+        }
     }
 
     public Alarm copy() {
@@ -168,6 +176,7 @@ public class Alarm implements Parcelable {
         jsonObject.put("alarmTune", alarmTune);
         jsonObject.put("snoozedToTime", snoozedToTime);
         jsonObject.put("snoozedCount", snoozedCount);
+        jsonObject.put("maxMinsRinging", maxMinsRinging);
         return jsonObject.toString();
     }
 
@@ -218,6 +227,12 @@ public class Alarm implements Parcelable {
         dest.writeByte((byte) (vibrationEnabled ? 1 : 0));
         dest.writeString(alarmLabel);
         dest.writeInt(alarmTune);
+        if (maxMinsRinging == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(maxMinsRinging);
+        }
     }
 
     @Override
@@ -252,6 +267,8 @@ public class Alarm implements Parcelable {
         alarm.enabled = jsonObject.getBoolean("enabled");
         alarm.vibrationEnabled = jsonObject.getBoolean("vibrationEnabled");
         alarm.alarmTune = jsonObject.getInt("alarmTune");
+        if (jsonObject.has("maxMinsRinging"))
+            alarm.maxMinsRinging = jsonObject.getInt("maxMinsRinging");
         return alarm;
     }
 

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/baseline_delete_forever_24"
         android:id="@+id/mnuDeleteAlarm"
         android:orderInCategory="100"
         android:title="@string/delete_alarm" />
     <item
-        android:icon="@android:drawable/presence_busy"
+        android:icon="@drawable/baseline_skip_next_24"
         android:id="@+id/mnuSkipNextAlarm"
         android:orderInCategory="101"
         android:title="@string/skip_next_alarm" />
     <item
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/baseline_remove_red_eye_24"
         android:id="@+id/mnuPreviewAlarm"
         android:orderInCategory="102"
         android:title="@string/preview_alarm" />
     <item
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/ic_add_24px"
         android:id="@+id/mnuDuplicateAlarm"
         android:orderInCategory="103"
         android:title="@string/duplicate_alarm" />

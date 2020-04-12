@@ -66,7 +66,7 @@ public class SelectRingtuneFragment extends Fragment {
         SelectTuneAdapter adapter = null;
         switch (mType) {
             case TYPE_TUNES:
-                adapter = new SelectTuneAdapter(getContext(), Tune.getTunes());
+                adapter = new SelectTuneAdapter(getContext(), Tune.getTunes(0));
                 break;
             case TYPE_LOUD_TUNES:
                 break;

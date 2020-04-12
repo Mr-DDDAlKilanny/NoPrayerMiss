@@ -1,112 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <ScrollView
+        android:layout_above="@id/layPrevNext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:text="@string/request_app_permissinos" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/auto_location"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btnDetectLocationWithGps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/detect_with_gps" />
-
-    <Button
-        android:id="@+id/btnDetectLocationWithNetwork"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/detect_with_network" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/btnManualLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/option_manual_location" />
-
-    <LinearLayout
-        android:visibility="invisible"
-        android:id="@+id/layoutManualLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/manualLng"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/longitude"
-            android:inputType="number|numberSigned|numberDecimal" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/manualLat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/latitude"
-            android:inputType="number|numberSigned|numberDecimal" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/request_app_permissinos" />
 
-        <Button
-            android:id="@+id/btnManualOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/set_manual_location" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/option_1_search_your_city"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/txtLocationAlreadySet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        android:text="@string/already_set_location"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="15sp"
-        android:visibility="invisible" />
+            <Button
+                android:id="@+id/btnSearchCity"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="@string/search_your_city"
+                app:icon="@drawable/baseline_search_24"
+                android:drawableLeft="@android:drawable/ic_search_category_default"
+                android:drawableStart="@android:drawable/ic_search_category_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/auto_location"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnDetectLocationWithNetwork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:icon="@drawable/baseline_location_searching_24"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/detect_with_network"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/or"
+                android:textColor="@color/green_primary"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDetectLocationWithGps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/detect_with_gps" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnManualLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/option_manual_location" />
+
+            <LinearLayout
+                android:id="@+id/layoutManualLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <EditText
+                    android:id="@+id/manualLng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/longitude"
+                    android:inputType="number|numberSigned|numberDecimal" />
+
+                <EditText
+                    android:id="@+id/manualLat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/latitude"
+                    android:inputType="number|numberSigned|numberDecimal" />
+
+                <Button
+                    android:id="@+id/btnManualOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/set_manual_location" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtLocationAlreadySet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:text="@string/already_set_location"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="15sp"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/layPrevNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_alignParentBottom="true">
 
         <include
             layout="@layout/view_prev_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

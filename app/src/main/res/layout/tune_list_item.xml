@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatRadioButton
         android:id="@+id/radioSelected"
@@ -29,6 +30,7 @@
         android:id="@+id/btnPreviewTune"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:background="@android:color/white"
-        android:src="@android:drawable/ic_media_play" />
+        app:srcCompat="@drawable/baseline_play_circle_outline_24" />
 </RelativeLayout>

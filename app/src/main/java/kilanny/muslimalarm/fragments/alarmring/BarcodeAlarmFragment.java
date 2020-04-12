@@ -83,23 +83,17 @@ public class BarcodeAlarmFragment extends ShowAlarmFragment
                 android.R.color.holo_red_dark);
         mScannerView = root.findViewById(R.id.scannerView);
         mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        root.findViewById(R.id.toggle_camera_fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCameraId == -1)
-                    ++mCameraId;
-                else
-                    mCameraId = (mCameraId + 1) % mNumberOfCameras;
-                mScannerView.stopCamera();
-                mScannerView.startCamera(mCameraId);
-            }
+        root.findViewById(R.id.toggle_camera_fab).setOnClickListener(view -> {
+            if (mCameraId == -1)
+                ++mCameraId;
+            else
+                mCameraId = (mCameraId + 1) % mNumberOfCameras;
+            mScannerView.stopCamera();
+            mScannerView.startCamera(mCameraId);
         });
-        root.findViewById(R.id.toggle_flash_fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFlash = !mFlash;
-                mScannerView.setFlash(mFlash);
-            }
+        root.findViewById(R.id.toggle_flash_fab).setOnClickListener(view -> {
+            mFlash = !mFlash;
+            mScannerView.setFlash(mFlash);
         });
 
         mScannerView.startCamera(mCameraId);

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:drawable/alert_dark_frame"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/alarm_notification_bg"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/icon"
         android:src="@mipmap/ic_launcher"
-        android:padding="4dip"
+        android:layout_centerVertical="true"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
 
     <LinearLayout
+        android:padding="@dimen/space_half"
+        android:layout_toRightOf="@id/icon"
+        android:layout_toEndOf="@id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -20,7 +23,7 @@
         <TextView
             android:text="@string/alarm_is_running_tab_to_dismiss"
             style="@android:style/TextAppearance.StatusBar.EventContent.Title"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:focusable="true"
             android:singleLine="true"
             android:layout_gravity="center"
@@ -30,7 +33,8 @@
         <TextView
             android:id="@+id/alarmTime"
             android:text="Fajr"
-            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textColor="@color/ms_white"
             style="@android:style/TextAppearance.StatusBar.EventContent"
             android:layout_gravity="center"
             android:maxLines="1"
@@ -43,7 +47,7 @@
             android:id="@+id/alarmLabel"
             android:text="Hello World"
             style="@android:style/TextAppearance.StatusBar.EventContent"
-            android:textColor="@android:color/white"
+            android:textColor="@color/ms_white"
             android:layout_gravity="center"
             android:maxLines="2"
             android:scrollHorizontally="true"
@@ -51,4 +55,4 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

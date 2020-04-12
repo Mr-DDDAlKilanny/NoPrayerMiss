@@ -1,0 +1,360 @@
+<resources>
+    <string name="app_name">Тревога мусульманина</string>
+    <string name="navigation_drawer_open">Открыть навигационный ящик</string>
+    <string name="navigation_drawer_close">Закрыть панель навигации</string>
+
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">Просыпаться за Фаджр, Циям или любую молитву</string>
+    <string name="nav_header_desc">Заголовок навигации</string>
+    <string name="action_settings">Настройки</string>
+    <string name="menu_home">Дома</string>
+    <string name="menu_alarms">Аварийные сигналы</string>
+    <string name="menu_slideshow">Слайд-шоу</string>
+    <string name="menu_Settings">Настройки</string>
+    <string name="menu_share">Поделиться</string>
+    <string name="menu_send">Послать</string>
+    <string name="tab_text_1">мелодии</string>
+    <string name="tab_text_2">Громкие мелодии</string>
+    <string name="tab_text_3">Файлы</string>
+    <string name="fajr">Фаджр</string>
+    <string name="sun">Восход</string>
+    <string name="zuhr">Дхур</string>
+    <string name="asr">Аср</string>
+    <string name="maghrib">Магриб</string>
+    <string name="ishaa">Ишаа</string>
+    <string name="request_app_permissinos">Добро пожаловать в приложение мусульманской тревоги! Приложению требуется разрешение на местоположение, чтобы рассчитать время молитвы, используя ваше местоположение Пожалуйста, разрешите доступ к вашему местоположению, если будет предложено.</string>
+    <string name="location_net">Сеть (Интернет)</string>
+    <string name="gps">GPS</string>
+    <string name="rejected_permission">Вы отклонили доступ к вашему местоположению. Приложение не может работать без него. Перезапустите приложение, чтобы снова показать запрос на разрешение, или включите это разрешение в настройках приложения</string>
+    <string name="cannot_get_location">Не могу получить ваше местоположение. Зайдите в настройки телефона и включите местоположение, чтобы рассчитать время молитвы</string>
+    <string name="config_title">Пожалуйста, найдите время, чтобы настроить время Salaat в соответствии с вашими требованиями.</string>
+    <string name="explain_default_config">По умолчанию время Salaat настраивается с использованием метода расчета Всемирной лиги мусульман, Shafii Juristic для расчета времени Asr и не корректирует людей, живущих в более высоких широтах. Другие методы расчета включают в себя: Карачи, ISNA, Мекку, Египет, Тегеран, Джафри. Вы можете использовать настройки по умолчанию (не беспокойтесь, вы можете изменить их позже) или настроить время Salaat согласно вашим требованиям ниже.</string>
+    <string name="title_onboarding_calc_method">Настроить время молитвы</string>
+    <string name="button_configure_now">Настройте параметры сейчас \u2192</string>
+    <string name="button_use_default">Использовать настройки по умолчанию \u2192</string>
+    <string name="button_prev">\u2190 предыдущий</string>
+
+
+    <string name="button_next">следующий \u2192</string>
+    <string name="button_done">Готово</string>
+    <string name="calc_method">Метод расчета</string>
+
+
+    <!-- Onboarding Calc method -->
+    <string name="calc_method_explain">"Пожалуйста, выберите метод расчета для Salat в вашем регионе. Всемирная мусульманская лига должна работать для большинства людей.\n    "</string>
+    <string name="asr_method">Asr Juristic</string>
+    <string name="asr_method_explain">"Шафии является стандартом, наиболее часто используемым. Пожалуйста, выберите метод, который подходит вам лучше всего. Если вы не уверены, оставьте Shafii выбранным, вы всегда можете изменить его позже.\n    "</string>
+    <string name="calc_method_karachi">КАРАЧИ - Университет исламских наук</string>
+
+    <string name="calc_method_isna">ИСНА - Исламское общество Северной Америки</string>
+    <string name="calc_method_mwl">MWL - Всемирная мусульманская лига</string>
+    <string name="calc_method_makkah">МАККА - Умм Аль Кура</string>
+    <string name="calc_method_egypt">ЕГИПЕТ - египетская Генеральная инспекция</string>
+    <string name="calc_method_tehran">Тегеран - Институт геофизики, Тегеранский университет</string>
+    <string name="calc_method_jafari">ДЖАФАРИ - Итна Ашари</string>
+    <string name="asr_method_shafii">Шафии (Стандарт)</string>
+    <string name="asr_method_hanfi">Ханфи</string>
+    <string name="time_title">Формат времени</string>
+    <string name="time_12">12 часов (пример: 01:00 вечера)</string>
+    <string name="time_24">24 часа (пример: 13:00)</string>
+    <string name="high_latitude">Регулировка высоких широт</string>
+    <string name="high_latitude_explain">Для людей, живущих в более высоких широтах, время молитвы может быть неправильным. Если время молитвы кажется неправильным, попробуйте изменить это значение. В течение летних месяцев один-седьмой метод дает более позднее время Фаджра, чем метод, основанный на углах. Если вы предпочитаете метод на основе углов, пожалуйста, измените их ниже.</string>
+    <string name="high_lat_none">Никто</string>
+    <string name="high_lat_midnight">Полночь</string>
+    <string name="high_lat_one_seventh">Одна седьмая ночи</string>
+    <string name="high_lat_angle_based">На основе угла</string>
+    <string name="auto_location">Вариант 2: автоматическое определение местоположения</string>
+    <string name="detect_with_gps">Обнаружить с помощью GPS</string>
+    <string name="detect_with_network">Обнаружение с использованием сети</string>
+    <string name="option_manual_location">Вариант 3: ручной ввод местоположения</string>
+    <string name="longitude">Долгота …</string>
+    <string name="latitude">Широта …</string>
+    <string name="set_manual_location">Установить местоположение вручную</string>
+    <string name="already_set_location">Место уже установлено. Если вы не хотите менять его, нажмите кнопку «СЛЕДУЮЩАЯ» ниже..</string>
+    <string name="please_enter_lng_lat">Пожалуйста, введите долготу и широту</string>
+    <string name="gps_not_enable">GPS не включен. Пожалуйста, включите его в настройках устройства в верхней части экрана рядом с WiFi (или вы можете использовать сетевое расположение)</string>
+    <string name="gps_no_last_location">Не могу получить ваше последнее местоположение</string>
+    <string name="network_location_not_enable">Сетевое расположение не включено. Пожалуйста, включите его в настройках устройства</string>
+    <string name="use_gps_anyway">Все равно использовать GPS</string>
+    <string name="gps_long_time">GPS может занять 2–3 минуты, чтобы найти местоположение. Это также должно быть на открытом воздухе. Поиск может быть быстрее, если вы выбрали местоположение в сети или получили ваше последнее известное местоположение GPS. Что вы выбираете?</string>
+    <string name="gps_location">Местоположение GPS</string>
+    <string name="use_my_last_location">Используйте мое последнее местоположение</string>
+    <string name="please_specify_location">Пожалуйста, сначала укажите местоположение</string>
+    <string name="prayer_time_config">Конфигурации времени молитвы</string>
+    <string name="prayer_times">время молитвы</string>
+    <string name="hmonth1">Мухаррам</string>
+    <string name="hmonth2">Сафар</string>
+    <string name="hmonth3">Раби Аль-Аввал</string>
+    <string name="hmonth4">Раби аль-Ачир</string>
+    <string name="hmonth5">Джумада аль-Аввал</string>
+    <string name="hmonth6">Джумада л-ахира</string>
+    <string name="hmonth7">Раджаб</string>
+    <string name="hmonth8">Шабан</string>
+    <string name="hmonth9">Рамадан</string>
+    <string name="hmonth10">Shawwal</string>
+    <string name="hmonth11">Dhu l-Qaʿda</string>
+    <string name="hmonth12">Дху л-Хиджа</string>
+    <string name="gmonth1">январь</string>
+    <string name="gmonth2">Февраль</string>
+    <string name="gmonth3">Марш</string>
+    <string name="gmonth4">Апреля</string>
+    <string name="gmonth5">Май</string>
+    <string name="gmonth6">июнь</string>
+    <string name="gmonth7">июль</string>
+    <string name="gmonth8">Август</string>
+    <string name="gmonth9">Сентябрь</string>
+    <string name="gmonth10">Октябрь</string>
+    <string name="gmonth11">ноябрь</string>
+    <string name="gmonth12">Декабрь</string>
+    <string name="systemLanguage">ru</string>
+    <string name="delete_alarm">Удалить будильник</string>
+    <string name="skip_next_alarm">Пропустить следующий сигнал тревоги</string>
+    <string name="unskip_next_alarm">Отмена пропустить следующий сигнал тревоги</string>
+    <string name="preview_alarm">Предварительный просмотр будильника</string>
+    <string name="duplicate_alarm">Дублировать сигнал тревоги</string>
+    <string name="one_time">Один раз</string>
+    <string name="everyday">Каждый день</string>
+    <string name="friday">пятница</string>
+    <string name="saturday">суббота</string>
+    <string name="sunday">Воскресенье</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">вторник</string>
+    <string name="wednesday">среда</string>
+    <string name="thursday">Четверг</string>
+
+    <string name="allDaysExpect1Day">Каждый день кроме %1$s</string>
+
+    <string name="allDaysExpect2Days">Каждый день кроме %1$s и %2$s</string>
+    <string name="not_connected">Вы не подключены к интернету</string>
+    <string name="beforeTimeBy">- %1$d мин.</string>
+    <string name="afterTimeBy">+ %1$d мин.</string>
+    <string name="afterNDays">Через %1$d дня</string>
+    <string name="afterNHours">Через %1$s часов</string>
+    <string name="afterNMinutes">Через %1$s мин.</string>
+    <string name="afterNHoursAndNMinutes">Через %1$s часов, %2$s мин.</string>
+    <string name="afterNDaysAndNHours">Через %1$s дня, %2$s часов</string>
+    <string name="all_times">Все время</string>
+    <string name="all_prayers">Все молитвы</string>
+    <string name="time_s">время:</string>
+    <string name="select">Выбрать</string>
+    <string name="beforeTime">Раньше времени</string>
+    <string name="afterTime">По истечении времени</string>
+    <string name="repeat_days">Повторите Дни</string>
+    <string name="alarm_tune">Alarm Tune</string>
+    <string name="default_tune">Настройка по умолчанию</string>
+    <string name="snooze_settings">Настройки дремоты</string>
+    <string name="math_problems">Математические проблемы</string>
+    <string name="barcode">Штрих-код</string>
+    <string name="vibration">Вибрация</string>
+    <string name="Default">По умолчанию</string>
+    <string name="phone_shaking">Тряска телефона</string>
+    <string name="please_add_a_barcode_to_use_to_stop_alarm">Пожалуйста, добавьте штрих-код, чтобы использовать его для отключения будильника</string>
+    <string name="barcode_added">Штрих-код добавлен</string>
+    <string name="barcode_captured">Штрих-код захвачен!</string>
+    <string name="do_you_want_to_save_it">Вы хотите сохранить его сейчас?</string>
+    <string name="capture_barcode">Захватить штрих-код</string>
+    <string name="exit_preview">Выход из просмотра</string>
+    <string name="your_device_not_support_feature">Ваше устройство не поддерживает эту функцию</string>
+    <string name="problem_difficulty">Уровень сложности Уровень</string>
+    <string name="num_problems">Количество проблем</string>
+    <string name="alarm_label_optional">Аварийная метка (необязательно)</string>
+    <string name="snooze_period_minutes">Период повтора (в минутах). Ноль означает, что нет повтора</string>
+    <string name="max_snooze_count">Макс отсрочить</string>
+    <string name="delete_barcode">Удалить штрих-код</string>
+    <string name="are_you_sure_delete_barcode">Вы уверены, что хотите удалить выбранный штрих-код?</string>
+    <string name="are_you_sure_delete_alarm">Вы уверены, что хотите удалить выбранный будильник?</string>
+    <string name="edit_barcode">Редактировать штрих-код</string>
+    <string name="you_entered_empty">Вы ввели пустое значение</string>
+    <string name="please_select_barcode">Пожалуйста, сначала выберите штрих-код</string>
+    <string name="to_preview_barcode_use">Для предварительного просмотра тревоги по штрих-коду, сначала выберите, какой штрих-код используется для остановки тревоги</string>
+    <string name="difficulty_shake">Сложность тряски</string>
+    <string name="num_shakes">Количество встряхиваний</string>
+    <string name="config_shakes">Настройка Shakes</string>
+    <string name="config_math_problems">Настроить математические задачи</string>
+    <string name="config_snooze">Настроить Snooze</string>
+    <string name="select_barcode">Выберите штрих-код</string>
+    <string name="select_camera">Выбрать камеру</string>
+    <string name="flash">Вспышка</string>
+    <string name="auto_focus">Автофокус</string>
+    <string name="front_facing">Фасадная сторона</string>
+    <string name="rear_facing">Задняя облицовка</string>
+    <string name="camera_id">Идентификатор камеры:</string>
+    <string name="err_choose_one_time">Если вы выберете One Time, вы не сможете выбрать и другие варианты. Попробуй снова</string>
+    <string name="must_select_one_day">Вы должны выбрать повторяющиеся дни или Один раз, чтобы не повторять</string>
+    <string name="when">Когда?</string>
+    <string name="err_select_prayer">Вы должны выбрать один или несколько раз молитвы</string>
+    <string name="for_prayer_times">На время молитвы</string>
+    <string name="alarm_stop_method">Аварийный останов Метод</string>
+    <string name="add_alarm">Добавить будильник</string>
+    <string name="edit_alarm">Редактировать будильник</string>
+    <string name="alarm_label">Аварийный ярлык</string>
+    <string name="failled_to_play_file">Не удалось воспроизвести файл: %1$s</string>
+    <string name="select_alarm_tune">Выберите сигнал будильника</string>
+    <string name="tune_no">тон #%1$d</string>
+    <string name="err_tune_not_selected">Вы не выбрали ни одного тона. Пожалуйста, попробуйте снова или нажмите «Отмена», чтобы выйти без выбора какого-либо тона.</string>
+    <string name="write_title_of_alarm">Напиши заголовок для будильника…</string>
+    <string name="must_select_tune">Вы должны выбрать мелодию</string>
+    <string name="less_than_minute">Менее чем за минуту</string>
+    <string name="please_give_permissions">Пожалуйста, дайте разрешения для приложения, чтобы нормально работать</string>
+    <string name="go">Идти</string>
+    <string name="need_sound_permission">Это приложение нуждается в разрешении, чтобы иметь возможность изменять уровень громкости звука. Нажмите кнопку ОК, чтобы показать настройки и предоставить разрешение</string>
+    <string name="permission_required">Требуется разрешение</string>
+    <string name="no_not_ask">Нет, не спрашивай снова</string>
+    <string name="changes_sound_no_affect">Изменения уровня звука могут не применяться.</string>
+    <string name="provide_permission">Предоставить разрешение</string>
+    <string name="incorrect_barcode">Неверный штрих-код. Пожалуйста, попробуйте еще раз</string>
+    <string name="alarm_is_snoozed_tab">Тревога отодвинута. \nНажмите, чтобы закрыть</string>
+    <string name="alarm_edit_wizard">Мастер редактирования сигналов тревоги</string>
+    <string name="this_wizard_alarm">Этот мастер поможет вам добавить или отредактировать будильник в несколько простых шагов. Вы можете выбрать время молитвы будильника, повторяющиеся дни, сигнал будильника, как прекратить звонок будильника и многое другое.</string>
+    <string name="going_to_add_new_alarm">Это собирается добавить новый сигнал тревоги. Нажмите далее, чтобы продолжить</string>
+    <string name="going_to_edit_alarm">Это будет редактировать следующий сигнал тревоги. Нажмите далее, чтобы продолжить</string>
+    <string name="how_to_stop_alarm">Как вы хотите остановить тревогу?</string>
+    <string name="specify_how_to_cancel_alarm">Пожалуйста, укажите, как отменить сигнал тревоги после того, как он начнет звонить. По умолчанию, когда вы нажимаете кнопку «отклонить», сигнал тревоги отменяется. Тем не менее, вы можете отменить только после встряхивания устройства в течение некоторого периода или решить некоторые математические задачи.</string>
+    <string name="welcome">Weclome</string>
+    <string name="select_times_you_need">Выберите время, когда вам нужно установить будильник</string>
+    <string name="specify_a_time_or_more_below">Пожалуйста, укажите время или более ниже, чтобы установить будильник. Например, если вы хотите установить будильник для Fajr, выберите Fajr. Если вы хотите установить будильник для Джума, выберите zuhr</string>
+    <string name="before_or_after">До или после?</string>
+    <string name="specify_whether_to_set_alarm_before_or_after_time">Пожалуйста, укажите, нужно ли устанавливать будильник до или после времени. Например, вам может понадобиться установить будильник за 5 минут до Zuhr или 20 минут после Fajr</string>
+    <string name="hours">Часы</string>
+    <string name="minutes">Минуты</string>
+    <string name="repeated_alarm">Повторная тревога</string>
+    <string name="select_weekly_days_of_repeating_alarm">Выберите еженедельные дни повторения тревоги</string>
+    <string name="select_the_weekly_days_the_alarm_will_repeat_on">Выберите недели, в которые будильник будет повторяться.</string>
+    <string name="alarm_times">Alarm Times</string>
+    <string name="alarm_days">Alarm Days</string>
+    <string name="select_alarm_sound">Выбрать звук будильника</string>
+    <string name="select_the_sound_you_want">Пожалуйста, выберите звук, который вы хотите воспроизвести, когда зазвонит будильник.</string>
+    <string name="do_you_want_a_snooze_for_the_alarm">Хочешь отложить тревогу?</string>
+    <string name="please_specify_the_snooze_settings">Пожалуйста, укажите настройки повтора для будильника. Это полезно для предоставления вам некоторого периода и повторного запуска тревоги после этого периода.</string>
+    <string name="how_many_snoozes">Сколько можно дремать на максимуме?</string>
+    <string name="none">Никто</string>
+    <string name="unlimited">Неограниченно</string>
+    <string name="customize">Настроить</string>
+    <string name="snooze_period">Период дремоты:</string>
+    <string name="select_if_repeat_alarm">Выберите, хотите ли вы повторить сигнал тревоги</string>
+    <string name="specify_if__set_one_time_alarm_or_repeat">Пожалуйста, укажите, хотите ли вы установить одноразовый будильник или повторите будильник в будние дни</string>
+    <string name="details_of_alarm">Детали тревоги</string>
+    <string name="setting_the_details_of_alarm">Настройка деталей будильника</string>
+    <string name="sound_volume">Громкость</string>
+    <string name="set_the_volume_of_sound">Пожалуйста, установите громкость звука для будильника ниже</string>
+    <string name="should_the_alarm_vibrate_your_device">Должен ли будильник вибрировать ваше устройство?</string>
+    <string name="please_set_label_for_alarm">Пожалуйста, установите (необязательно) метку для отображения будильника на экране вызова</string>
+    <string name="set_alarm_label">Установить метку тревоги</string>
+    <string name="nuclear_alert">Ядерная тревога</string>
+    <string name="hazard_warning">Предупреждение об опасности</string>
+    <string name="car_guard">Car Guard</string>
+    <string name="old_peep_alarm">Old Peep Alarm</string>
+    <string name="hazard_traffic">Опасный трафик</string>
+    <string name="annoying_surprise">Раздражающий сюрприз</string>
+    <string name="loud_tune">Громкая мелодия</string>
+    <string name="rooster">Петух</string>
+    <string name="ambulance_vehicle">Автомобиль скорой помощи</string>
+    <string name="police">Полиция</string>
+    <string name="cow">Корова</string>
+    <string name="horse">Лошадь</string>
+    <string name="birds">Птицы</string>
+    <string name="traffic_trouble">Проблемы с трафиком</string>
+    <string name="shocks">Шоки</string>
+    <string name="crow">Ворон</string>
+    <string name="extreme_alarm">Экстремальная тревога</string>
+    <string name="warning_siren">Предупреждение сирены</string>
+    <string name="annoying_tune_fixed">Исправлена ​​раздражающая мелодия</string>
+    <string name="upward_annoying_tune">Восходящая раздражающая мелодия</string>
+    <string name="bubbles">Пузыри</string>
+    <string name="constant_wave">Постоянная волна</string>
+    <string name="high_snoring">Высокий храп</string>
+    <string name="monkey">Обезьяна</string>
+    <string name="metal_gear">Металлическая шестеренка</string>
+    <string name="old_alarm">Старая тревога</string>
+    <string name="tiger">Тигр</string>
+    <string name="drops">Drops</string>
+    <string name="phone_alert">Телефонная тревога</string>
+    <string name="bubbles_fast">Bubbles Fast</string>
+    <string name="wolf">Волк</string>
+    <string name="back">Назад</string>
+    <string name="next">Следующий</string>
+    <string name="complete">Завершить</string>
+    <string name="exit">Выход</string>
+    <string name="snooze">Дремать</string>
+    <string name="shake_the_device_to_stop_alarm">встряхнуть устройство, чтобы выключить будильник</string>
+    <string name="shakes">качает</string>
+    <string name="click_here_to_open_menu">Нажмите здесь, чтобы открыть меню приложения и добавить сигналы тревоги</string>
+    <string name="open_app_alarm_menu">Открыть меню тревоги приложения</string>
+    <string name="list_empty">Список пуст.</string>
+    <string name="add_alarm_tab">Чтобы добавить будильник, нажмите красную кнопку ниже.</string>
+    <string name="dealing_with_list_of_alarms">Работа со списком аварийных сигналов</string>
+    <string name="toturial_alarms">* Для редактирования будильника нажмите на его карточку.\n * Чтобы отключить / включить, щелкните флажок на карточке. \n * Чтобы просмотреть будильник, нажмите на 3 точки на нем</string>
+    <string name="communicate">Связь / Поделиться приложением</string>
+    <string name="share_msg">Пробуждение для Фаджра! Приложение «Мусульманский молитвенный будильник» никогда не остановит вас, пока вы не решите математику, не потрясете устройство или не отсканируете штрих-код. Это бесплатно, без рекламы!</string>
+    <string name="just_on_time">Точно в срок</string>
+    <string name="after_time_by">Через время</string>
+    <string name="before_time_by">До того времени</string>
+    <string-array name="prayer_times">
+        <item>@string/fajr</item>
+        <item>@string/sun</item>
+        <item>@string/zuhr</item>
+        <item>@string/asr</item>
+        <item>@string/maghrib</item>
+        <item>@string/ishaa</item>
+    </string-array>
+    <string-array name="languages">
+        <item>ar|100</item>
+        <item>en|100</item>
+    </string-array>
+    <string-array name="repeat_days">
+        <item>@string/one_time</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+    </string-array>
+    <string-array name="onOff">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+    <string-array name="math_level_example">
+        <item>5 + 6</item>
+        <item>13 + 44</item>
+        <item>36 + 93 + 17</item>
+        <item>(53 x 4) + 11</item>
+        <item>(53 x 34) + 151</item>
+        <item>(755 x 57) + 6623</item>
+    </string-array>
+    <string name="nMinutes">%1$s МИН.</string>
+    <string name="nHours">%1$s часов</string>
+    <string name="nHoursAndNMinutes">%1$s часов, %2$s МИН.</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="share_msg_dlg">Спасибо за использование мусульманского будильника! \nПожалуйста, поделитесь этим приложением, чтобы получить Thawab (награду) от Аллаха!</string>
+    <string name="not_now">Не сейчас</string>
+    <string name="alarm_ringing_service_descr">Запускает будильник, который вы выбрали для молитвы</string>
+    <string name="alarm_is_running_tab_to_dismiss">Будильник работает. Нажмите, чтобы уволить!</string>
+    <string name="battery_opts">Оптимизация батареи</string>
+    <string name="battery_msg">На некоторых устройствах Android запрещает запуск приложений из-за оптимизации заряда батареи. Убедитесь, что вы отключили оптимизацию для этого приложения, иначе вы можете не получать сигналы тревоги! \nЕсли вы проверили ранее настройки, выберите «Больше не спрашивать»</string>
+    <string name="open_settings">Открыть настройки</string>
+    <string name="pls_start_from_icon">Пожалуйста, запустите приложение с его иконки</string>
+    <string name="cannot_start_new_alarm_old_running">Невозможно запустить новый сигнал тревоги. Старая тревога в работе (проверьте панель уведомлений)</string>
+    <string name="failed_delete_barcode_ref_records">Невозможно удалить этот штрих-код, потому что некоторые тревоги связаны с ним</string>
+    <string name="or">или же</string>
+    <string name="azan_final">Азан Энд</string>
+    <string name="azan_full_abdulbasit">Азан Абдул-Баасет (Полная версия)</string>
+    <string name="azan_full_deedat">Азан (Полная версия)</string>
+    <string name="azan_full_egy">Азан Египет 1 (Полная версия)</string>
+    <string name="azan_full_egy2">Азан Египет 2 (Полная версия)</string>
+    <string name="azan_full_egy3">Азан Египет 3 (Полная версия)</string>
+    <string name="azan_haya">Азан Хайя</string>
+    <string name="azan_makkah">Азан Мекка</string>
+    <string name="azan_otaiby">Азан Отайби</string>
+    <string name="azan_qatami">Азан Катами</string>
+    <string name="azan_quite">Азан</string>
+    <string name="azan_salat_khair">Азан Салат Хайр</string>
+    <string name="azan_salati">Азан Акбар</string>
+    <string name="device_feature_not_supported">Ваше устройство не поддерживает эту функцию</string>
+    <string name="option_1_search_your_city">Вариант 1: Поиск по названию вашего города</string>
+    <string name="search_your_city">Ищите свой город</string>
+    <string name="automatically_stop_alarm_after">Автоматически останавливать тревогу после</string>
+    <string name="city_search_failed">Не удается загрузить результаты поиска. Попробуйте более конкретный адрес, измените текст поиска, или вы можете использовать вариант 2</string>
+    <string name="times_invalid">Пожалуйста, предоставьте действительные настройки, чтобы сделать правильное время молитвы</string>
+</resources>

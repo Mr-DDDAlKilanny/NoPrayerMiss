@@ -26,9 +26,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_above="@id/toggle_flash_fab"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_camera"
-        app:backgroundTint="@android:color/holo_blue_dark"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        app:srcCompat="@drawable/baseline_add_a_photo_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

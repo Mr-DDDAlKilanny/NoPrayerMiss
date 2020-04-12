@@ -1,0 +1,358 @@
+<resources>
+    <string name="app_name">Alarme musulmane</string>
+    <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
+
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">Se réveiller pour Fajr, Qiyam ou toute prière</string>
+    <string name="nav_header_desc">En-tête de navigation</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="menu_home">Accueil</string>
+    <string name="menu_alarms">Alarmes</string>
+    <string name="menu_slideshow">Diaporama</string>
+    <string name="menu_Settings">Paramètres</string>
+    <string name="menu_share">Partager</string>
+    <string name="menu_send">Envoyer</string>
+    <string name="tab_text_1">Tunes</string>
+    <string name="tab_text_2">Loud Tunes</string>
+    <string name="tab_text_3">Des dossiers</string>
+    <string name="fajr">Fajr</string>
+    <string name="sun">Lever du soleil</string>
+    <string name="zuhr">Dhuhr</string>
+    <string name="asr">Asr</string>
+    <string name="maghrib">Maghrib</string>
+    <string name="ishaa">Ishaa</string>
+    <string name="request_app_permissinos">Bienvenue sur Muslim Alarm App! L\'application a besoin d\'une autorisation de localisation pour le calcul du temps de prière en utilisant votre emplacement. Veuillez autoriser l\'accès à votre emplacement si vous y êtes invité.</string>
+    <string name="location_net">Réseau (Internet)</string>
+    <string name="gps">GPS</string>
+    <string name="rejected_permission">Vous avez refusé d\'accéder à votre position. L\'application ne peut pas fonctionner sans elle. Redémarrez l\'application pour afficher à nouveau la demande d\'autorisation ou activez cette autorisation à partir des paramètres de l\'application</string>
+    <string name="cannot_get_location">Impossible d\'obtenir votre position. Accédez aux paramètres du téléphone et activez l\'emplacement afin de calculer les heures de prière</string>
+    <string name="config_title">Veuillez prendre un moment pour configurer les heures de Salaat selon vos besoins.</string>
+    <string name="explain_default_config">Par défaut, les heures Salaat sont configurées à l\'aide de la méthode de calcul de la Ligue mondiale musulmane, Shafii Juristic pour les calculs de temps Asr et ne font aucun ajustement pour les personnes vivant dans des latitudes plus élevées. Les autres méthodes de calcul incluent: Karachi, ISNA, Makkah, Egypt, Tehran, Jafri Vous pouvez choisir d\'utiliser les paramètres par défaut (ne vous inquiétez pas, vous pouvez les modifier plus tard), ou configurer les heures de Salaat selon vos besoins ci-dessous.</string>
+    <string name="title_onboarding_calc_method">Configurer les heures de prière</string>
+
+    <string name="button_configure_now">Configurer les paramètres maintenant \u2192</string>
+    <string name="button_use_default">Utiliser les paramètres par défaut \u2192</string>
+    <string name="button_prev">\u2190 Précédent</string>
+
+
+    <string name="button_next">Prochain \u2192</string>
+    <string name="button_done">Terminé</string>
+    <string name="calc_method">Méthode de calcul</string>
+    <string name="calc_method_explain">Veuillez sélectionner la méthode de calcul pour Salaat dans votre région. La Ligue mondiale musulmane devrait fonctionner pour la plupart des gens.</string>
+    <string name="asr_method">Asr Juristic</string>
+    <string name="asr_method_explain">Shafii est la norme la plus utilisée. Veuillez sélectionner la méthode qui vous convient le mieux. Si vous n\'êtes pas sûr, laissez Shafii sélectionné, vous pouvez toujours le changer plus tard.</string>
+    <string name="calc_method_karachi">KARACHI - Université des sciences islamiques</string>
+    <string name="calc_method_isna">ISNA - Société islamique d\'Amérique du Nord</string>
+    <string name="calc_method_mwl">MWL - Ligue mondiale musulmane</string>
+    <string name="calc_method_makkah">MAKKAH - Umm al-Qura</string>
+    <string name="calc_method_egypt">EGYPTE - Autorité générale égyptienne d\'enquête</string>
+    <string name="calc_method_tehran">TEHRAN - Institut de géophysique, Université de Téhéran</string>
+    <string name="calc_method_jafari">JAFARI - Ithna Ashari</string>
+    <string name="asr_method_shafii">Shafii (Standard)</string>
+    <string name="asr_method_hanfi">Hanfi</string>
+    <string name="time_title">Format de l\'heure</string>
+    <string name="time_12">12 heures (exemple: 13h00)</string>
+    <string name="time_24">24 heures (exemple: 13h00)</string>
+    <string name="high_latitude">Réglage haute latitude</string>
+    <string name="high_latitude_explain">Pour les personnes vivant dans des latitudes plus élevées, les heures de prière peuvent être incorrectes. Si les heures de prière semblent incorrectes, essayez de changer cette valeur. Pendant les mois d\'été, la méthode One-Seventh produit un temps Fajr plus tard que la méthode basée sur l\'angle. Si vous utilisez une méthode basée sur l\'angle, veuillez changer ci-dessous.</string>
+    <string name="high_lat_none">Aucun</string>
+    <string name="high_lat_midnight">Minuit</string>
+    <string name="high_lat_one_seventh">Un septième de la nuit</string>
+    <string name="high_lat_angle_based">Basé sur l\'angle</string>
+    <string name="auto_location">Option 2: Détection automatique d\'emplacement</string>
+    <string name="detect_with_gps">Détecter à l\'aide du GPS</string>
+    <string name="detect_with_network">Détecter à l\'aide du réseau</string>
+    <string name="option_manual_location">Option 3: saisie manuelle de l\'emplacement</string>
+    <string name="longitude">Longitude…</string>
+    <string name="latitude">Latitude…</string>
+    <string name="set_manual_location">Définir l\'emplacement manuel</string>
+    <string name="already_set_location">Un emplacement est déjà défini. Si vous ne souhaitez pas le modifier, appuyez sur le bouton SUIVANT ci-dessous.</string>
+    <string name="please_enter_lng_lat">Veuillez entrer la longitude et la latitude</string>
+    <string name="gps_not_enable">Le GPS n\'est pas activé. Veuillez l\'activer à partir des paramètres de l\'appareil en haut de l\'écran près du WiFi (ou vous pouvez utiliser la localisation réseau)</string>
+    <string name="gps_no_last_location">Impossible d\'obtenir votre dernier emplacement</string>
+    <string name="network_location_not_enable">L\'emplacement réseau n\'est pas activé. Veuillez l\'activer à partir des paramètres de l\'appareil</string>
+    <string name="use_gps_anyway">Utilisez quand même le GPS</string>
+    <string name="gps_long_time">Le GPS peut prendre 2 à 3 minutes pour trouver un emplacement. Il doit également être à l\'extérieur. La recherche peut être plus rapide si vous avez choisi l\'emplacement réseau ou pour obtenir votre dernière position GPS connue. Qu\'est ce que tu choisis?</string>
+    <string name="gps_location">Localisation GPS</string>
+    <string name="use_my_last_location">Utiliser ma dernière position</string>
+    <string name="please_specify_location">Veuillez d\'abord spécifier l\'emplacement</string>
+    <string name="prayer_time_config">Configurations du temps de prière</string>
+    <string name="prayer_times">Horaires de prière</string>
+    <string name="hmonth1">Muharram</string>
+    <string name="hmonth2">Safar</string>
+    <string name="hmonth3">Rabi al-awwal</string>
+    <string name="hmonth4">Rabi al-achir</string>
+    <string name="hmonth5">Jumada al-awwal</string>
+    <string name="hmonth6">Jumada l-akhira</string>
+    <string name="hmonth7">Rajab</string>
+    <string name="hmonth8">Shaban</string>
+    <string name="hmonth9">Ramadan</string>
+    <string name="hmonth10">Shawwal</string>
+    <string name="hmonth11">Dhu l-Qaʿda</string>
+    <string name="hmonth12">Dhū l-Hijja</string>
+    <string name="gmonth1">janvier</string>
+    <string name="gmonth2">février</string>
+    <string name="gmonth3">Mars</string>
+    <string name="gmonth4">avril</string>
+    <string name="gmonth5">Peut</string>
+    <string name="gmonth6">Juin</string>
+    <string name="gmonth7">Juillet</string>
+    <string name="gmonth8">août</string>
+    <string name="gmonth9">septembre</string>
+    <string name="gmonth10">octobre</string>
+    <string name="gmonth11">novembre</string>
+    <string name="gmonth12">décembre</string>
+    <string name="systemLanguage">fr</string>
+    <string name="delete_alarm">Supprimer l\'alarme</string>
+    <string name="skip_next_alarm">Ignorer la prochaine alarme</string>
+    <string name="unskip_next_alarm">Annuler le saut de la prochaine alarme</string>
+    <string name="preview_alarm">Aperçu de l\'alarme</string>
+    <string name="duplicate_alarm">Alarme en double</string>
+
+    <string name="one_time">Une fois</string>
+    <string name="everyday">Tous les jours</string>
+    <string name="friday">Vendredi</string>
+    <string name="saturday">Samedi</string>
+    <string name="sunday">Dimanche</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Jeudi</string>
+
+    <string name="allDaysExpect1Day">Attendre au quotidien %1$s</string>
+
+    <string name="allDaysExpect2Days">Attendre au quotidien %1$s et %2$s</string>
+    <string name="not_connected">Vous n\'êtes pas connecté à Internet</string>
+    <string name="beforeTimeBy">- %1$d m</string>
+    <string name="afterTimeBy">+ %1$d m</string>
+    <string name="afterNDays">Après %1$d jours</string>
+    <string name="afterNHours">Après %1$s heures</string>
+    <string name="afterNMinutes">Après %1$s min.</string>
+    <string name="afterNHoursAndNMinutes">Après %1$s heures, %2$s min.</string>
+    <string name="afterNDaysAndNHours">Après %1$s jours, %2$s heures</string>
+    <string name="all_times">Chaque fois</string>
+    <string name="all_prayers">Toutes les prières</string>
+    <string name="time_s">Fois:</string>
+    <string name="select">Sélectionnez</string>
+    <string name="beforeTime">Avant l\'heure</string>
+    <string name="afterTime">Après le temps</string>
+    <string name="repeat_days">Jours de répétition</string>
+    <string name="alarm_tune">Alarm Tune</string>
+    <string name="default_tune">Réglage par défaut</string>
+    <string name="snooze_settings">Snooze Settings</string>
+    <string name="math_problems">Problèmes mathématiques</string>
+    <string name="barcode">Code à barre</string>
+    <string name="vibration">Vibration</string>
+    <string name="Default">Défaut</string>
+    <string name="phone_shaking">Secousse du téléphone</string>
+    <string name="please_add_a_barcode_to_use_to_stop_alarm">Veuillez ajouter un code-barres à utiliser pour arrêter l\'alarme</string>
+    <string name="barcode_added">Code à barres ajouté</string>
+    <string name="barcode_captured">Code-barres capturé!</string>
+    <string name="do_you_want_to_save_it">Voulez-vous l\'enregistrer maintenant?</string>
+    <string name="capture_barcode">Capture Barcode</string>
+    <string name="exit_preview">Quitter l\'aperçu</string>
+    <string name="your_device_not_support_feature">Votre appareil ne prend pas en charge cette fonctionnalité</string>
+    <string name="problem_difficulty">Niveau de difficulté du problème</string>
+    <string name="num_problems">Nombre de problèmes</string>
+    <string name="alarm_label_optional">Étiquette d\'alarme (facultatif)</string>
+    <string name="snooze_period_minutes">Période de répétition (en minutes). Zéro signifie pas de répétition</string>
+    <string name="max_snooze_count">Nombre de répétitions max</string>
+    <string name="delete_barcode">Supprimer le code-barres</string>
+    <string name="are_you_sure_delete_barcode">Êtes-vous sûr de vouloir supprimer le code-barres sélectionné?</string>
+    <string name="are_you_sure_delete_alarm">Êtes-vous sûr de vouloir supprimer l\'alarme sélectionnée?</string>
+    <string name="edit_barcode">Modifier le code-barres</string>
+    <string name="you_entered_empty">Vous avez entré une valeur vide</string>
+    <string name="please_select_barcode">Veuillez d\'abord sélectionner un code-barres</string>
+    <string name="to_preview_barcode_use">Pour prévisualiser l\'alarme de code-barres, choisissez d\'abord le code-barres utilisé pour arrêter l\'alarme</string>
+    <string name="difficulty_shake">Difficulté de secouer</string>
+    <string name="num_shakes">Nombre de shakes</string>
+    <string name="config_shakes">Configurer les shakes</string>
+    <string name="config_math_problems">Configurer les problèmes mathématiques</string>
+    <string name="config_snooze">Configurer Snooze</string>
+    <string name="select_barcode">Sélectionnez le code-barres</string>
+    <string name="select_camera">Sélectionnez la caméra</string>
+    <string name="flash">Éclat</string>
+    <string name="auto_focus">Mise au point automatique</string>
+    <string name="front_facing">Face avant</string>
+    <string name="rear_facing">Face arrière</string>
+    <string name="camera_id">ID de la caméra:</string>
+    <string name="err_choose_one_time">Si vous choisissez One Time, vous ne pouvez pas choisir d\'autres options également. Réessayer</string>
+    <string name="must_select_one_day">Vous devez sélectionner les jours de répétition, ou une fois pour aucune répétition</string>
+    <string name="when">Quand?</string>
+    <string name="err_select_prayer">Vous devez sélectionner une ou plusieurs heures de prière</string>
+    <string name="for_prayer_times">Pour les heures de prière</string>
+    <string name="alarm_stop_method">Méthode d\'arrêt d\'alarme</string>
+    <string name="add_alarm">Ajouter une alarme</string>
+    <string name="edit_alarm">Modifier l\'alarme</string>
+    <string name="alarm_label">Étiquette d\'alarme</string>
+    <string name="failled_to_play_file">Impossible de lire le fichier: %1$s</string>
+    <string name="select_alarm_tune">Sélectionnez la tonalité d\'alarme</string>
+    <string name="tune_no">Ton #%1$d</string>
+    <string name="err_tune_not_selected">Vous n\'avez sélectionné aucun ton. Veuillez réessayer ou appuyez sur annuler pour quitter sans sélectionner de tonalité</string>
+    <string name="write_title_of_alarm">Écrivez un titre pour l\'alarme…</string>
+    <string name="must_select_tune">Vous devez sélectionner un morceau</string>
+    <string name="less_than_minute">En moins d\'une minute</string>
+    <string name="please_give_permissions">Veuillez accorder des autorisations pour l\'application afin de fonctionner normalement</string>
+    <string name="go">Aller</string>
+    <string name="need_sound_permission">Cette application nécessite une autorisation pour pouvoir modifier le niveau du volume sonore. Cliquez sur ok pour afficher les paramètres et fournir l\'autorisation</string>
+    <string name="permission_required">Autorisation requise</string>
+    <string name="no_not_ask">Non, ne redemande pas</string>
+    <string name="changes_sound_no_affect">Les modifications du niveau sonore peuvent ne pas s\'appliquer.</string>
+    <string name="provide_permission">Fournir l\'autorisation</string>
+    <string name="incorrect_barcode">Code-barres incorrect. Veuillez réessayer</string>
+    <string name="alarm_is_snoozed_tab">L\'alarme est suspendue.\nAppuyez pour ignorer</string>
+    <string name="alarm_edit_wizard">Assistant de modification d\'alarme</string>
+    <string name="this_wizard_alarm">Cet assistant vous guide pour ajouter ou modifier une alarme en quelques étapes simples. Vous pouvez choisir l\'heure de prière de l\'alarme, les jours répétés, la tonalité de l\'alarme, comment arrêter de sonner l\'alarme, et plus encore.</string>
+    <string name="going_to_add_new_alarm">Cela va ajouter une nouvelle alarme. Cliquer sur Suivant pour continuer</string>
+    <string name="going_to_edit_alarm">Cela va modifier l\'alarme suivante. Cliquer sur Suivant pour continuer</string>
+    <string name="how_to_stop_alarm">Comment voulez-vous arrêter l\'alarme?</string>
+    <string name="specify_how_to_cancel_alarm">Veuillez spécifier comment annuler l\'alarme une fois qu\'elle a commencé à sonner. Par défaut, lorsque vous cliquez sur le bouton de fermeture, l\'alarme est annulée. Cependant, vous pouvez choisir d\'annuler uniquement après avoir secoué l\'appareil pendant une certaine période ou résoudre certains problèmes mathématiques.</string>
+    <string name="welcome">Weclome</string>
+    <string name="select_times_you_need">Sélectionnez les heures auxquelles vous devez régler l\'alarme</string>
+    <string name="specify_a_time_or_more_below">Veuillez spécifier une heure ou plus ci-dessous pour régler l\'alarme. Par exemple, si vous souhaitez définir une alarme pour Fajr, sélectionnez Fajr. Si vous souhaitez régler l\'alarme pour Juhmaah, sélectionnez zuhr</string>
+    <string name="before_or_after">Avant ou après?</string>
+    <string name="specify_whether_to_set_alarm_before_or_after_time">Veuillez spécifier s\'il faut régler l\'alarme avant ou après l\'heure. Par exemple, vous devrez peut-être régler l\'alarme 5 minutes avant Zuhr ou 20 minutes après Fajr</string>
+    <string name="hours">Heures</string>
+    <string name="minutes">Minutes</string>
+    <string name="repeated_alarm">Alarme répétée</string>
+    <string name="select_weekly_days_of_repeating_alarm">Sélectionnez les jours hebdomadaires de répétition de l\'alarme</string>
+    <string name="select_the_weekly_days_the_alarm_will_repeat_on">Sélectionnez les jours hebdomadaires pendant lesquels l\'alarme se répétera.</string>
+    <string name="alarm_times">Alarm Times</string>
+    <string name="alarm_days">Alarm Days</string>
+    <string name="select_alarm_sound">Sélectionnez le son de l\'alarme</string>
+    <string name="select_the_sound_you_want">Veuillez sélectionner le son que vous souhaitez écouter lorsque l\'alarme sonne.</string>
+    <string name="do_you_want_a_snooze_for_the_alarm">Voulez-vous une répétition de l\'alarme?</string>
+    <string name="please_specify_the_snooze_settings">Veuillez spécifier les paramètres de répétition d\'alarme. Ceci est utile pour vous donner une certaine période et relancer l\'alarme après cette période.</string>
+    <string name="how_many_snoozes">Combien de répétitions pouvez-vous obtenir au maximum?</string>
+    <string name="none">Aucun</string>
+    <string name="unlimited">Illimité</string>
+    <string name="customize">Personnaliser</string>
+    <string name="snooze_period">Période de répétition:</string>
+    <string name="select_if_repeat_alarm">Sélectionnez si vous souhaitez répéter l\'alarme</string>
+    <string name="specify_if__set_one_time_alarm_or_repeat">Veuillez spécifier si vous souhaitez régler une alarme unique ou, répétez l\'alarme tous les jours</string>
+    <string name="details_of_alarm">Détails de l\'alarme</string>
+    <string name="setting_the_details_of_alarm">Réglage des détails de l\'alarme</string>
+    <string name="sound_volume">Volume sonore</string>
+    <string name="set_the_volume_of_sound">Veuillez régler le volume du son pour l\'alarme ci-dessous</string>
+    <string name="should_the_alarm_vibrate_your_device">L\'alarme doit-elle faire vibrer votre appareil?</string>
+    <string name="please_set_label_for_alarm">Veuillez définir une étiquette (facultative) pour que l\'alarme s\'affiche sur l\'écran de sonnerie</string>
+    <string name="set_alarm_label">Définir l\'étiquette de l\'alarme</string>
+    <string name="nuclear_alert">Alerte nucléaire</string>
+    <string name="hazard_warning">Avertissement de danger</string>
+    <string name="car_guard">Car Guard</string>
+    <string name="old_peep_alarm">Old Peep Alarm</string>
+    <string name="hazard_traffic">Trafic dangereux</string>
+    <string name="annoying_surprise">Annoying Surprise</string>
+    <string name="loud_tune">Loud Tune</string>
+    <string name="rooster">Coq</string>
+    <string-array name="prayer_times">
+        <item>@string/fajr</item>
+        <item>@string/sun</item>
+        <item>@string/zuhr</item>
+        <item>@string/asr</item>
+        <item>@string/maghrib</item>
+        <item>@string/ishaa</item>
+    </string-array>
+    <string-array name="languages">
+        <item>ar|100</item>
+        <item>en|100</item>
+    </string-array>
+    <string-array name="repeat_days">
+        <item>@string/one_time</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+    </string-array>
+    <string-array name="onOff">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+    <string-array name="math_level_example">
+        <item>5 + 6</item>
+        <item>13 + 44</item>
+        <item>36 + 93 + 17</item>
+        <item>(53 x 4) + 11</item>
+        <item>(53 x 34) + 151</item>
+        <item>(755 x 57) + 6623</item>
+    </string-array>
+    <string name="ambulance_vehicle">Véhicule d\'ambulance</string>
+    <string name="police">Police</string>
+    <string name="cow">Vache</string>
+    <string name="horse">Cheval</string>
+    <string name="birds">Des oiseaux</string>
+    <string name="traffic_trouble">Problème de circulation</string>
+    <string name="shocks">Chocs</string>
+    <string name="crow">Corbeau</string>
+    <string name="extreme_alarm">Extreme Alarm</string>
+    <string name="warning_siren">Avertissement sirène</string>
+    <string name="annoying_tune_fixed">Annoying Tune Fixed</string>
+    <string name="upward_annoying_tune">Upward Annoying Tune</string>
+    <string name="bubbles">Bulles</string>
+    <string name="constant_wave">Onde constante</string>
+    <string name="high_snoring">Ronflement élevé</string>
+    <string name="monkey">Monkey</string>
+    <string name="metal_gear">Engrenage métallique</string>
+    <string name="old_alarm">Ancienne alarme</string>
+    <string name="tiger">Tigre</string>
+    <string name="drops">Gouttes</string>
+    <string name="phone_alert">Alerte téléphonique</string>
+    <string name="bubbles_fast">Bubbles Fast</string>
+    <string name="wolf">Loup</string>
+    <string name="back">Arrière</string>
+    <string name="next">Suivant</string>
+    <string name="complete">Achevée</string>
+    <string name="exit">Sortie</string>
+    <string name="snooze">Roupillon</string>
+    <string name="shake_the_device_to_stop_alarm">Secouez l\'appareil pour arrêter l\'alarme</string>
+    <string name="shakes">Shakes</string>
+    <string name="click_here_to_open_menu">Cliquez ici pour ouvrir le menu des applications et ajouter des alarmes</string>
+    <string name="open_app_alarm_menu">Ouvrir le menu d\'alarme de l\'application</string>
+    <string name="list_empty">La liste est vide.</string>
+    <string name="add_alarm_tab">Pour ajouter une alarme, appuyez sur le bouton rouge ci-dessous.</string>
+    <string name="dealing_with_list_of_alarms">Traitement de la liste des alarmes</string>
+    <string name="toturial_alarms">* Pour modifier une alarme, appuyez sur sa carte.\n* Pour désactiver / activer, cliquez sur la coche dans la carte.\n* Pour prévisualiser l\'alarme, cliquez dessus sur les 3 points</string>
+    <string name="communicate">Communiquer / Partager l\'application</string>
+    <string name="share_msg">Réveillez-vous pour Fajr! L\'application d\'alarme de prière musulmane ne s\'arrêtera jamais jusqu\'à ce que vous résolviez des mathématiques, secouiez votre appareil ou numérisiez un code-barres. C\'est gratuit, sans publicité!</string>
+    <string name="just_on_time">Exactement à l\'heure</string>
+    <string name="after_time_by">Après le temps par</string>
+    <string name="before_time_by">Avant l\'heure par</string>
+    <string name="nMinutes">%1$s min</string>
+    <string name="nHours">%1$s heure(s)</string>
+    <string name="nHoursAndNMinutes">%1$s heure(s), %2$s min</string>
+    <string name="share_app">Partager l\'application</string>
+    <string name="share_msg_dlg">Merci d\'utiliser l\'alarme de prière musulmane!\nVeuillez partager cette application pour gagner Thawab (récompense) d\'Allah!</string>
+    <string name="not_now">Pas maintenant</string>
+    <string name="alarm_ringing_service_descr">Exécute l\'alarme que vous avez sélectionnée pour la prière</string>
+    <string name="alarm_is_running_tab_to_dismiss">L\'alarme est en marche. Appuyez pour rejeter!</string>
+    <string name="battery_opts">Optimisations de batterie</string>
+    <string name="battery_msg">Sur certains appareils, Android empêche les applications de fonctionner en raison d\'optimisations de la batterie. Veuillez vous assurer de désactiver les optimisations pour cette application ou vous ne recevrez peut-être pas d\'alarmes!\nSi vous avez précédemment vérifié les paramètres, veuillez choisir Ne pas demander à nouveau</string>
+    <string name="open_settings">Ouvrir les paramètres</string>
+    <string name="pls_start_from_icon">Veuillez démarrer l\'application à partir de son icône</string>
+    <string name="cannot_start_new_alarm_old_running">Impossible de démarrer une nouvelle alarme. Une ancienne alarme en cours d\'exécution (vérifier la barre de notification)</string>
+    <string name="failed_delete_barcode_ref_records">Impossible de supprimer ce code-barres car certaines alarmes y sont liées</string>
+    <string name="or">OU</string>
+    <string name="azan_final">Azan End</string>
+    <string name="azan_full_abdulbasit">Azan Abdul-Baaset (complet)</string>
+    <string name="azan_full_deedat">Azan (complet)</string>
+    <string name="azan_full_egy">Azan Egypt 1 (complet)</string>
+    <string name="azan_full_egy2">Azan Egypt 2 (complet)</string>
+    <string name="azan_full_egy3">Azan Egypt 3 (complet)</string>
+    <string name="azan_haya">Azan Hayya</string>
+    <string name="azan_makkah">Azan Mekkah</string>
+    <string name="azan_otaiby">Azan Otaybi</string>
+    <string name="azan_qatami">Azan Qatami</string>
+    <string name="azan_quite">Azan</string>
+    <string name="azan_salat_khair">Azan Salat Khayr</string>
+    <string name="azan_salati">Azan Akbar</string>
+    <string name="device_feature_not_supported">Votre appareil ne prend pas en charge cette fonctionnalité</string>
+    <string name="option_1_search_your_city">Option 1: recherchez le nom de votre ville</string>
+    <string name="search_your_city">Recherchez votre ville</string>
+    <string name="automatically_stop_alarm_after">Arrête automatiquement l\'alarme après</string>
+    <string name="city_search_failed">Impossible de charger les résultats de la recherche. Essayez une adresse plus spécifique, modifiez le texte de recherche ou utilisez l\'option 2</string>
+    <string name="times_invalid">Veuillez fournir des paramètres valides pour effectuer des heures de prière valides</string>
+</resources>

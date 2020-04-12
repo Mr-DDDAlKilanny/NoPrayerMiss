@@ -62,33 +62,26 @@ public class SelectTuneAdapter extends ArrayAdapter<Tune> {
         radioButtonSel.setChecked(item.selected);
         //radioButtonSel.setEnabled(false);
         radioButtonSel.setClickable(false);
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setSelectedTune(item);
-            }
-        });
+        rowView.setOnClickListener(view -> setSelectedTune(item));
         final AppCompatImageButton btn = rowView.findViewById(R.id.btnPreviewTune);
-        btn.setImageDrawable(getContext().getResources().getDrawable(item.playing ?
-                android.R.drawable.ic_media_pause
-                : android.R.drawable.ic_media_play));
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (item.playing) {
-                    stopPlayback();
-                    for (int i = 0; i < getCount(); ++i)
-                        getItem(i).playing = false;
-                } else {
-                    playTune(getContext(), item.rawResId);
-                    for (int i = 0; i < position; ++i)
-                        getItem(i).playing = false;
-                    item.playing = true;
-                    for (int i = position + 1; i < getCount(); ++i)
-                        getItem(i).playing = false;
-                }
-                notifyDataSetChanged();
+
+        btn.setImageResource(item.playing ?
+                R.drawable.baseline_pause_circle_outline_24
+                : R.drawable.baseline_play_circle_outline_24);
+        btn.setOnClickListener(view -> {
+            if (item.playing) {
+                stopPlayback();
+                for (int i = 0; i < getCount(); ++i)
+                    getItem(i).playing = false;
+            } else {
+                playTune(getContext(), item.rawResId);
+                for (int i = 0; i < position; ++i)
+                    getItem(i).playing = false;
+                item.playing = true;
+                for (int i = position + 1; i < getCount(); ++i)
+                    getItem(i).playing = false;
             }
+            notifyDataSetChanged();
         });
         return rowView;
     }

@@ -236,15 +236,17 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     @Override
     public void onResetSleepTimeout() {
         if (mBinder != null) {
-            mBinder.getService().resetCountDown();
+            mBinder.getService().resetSolveAlarmCountDown();
             mProgressBar.setProgress(mProgressBar.getMax());
         }
     }
 
     @Override
     public void onDismissed(boolean isDone) {
-        if (mBinder != null)
-            mBinder.getService().onDismissed(isDone);
+        if (mBinder != null) {
+            mBinder.getService().onDismissed(isDone ? AlarmRingingService.ALARM_DISMISS_DONE
+                    : AlarmRingingService.ALARM_DISMISS_SNOOZE);
+        }
         finish();
     }
 
@@ -265,20 +267,12 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
         mProgressBar.setProgress(mProgressBar.getMax());
         mProgressBar.setVisibility(View.VISIBLE);
-        mBinder.getService().onCountDownChanged = new Function<Integer, Void>() {
-            @Override
-            public Void apply(Integer input) {
-                mProgressBar.setProgress(input);
-                if (input == 0) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            cancelAttempt();
-                        }
-                    });
-                }
-                return null;
+        mBinder.getService().onCountDownChanged = input -> {
+            mProgressBar.setProgress(input);
+            if (input == 0) {
+                runOnUiThread(this::cancelAttempt);
             }
+            return null;
         };
         boolean isSilent = mBinder.getService().onAttemptingDismissAlarm();
 

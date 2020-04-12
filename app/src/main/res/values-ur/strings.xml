@@ -1,0 +1,362 @@
+<resources>
+    <string name="app_name">مسلمان کا الارم</string>
+
+    <string name="navigation_drawer_open">نیوی گیشن دراز</string>
+    <string name="navigation_drawer_close">نیویگیشن دراج بند کریں</string>
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">فجر ، قیوم ، یا کسی دعا کے لئے جاگنا</string>
+    <string name="nav_header_desc">نیویگیشن ہیڈر</string>
+    <string name="action_settings">ترتیبات</string>
+    <string name="menu_home">گھر</string>
+    <string name="menu_alarms">الارمز</string>
+    <string name="menu_slideshow">سلائیڈ شو</string>
+    <string name="menu_Settings">ترتیبات</string>
+    <string name="menu_share">بانٹیں</string>
+    <string name="menu_send">بھیجیں</string>
+    <string name="tab_text_1">ٹن</string>
+    <string name="tab_text_2">بلند آواز</string>
+    <string name="tab_text_3">فائلوں</string>
+    <string name="fajr">فجر</string>
+    <string name="sun">طلوع</string>
+    <string name="zuhr">ظہر</string>
+    <string name="asr">عصر</string>
+    <string name="maghrib">مغرب</string>
+    <string name="ishaa">عشاء</string>
+    <string name="request_app_permissinos">مسلم الارم ایپ میں خوش آمدید! آپ کے مقام کا استعمال کرتے ہوئے نماز کے وقت کے حساب کے لئے ایپ کو مقام کی اجازت کی ضرورت ہے۔ اگر اشارہ کیا گیا تو براہ کرم اپنے مقام تک رسائی کی اجازت دیں۔ #</string>
+    <string name="location_net">نیٹ ورک (انٹرنیٹ)</string>
+    <string name="gps">GPS</string>
+    <string name="rejected_permission">آپ نے اپنے مقام تک رسائی کو مسترد کردیا ہے۔ ایپ اس کے بغیر کام نہیں کرسکتی ہے۔ اجازت کی درخواست کو دوبارہ دکھانے کے لئے ایپ کو دوبارہ شروع کریں یا درخواست کی ترتیبات سے اس اجازت کو اہل بنائیں۔</string>
+    <string name="cannot_get_location">آپ کا مقام نہیں مل سکتا۔ نماز کے اوقات کا حساب لگانے کے لئے فون کی ترتیبات پر جائیں اور مقام کو قابل بنائیں</string>
+    <string name="config_title">براہ کرم صلات کے اوقات کو اپنی ضروریات کے مطابق ترتیب دینے میں ایک لمحہ لگائیں۔ #</string>
+    <string name="explain_default_config">صلات کے اوقات کو مسلم ورلڈ لیگ کے حساب کتاب کے طریقہ کار ، شفیع فقہا عصر کے وقت کے حساب سے ترتیب دیا جاتا ہے اور اعلی طول البلد میں رہنے والے لوگوں کے لئے کوئی ایڈجسٹمنٹ نہیں کی جاتی ہے۔ حساب کتاب کے دیگر طریقوں میں شامل ہیں: کراچی ، آئی ایس این اے ، مکہ مکرمہ ، مصر ، تہران ، جعفری آپ پہلے سے طے شدہ ترتیبات استعمال کرنے کا انتخاب کرسکتے ہیں (پریشان نہ ہوں کہ آپ انہیں بعد میں تبدیل کرسکتے ہیں) ، یا ذیل میں اپنی ضروریات کے مطابق صلاat اوقات مرتب کریں۔ #</string>
+    <string name="title_onboarding_calc_method">نماز کے اوقات مرتب کریں</string>
+    <string name="button_configure_now">ابھی ترتیبات تشکیل دیں \u2192</string>
+    <string name="button_use_default">پہلے سے طے شدہ ترتیبات استعمال کریں \u2192</string>
+    <string name="button_prev">\u2190 پچھلا</string>
+
+
+    <string name="button_next">اگلے \u2192</string>
+    <string name="button_done">ہو گیا</string>
+    <string name="calc_method">حساب کتاب</string>
+
+
+    <!-- Onboarding Calc method -->
+    <string name="calc_method_explain">
+        براہ کرم اپنے علاقے میں صلوات کے لئے حساب کتاب کا طریقہ منتخب کریں۔ مسلم ورلڈ لیگ زیادہ تر لوگوں کے لئے کام کرے۔
+    </string>
+    <string name="asr_method">عصر فقہی</string>
+    <string name="asr_method_explain">
+        شفیع وہ معیار ہے جو اکثر استعمال ہوتا ہے۔ براہ کرم وہ طریقہ منتخب کریں جو آپ کے لئے مناسب ہے۔ اگر آپ کو یقین نہیں ہے تو ، شفیع کو منتخب چھوڑیں ، آپ اسے بعد میں ہمیشہ تبدیل کرسکتے ہیں۔
+    </string>
+    <string name="calc_method_karachi">کراچی - یونیورسٹی آف اسلامک سائنسز</string>
+    <string name="calc_method_isna">ISNA - اسلامی سوسائٹی آف شمالی امریکہ</string>
+    <string name="calc_method_mwl">MWL - مسلم ورلڈ لیگ</string>
+    <string name="calc_method_makkah">مکہ - ام القراء</string>
+    <string name="calc_method_egypt">EGYPT - مصری جنرل اتھارٹی آف سروے</string>
+    <string name="calc_method_tehran">تہران - تہران یونیورسٹی برائے جیو فزکس ، انسٹی ٹیوٹ</string>
+    <string name="calc_method_jafari">جعفری۔ اتھنہ اشعری</string>
+    <string name="asr_method_shafii">شفیع (معیاری)</string>
+    <string name="asr_method_hanfi">حنفی</string>
+    <string name="time_title">وقت کی ترتیب</string>
+    <string name="time_12">12 گھنٹے (مثال کے طور پر: 01:00 pm)</string>
+    <string name="time_24">24 گھنٹے (مثال کے طور پر: 13:00)</string>
+    <string name="high_latitude">عرض البلد ایڈجسٹمنٹ</string>
+    <string name="high_latitude_explain">اعلی طول البلد میں رہنے والے لوگوں کے لئے ، نماز کے اوقات غلط ہوسکتے ہیں۔ اگر نماز کے اوقات غلط معلوم ہوں تو ، اس قدر کو تبدیل کرنے کی کوشش کریں۔ موسم گرما کے مہینوں کے دوران ایکویں ساتواں طریقہ زاویہ پر مبنی طریقہ کے مقابلے میں بعد میں فجر کا وقت پیدا کرتا ہے۔ اگر آپ کو زاویہ پر مبنی طریقہ کار ہے تو ، براہ کرم نیچے تبدیل کریں #</string>
+    <string name="high_lat_none">کوئی نہیں</string>
+    <string name="high_lat_midnight">آدھی رات</string>
+    <string name="high_lat_one_seventh">رات کا ساتواں حصہ</string>
+    <string name="high_lat_angle_based">زاویہ پر مبنی</string>
+    <string name="auto_location">اختیار 2: خودکار مقام کا پتہ لگانا</string>
+    <string name="detect_with_gps">GPS کا استعمال کریں کا پتہ لگائیں</string>
+    <string name="detect_with_network">نیٹ ورک کے استعمال کا پتہ لگائیں</string>
+    <string name="option_manual_location">اختیار 3: دستی مقام میں اندراج</string>
+    <string name="longitude">طول البلد…</string>
+    <string name="latitude">طول…</string>
+    <string name="set_manual_location">دستی مقام مقرر کریں</string>
+    <string name="already_set_location">ایک جگہ پہلے ہی متعین ہے۔ اگر آپ اسے تبدیل نہیں کرنا چاہتے ہیں تو ، نیچے نیکسٹ بٹن پر ٹیپ کریں۔ #</string>
+    <string name="please_enter_lng_lat">براہ کرم طول البلد اور عرض البلد درج کریں</string>
+    <string name="gps_not_enable">GPS فعال نہیں ہے۔ براہ کرم اسے WiFi کے قریب اسکرین ٹاپ میں آلہ کی ترتیبات سے فعال کریں (یا آپ نیٹ ورک کا مقام استعمال کرسکتے ہیں)</string>
+    <string name="gps_no_last_location">اپنا آخری مقام نہیں مل سکتا</string>
+    <string name="network_location_not_enable">نیٹ ورک کا مقام اہل نہیں ہے۔ براہ کرم اسے آلے کی ترتیبات سے فعال کریں</string>
+    <string name="use_gps_anyway">ویسے بھی GPS کا استعمال کریں</string>
+    <string name="gps_long_time">GPS کو مقام تلاش کرنے میں 2–3 منٹ لگ سکتے ہیں۔ اسے باہر بھی رہنے کی ضرورت ہے۔ اگر آپ نے نیٹ ورک کی جگہ کا انتخاب کیا ہے یا اپنے آخری معلوم GPS مقام حاصل کرنے کے لئے تلاش تیز ہوسکتی ہے۔ آپ کیا منتخب کرتے ہیں؟ #</string>
+    <string name="gps_location">GPS مقام</string>
+    <string name="use_my_last_location">میرا آخری مقام استعمال کریں</string>
+    <string name="please_specify_location">براہ کرم پہلے مقام کی وضاحت کریں</string>
+    <string name="prayer_time_config">نماز کے وقت کی تشکیلات</string>
+    <string name="prayer_times">نماز کے اوقات</string>
+    <string name="or">یا</string>
+    <string name="hmonth1">محرم</string>
+    <string name="hmonth2">صفر</string>
+    <string name="hmonth3">ربیع الاول</string>
+    <string name="hmonth4">ربیع الاخر</string>
+    <string name="hmonth5">جمعہ الاول</string>
+    <string name="hmonth6">جمعہ ایل الاخیرا</string>
+    <string name="hmonth7">رجب</string>
+    <string name="hmonth8">شعبان</string>
+    <string name="hmonth9">رمضان</string>
+    <string name="hmonth10">شوال</string>
+    <string name="hmonth11">ذو القضا</string>
+    <string name="hmonth12">ذی الحجہ</string>
+    <string name="gmonth1">جنوری</string>
+    <string name="gmonth2">فروری</string>
+    <string name="gmonth3"># مارچ</string>
+    <string name="gmonth4">اپریل</string>
+    <string name="gmonth5">مئی</string>
+    <string name="gmonth6">جون</string>
+    <string name="gmonth7">جولائی</string>
+    <string name="gmonth8">اگست</string>
+    <string name="gmonth9">ستمبر</string>
+    <string name="gmonth10">اکتوبر</string>
+    <string name="gmonth11">نومبر</string>
+    <string name="gmonth12">دسمبر</string>
+    <string name="systemLanguage">en</string>
+    <string name="delete_alarm">الارم کو حذف کریں</string>
+    <string name="skip_next_alarm">اگلا الارم چھوڑیں</string>
+    <string name="unskip_next_alarm">اگلے الارم کو چھوڑیں</string>
+    <string name="preview_alarm">پیش نظارہ الارم</string>
+    <string name="duplicate_alarm">ڈپلیکیٹ الارم</string>
+    <string name="one_time">ایک بار</string>
+    <string name="everyday">ہر روز</string>
+    <string name="friday">جمعہ</string>
+    <string name="saturday">ہفتہ</string>
+    <string name="sunday">اتوار</string>
+    <string name="monday">پیر</string>
+    <string name="tuesday">منگل</string>
+    <string name="wednesday">بدھ</string>
+    <string name="thursday">جمعرات</string>
+
+    <string name="allDaysExpect1Day">ہر دن کی توقع %1$s</string>
+    <string name="allDaysExpect2Days">ہر دن کی توقع %1$s اور %2$s</string>
+    <string name="not_connected">آپ انٹرنیٹ سے مربوط نہیں ہیں</string>
+    <string name="beforeTimeBy">- %1$d م</string>
+    <string name="afterTimeBy">+ %1$d م</string>
+    <string name="afterNDays">%1$d دن کے بعد</string>
+    <string name="afterNHours">%1$s گھنٹے کے بعد</string>
+    <string name="afterNMinutes">%1$s منٹ کے بعد</string>
+    <string name="afterNHoursAndNMinutes">%1$s گھنٹے ، %2$s منٹ کے بعد.</string>
+    <string name="afterNDaysAndNHours">%1$s دن ، %2$s گھنٹے کے بعد</string>
+    <string name="all_times">تمام اوقات</string>
+    <string name="all_prayers">تمام دعائیں</string>
+    <string name="time_s">ٹائمز:</string>
+    <string name="select">منتخب کریں</string>
+    <string name="beforeTime">وقت سے پہلے</string>
+    <string name="afterTime">بعد از وقت</string>
+    <string name="repeat_days">دن دہرائیں</string>
+    <string name="alarm_tune">الارم سر</string>
+    <string name="default_tune">ڈیفالٹ ٹون</string>
+    <string name="snooze_settings">اسنوز کی ترتیبات</string>
+    <string name="math_problems">ریاضی کے مسائل</string>
+    <string name="barcode">بارکوڈ</string>
+    <string name="vibration">تھرتھراہٹ</string>
+    <string name="Default">ڈیفالٹ</string>
+    <string name="phone_shaking">فون لرزنا</string>
+    <string name="please_add_a_barcode_to_use_to_stop_alarm">الارم کو روکنے کے لئے براہ کرم بار کوڈ شامل کریں</string>
+    <string name="barcode_added">بارکوڈ نے  شامل کیا</string>
+    <string name="barcode_captured">بارکوڈ پکڑا گیا! #</string>
+    <string name="do_you_want_to_save_it">کیا آپ ابھی اسے محفوظ کرنا چاہتے ہیں؟ #</string>
+    <string name="capture_barcode">بار کوڈ کیپچر کریں</string>
+    <string name="exit_preview">باہر نکلیں پیش نظارہ</string>
+    <string name="your_device_not_support_feature">آپ کا آلہ اس خصوصیت کی حمایت نہیں کرتا ہے</string>
+    <string name="problem_difficulty">مسئلہ مشکل سطح</string>
+    <string name="num_problems">مسائل کی تعداد</string>
+    <string name="alarm_label_optional">الارم لیبل (اختیاری)</string>
+    <string name="snooze_period_minutes">اسنوز پیریڈ (منٹ میں) صفر کا مطلب ہے کہ اسنا کو #</string>
+    <string name="max_snooze_count">اسنوز گنتی کی زیادہ سے زیادہ تعداد</string>
+    <string name="delete_barcode">بار کوڈ کو حذف کریں</string>
+    <string name="are_you_sure_delete_barcode">کیا آپ واقعی منتخب بارکوڈ کو حذف کرنا چاہتے ہیں؟ #</string>
+    <string name="are_you_sure_delete_alarm">کیا آپ واقعی منتخب الارم کو حذف کرنا چاہتے ہیں؟ #</string>
+    <string name="edit_barcode">ترمیم بارکوڈ</string>
+    <string name="you_entered_empty">آپ نے خالی قیمت داخل کردی ہے</string>
+    <string name="please_select_barcode">براہ کرم پہلے بار کوڈ منتخب کریں</string>
+    <string name="to_preview_barcode_use">بار کوڈ الارم کا جائزہ لینے کے لئے ، پہلے منتخب کریں کہ کون سے بار کوڈ الارم کو روکنے کے لئے استعمال ہوتا ہے</string>
+    <string name="difficulty_shake">ہلانے کی مشکل</string>
+    <string name="num_shakes">ہلاوں کی تعداد</string>
+    <string name="config_shakes">ہلاکتوں کو تشکیل دیں</string>
+    <string name="config_math_problems">ریاضی کے مسائل کی تشکیل کریں</string>
+    <string name="config_snooze">اسنوز کی تشکیل کریں</string>
+    <string name="select_barcode">بار کوڈ منتخب کریں</string>
+    <string name="select_camera">کیمرہ منتخب کریں</string>
+    <string name="flash">فلیش</string>
+    <string name="auto_focus">آٹو فوکس</string>
+    <string name="front_facing">سامنے کا سامنا</string>
+    <string name="rear_facing">پیچھے کا سامنا</string>
+    <string name="camera_id">کیمرہ ID:</string>
+    <string name="err_choose_one_time">اگر آپ ایک بار کا انتخاب کرتے ہیں تو ، آپ دوسرے اختیارات کا انتخاب بھی نہیں کرسکتے ہیں۔ دوبارہ کوشش کریں</string>
+    <string name="must_select_one_day">آپ دہرانے والے دن منتخب کریں ، یا ایک بار بغیر تکرار کے</string>
+    <string name="when">کب؟ #</string>
+    <string name="err_select_prayer">آپ کو نماز کے ایک یا ایک سے زیادہ اوقات کا انتخاب کرنا ہوگا</string>
+    <string name="for_prayer_times">نماز کے اوقات کے لئے</string>
+    <string name="alarm_stop_method">الارم اسٹاپ کا طریقہ</string>
+    <string name="add_alarm">الارم شامل کریں</string>
+    <string name="edit_alarm">الارم میں ترمیم کریں</string>
+    <string name="alarm_label">الارم لیبل</string>
+    <string name="failled_to_play_file">فائل چلانے میں ناکام: %1$s</string>
+    <string name="select_alarm_tune">الارم سر منتخب کریں</string>
+    <string name="tune_no">سر #%1$d</string>
+    <string name="err_tune_not_selected">آپ نے کوئی لہجہ منتخب نہیں کیا۔ براہ کرم دوبارہ کوشش کریں یا کوئی ٹون منتخب کیے بغیر باہر نکلنے کیلئے منسوخ کریں پر تھپتھپائیں</string>
+    <string name="write_title_of_alarm">الارم کے لئے ایک عنوان لکھیں…</string>
+    <string name="must_select_tune">آپ کو ایک سر منتخب کرنا ہوگا</string>
+    <string name="less_than_minute">منٹ سے بھی کم وقت میں</string>
+    <string name="please_give_permissions">عام طور پر کام کرنے کے ل app براہ کرم ایپ کو اجازت دیں۔</string>
+    <string name="go">جاؤ</string>
+    <string name="need_sound_permission">صوتی حجم کی سطح کو تبدیل کرنے کے ل This اس ایپ کو اجازت کی ضرورت ہے۔ ترتیبات کو ظاہر کرنے اور اجازت دینے کیلئے ٹھیک ہے پر کلک کریں</string>
+    <string name="permission_required">اجازت درکار ہے</string>
+    <string name="no_not_ask">نہیں ، دوبارہ نہ پوچھیں</string>
+    <string name="changes_sound_no_affect">آواز کی سطح میں تبدیلیاں لاگو نہیں ہوسکتی ہیں۔ #</string>
+    <string name="provide_permission">اجازت فراہم کریں</string>
+    <string name="incorrect_barcode">غلط بار کوڈ۔ دوبارہ کوشش کریں</string>
+    <string name="alarm_is_snoozed_tab">الارم اسنوز کیا گیا ہے۔\nخارج کرنے کے لئے تھپتھپائیں</string>
+    <string name="alarm_edit_wizard">الارم میں ترمیم وزرڈ</string>
+    <string name="this_wizard_alarm">یہ وزرڈ آسان اقدامات میں آپ کو الارم شامل کرنے یا ترمیم کرنے کی رہنمائی کرتا ہے۔ آپ الارم کی نماز کا وقت ، دہرانے والے دن ، خطرے کی گھنٹی ، گھنٹی بجنے سے کیسے روک سکتے ہیں ، وغیرہ کا انتخاب کرسکتے ہیں۔</string>
+    <string name="going_to_add_new_alarm">یہ ایک نیا الارم شامل کرنے جارہا ہے۔ جاری رکھنے کے لئے اگلا پر کلک کریں</string>
+    <string name="going_to_edit_alarm">یہ مندرجہ ذیل الارم میں ترمیم کرنے جا رہا ہے۔ جاری رکھنے کے لئے اگلا پر کلک کریں</string>
+    <string name="how_to_stop_alarm">آپ الارم کو کس طرح روکنا چاہتے ہیں؟</string>
+    <string name="specify_how_to_cancel_alarm">براہ کرم واضح کریں کہ الارم بجنے کے بعد اسے کیسے منسوخ کریں۔ پہلے سے طے شدہ طور پر ، جب آپ برطرفی کے بٹن پر کلک کرتے ہیں تو ، الارم منسوخ ہوجاتا ہے۔ تاہم ، آپ کچھ مدت کے لئے آلہ لرزنے کے بعد ہی منسوخ کرنے کا انتخاب کرسکتے ہیں یا ریاضی کے کچھ مسائل حل کر سکتے ہیں۔</string>
+    <string name="welcome">عجیب</string>
+    <string name="select_times_you_need">الارم طے کرنے کے اوقات کو منتخب کریں</string>
+    <string name="specify_a_time_or_more_below">الارم لگانے کے لئے نیچے یا زیادہ وقت بتائیں۔ مثال کے طور پر ، اگر آپ فجر کیلئے الارم لگانا چاہتے ہیں تو فجر کو منتخب کریں۔ اگر آپ جمعہ کے لئے الارم رکھنا چاہتے ہیں تو ، ظہر کو منتخب کریں</string>
+    <string name="before_or_after">پہلے یا بعد میں؟</string>
+    <string name="specify_whether_to_set_alarm_before_or_after_time">براہ کرم واضح کریں کہ وقت سے پہلے یا بعد میں الارم لگانا ہے یا نہیں۔ مثال کے طور پر ، آپ کو ال ظہر سے 5 منٹ قبل یا فجر کے 20 منٹ بعد الارم لگانے کی ضرورت ہوگی</string>
+    <string name="hours">گھنٹے</string>
+    <string name="minutes">منٹ</string>
+    <string name="repeated_alarm">بار بار الارم</string>
+    <string name="select_weekly_days_of_repeating_alarm">دہرانے کے الارم کے ہفتہ وار دن منتخب کریں</string>
+    <string name="select_the_weekly_days_the_alarm_will_repeat_on">الارم دہرایا جائے گا ہفتہ کے دن منتخب کریں.</string>
+    <string name="alarm_times">الارم ٹائمز</string>
+    <string name="alarm_days">الارم کے دن</string>
+    <string name="select_alarm_sound">الارم صوتی منتخب کریں</string>
+    <string name="select_the_sound_you_want">الارم بجنے پر براہ کرم وہ آواز منتخب کریں جو آپ بجانا چاہتے ہیں۔</string>
+    <string name="do_you_want_a_snooze_for_the_alarm">کیا آپ الارم کے لئے اسنوز چاہتے ہیں؟</string>
+    <string name="please_specify_the_snooze_settings">الارم کے لئے براہ کرم اسنوز کی ترتیبات کی وضاحت کریں۔ یہ آپ کو کچھ مدت دینے اور اس مدت کے بعد دوبارہ الارم چلانے کے لئے مفید ہے۔</string>
+    <string name="how_many_snoozes">آپ زیادہ سے زیادہ کتنے سنوز حاصل کرسکتے ہیں؟</string>
+    <string name="none">کوئی نہیں</string>
+    <string name="unlimited">لا محدود</string>
+    <string name="customize">اپنی مرضی کے مطابق</string>
+    <string name="snooze_period">اسنوز کا دورانیہ:</string>
+    <string name="select_if_repeat_alarm">اگر آپ الارم دہرانا چاہتے ہیں تو منتخب کریں</string>
+    <string name="specify_if__set_one_time_alarm_or_repeat">براہ کرم بتائیں کہ کیا آپ ایک وقتی الارم مرتب کرنا چاہتے ہیں یا ، ہفتہ کے دنوں میں الارم دہرائیں</string>
+    <string name="details_of_alarm">الارم کی تفصیلات</string>
+    <string name="setting_the_details_of_alarm">الارم کی تفصیلات مرتب کرنا</string>
+    <string name="sound_volume">صوتی حجم</string>
+    <string name="set_the_volume_of_sound">الارم کے لئے آواز کا حجم ذیل میں درج کریں</string>
+    <string name="should_the_alarm_vibrate_your_device">کیا الارم آپ کے آلے کو کمپن کرے؟</string>
+    <string name="please_set_label_for_alarm">بجنے والی اسکرین میں الارم ظاہر کرنے کے ل Please براہ کرم (اختیاری) لیبل مرتب کریں</string>
+    <string name="set_alarm_label">الارم لیبل مرتب کریں</string>
+    <string name="nuclear_alert">جوہری انتباہ</string>
+    <string name="hazard_warning">خطرات کا انتباہ</string>
+    <string name="car_guard">کار گارڈ</string>
+    <string name="old_peep_alarm">پرانا جھانکنے کا الارم</string>
+    <string name="hazard_traffic">خطرہ ٹریفک</string>
+    <string name="annoying_surprise">پریشان کن حیرت</string>
+    <string name="loud_tune">بلند آواز</string>
+    <string name="rooster">مرغی</string>
+    <string name="ambulance_vehicle">ایمبولینس گاڑی</string>
+    <string name="police">پولیس</string>
+    <string name="cow">گائے</string>
+    <string name="horse">گھوڑا</string>
+    <string name="birds">پرندے</string>
+    <string name="traffic_trouble">ٹریفک کی پریشانی</string>
+    <string name="shocks">جھٹکے</string>
+    <string name="crow">کرو</string>
+    <string name="extreme_alarm">انتہائی الارم</string>
+    <string name="warning_siren">انتباہی سائرن</string>
+    <string name="annoying_tune_fixed">پریشان کن سر فکسڈ</string>
+    <string name="upward_annoying_tune">پریشان کن سر</string>
+    <string name="bubbles">بلبلے</string>
+    <string name="constant_wave">مستحکم لہر</string>
+    <string name="high_snoring">اعلی خرراٹی</string>
+    <string name="monkey">بندر</string>
+    <string name="metal_gear">دھاتی گیئر</string>
+    <string name="old_alarm">پرانا الارم</string>
+    <string name="tiger">چیتا</string>
+    <string name="drops">قطرے</string>
+    <string name="phone_alert">فون الرٹ</string>
+    <string name="bubbles_fast">بلبل روزہ</string>
+    <string name="wolf">بھیڑیا</string>
+    <string name="back">پیچھے</string>
+    <string name="next">اگلے</string>
+    <string name="complete">مکمل</string>
+    <string name="exit">باہر نکلیں</string>
+    <string name="snooze">اسنوز کریں</string>
+    <string name="shake_the_device_to_stop_alarm">الارم کو روکنے کے لئے آلہ ہلائیں</string>
+    <string name="shakes">ہلاتا ہے</string>
+    <string name="click_here_to_open_menu">درخواست کا مینو کھولنے اور الارم شامل کرنے کے لئے یہاں کلک کریں</string>
+    <string name="open_app_alarm_menu">ایپ کے الارم مینو کو کھولیں</string>
+    <string name="list_empty">فہرست خالی ہے۔</string>
+    <string name="add_alarm_tab">الارم شامل کرنے کے لئے ، نیچے سرخ بٹن کو تھپتھپائیں۔</string>
+    <string-array name="prayer_times">
+        <item>@string/fajr</item>
+        <item>@string/sun</item>
+        <item>@string/zuhr</item>
+        <item>@string/asr</item>
+        <item>@string/maghrib</item>
+        <item>@string/ishaa</item>
+    </string-array>
+    <string-array name="languages">
+        <item>ar|100</item>
+        <item>en|100</item>
+    </string-array>
+    <string-array name="repeat_days">
+        <item>@string/one_time</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+    </string-array>
+    <string-array name="onOff">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+    <string-array name="math_level_example">
+        <item>5 + 6</item>
+        <item>13 + 44</item>
+        <item>36 + 93 + 17</item>
+        <item>(53 x 4) + 11</item>
+        <item>(53 x 34) + 151</item>
+        <item>(755 x 57) + 6623</item>
+    </string-array>
+    <string name="dealing_with_list_of_alarms">الارم کی فہرست سے نمٹنا</string>
+    <string name="toturial_alarms">* الارم میں ترمیم کرنے کے لئے ، کارڈ پر تھپتھپائیں۔\n*غیر فعال / فعال کرنے کے لئے ، کارڈ میں چیک پر کلک کریں۔\n*الارم کا پیش نظارہ کرنے کے لئے ، اس پر 3 نقطوں پر کلک کریں</string>
+    <string name="communicate">مواصلت / اشتراک ایپ</string>
+    <string name="share_msg">فجر کے لئے جاگو! مسلم پرائمر الارم ایپ کبھی نہیں رکے گی جب تک کہ آپ ریاضی کو حل نہ کریں ، اپنے آلے کو جھاڑیں ، یا بار کوڈ اسکین نہ کریں۔ یہ مفت ہے ، کوئی اشتہار نہیں!</string>
+    <string name="just_on_time">بالکل وقت پر</string>
+    <string name="after_time_by">وقت کے بعد</string>
+    <string name="before_time_by">وقت سے پہلے</string>
+    <string name="nMinutes">%1$s منٹ</string>
+    <string name="nHours">%1$s گھنٹے</string>
+    <string name="nHoursAndNMinutes">%1$s گھنٹے، %2$s منٹ</string>
+    <string name="share_app">ایپ شیئر کریں</string>
+    <string name="share_msg_dlg">مسلم نماز الارم استعمال کرنے کے لئے آپ کا شکریہ!\nاللہ کی طرف سے ثواب حاصل کرنے کے لئے یہ ایپ شیئر کریں!</string>
+    <string name="not_now">ابھی نہیں</string>
+    <string name="alarm_ringing_service_descr">آپ نے دعا کے لئے منتخب کردہ الارم کو چلاتا ہے</string>
+    <string name="alarm_is_running_tab_to_dismiss">الارم چل رہا ہے۔ برخاست کرنے کے لئے تھپتھپائیں!</string>
+    <string name="battery_opts">بیٹری کی اصلاح</string>
+    <string name="battery_msg">کچھ ڈیوائسز پر ، android ڈاؤن لوڈ ، بیٹری کی اصلاح کے سبب ایپس کو چلانے سے روکتا ہے۔ براہ کرم یقینی بنائیں کہ آپ اس ایپ کیلئے بیٹری کی اصلاح کو غیر فعال کردیں گے یا آپ کو الارم موصول نہیں ہوگا!\nاگر آپ نے پہلے کی ترتیبات کی جانچ پڑتال کی ہے تو ، براہ کرم دوبارہ مت پوچھیں کا انتخاب کریں</string>
+    <string name="open_settings">سیٹنگیں کھولیں</string>
+    <string name="pls_start_from_icon">براہ کرم ایپ کو اس کے آئیکن سے شروع کریں</string>
+    <string name="cannot_start_new_alarm_old_running">نیا الارم شروع نہیں کیا جاسکتا۔ چلانے میں ایک پرانا الارم (نوٹیفکیشن بار چیک کریں)</string>
+    <string name="failed_delete_barcode_ref_records">اس بار کوڈ کو حذف نہیں کیا جاسکتا کیونکہ کچھ الارم اس سے جڑے ہوئے ہیں</string>
+    <string name="azan_final">اذان ختم</string>
+    <string name="azan_full_abdulbasit">اذان عبدالباسط (مکمل)</string>
+    <string name="azan_full_deedat">اذان (مکمل)</string>
+    <string name="azan_full_egy">اذان مصر 1 (مکمل)</string>
+    <string name="azan_full_egy2">اذان مصر 2 (مکمل)</string>
+    <string name="azan_full_egy3">اذان مصر 3 (مکمل)</string>
+    <string name="azan_haya">اذان حیا</string>
+    <string name="azan_makkah">اذان مک</string>
+    <string name="azan_otaiby">اذان اوطبی</string>
+    <string name="azan_qatami">اذان قاطمی</string>
+    <string name="azan_quite">اذان</string>
+    <string name="azan_salat_khair">اذان صلا خیر</string>
+    <string name="azan_salati">اذان اکبر</string>
+    <string name="device_feature_not_supported">آپ کا آلہ اس خصوصیت کی حمایت نہیں کرتا ہے</string>
+    <string name="option_1_search_your_city">آپشن 1: اپنے شہر کا نام تلاش کریں</string>
+    <string name="search_your_city">اپنا شہر تلاش کریں</string>
+    <string name="automatically_stop_alarm_after">خود بخود الارم کے بعد روکیں</string>
+    <string name="city_search_failed">تلاش کے نتائج کو لوڈ نہیں کیا جاسکتا۔ زیادہ مخصوص پتہ آزمائیں ، تلاش کا متن تبدیل کریں ، یا آپ آپشن 2 استعمال کرسکتے ہیں</string>
+    <string name="times_invalid">براہ کرم نماز کے صحیح اوقات بنانے کے لئے صحیح ترتیبات فراہم کریں</string>
+</resources>

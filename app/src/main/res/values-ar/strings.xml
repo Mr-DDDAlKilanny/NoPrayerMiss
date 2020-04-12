@@ -28,7 +28,7 @@
     <string name="asr_method_explain">الشافعي هو المذهب المختار. اختر الطريقة التي تريدها بالأسفل، وإذا كنت لا تعرف يمكن ترك الشافعي مختارا ويمكنك تغييره لاحقا</string>
     <string name="asr_method_shafii">شافعي (افتراضي)</string>
     <string name="auto_focus">تركيز آلي</string>
-    <string name="auto_location">الخيار 1: تحديد آلي لموقعك</string>
+    <string name="auto_location">الخيار 2: تحديد آلي لموقعك</string>
     <string name="barcode">باركود</string>
     <string name="barcode_added">تم إضافة الباركود</string>
     <string name="barcode_captured">تم التقاط الباركود!</string>
@@ -122,7 +122,7 @@
     <string name="longitude">خط الطول…</string>
     <string name="maghrib">المغرب</string>
     <string name="math_problems">مسائل رياضية</string>
-    <string name="max_snooze_count">أعلى عدد من الغفوات. اختيار صفر يعني غفوات بلا حدود</string>
+    <string name="max_snooze_count">أعلى عدد من الغفوات</string>
     <string name="menu_Settings">الضبط</string>
     <string name="menu_alarms">المنبهات</string>
     <string name="menu_home">الرئيسية</string>
@@ -142,7 +142,7 @@
     <string name="num_problems">عدد المسائل</string>
     <string name="num_shakes">مرات التحريك</string>
     <string name="one_time">مرة واحدة</string>
-    <string name="option_manual_location">خيار 2: إدخال الموقع بنفسك</string>
+    <string name="option_manual_location">خيار 3: إدخال الموقع بنفسك</string>
     <string name="permission_required">الإذن مطلوب لهذه العملية</string>
     <string name="phone_shaking">تحريك الجهاز</string>
     <string name="please_add_a_barcode_to_use_to_stop_alarm">فضلا قم بإضافة باركود لاستخدامه</string>
@@ -298,4 +298,24 @@
     <string name="pls_start_from_icon">الرجاء فتح التطبيق من الأيقونة في الشاشة الرئيسية</string>
     <string name="cannot_start_new_alarm_old_running">لا يمكن بدء منبه جديد لأنه يوجد منبه سابق قيد العمل حاليا. تأكد من شريط التنبيهات في أعلى الشاشة</string>
     <string name="failed_delete_barcode_ref_records">لا يمكن حذف الباركود لوجود منبهات مرتبطة به</string>
+    <string name="or">أو</string>
+    <string name="azan_final">نهاية الأذان</string>
+    <string name="azan_full_abdulbasit">أذان عبد الباسط (كاملا)</string>
+    <string name="azan_full_deedat">الأذان (كاملا)</string>
+    <string name="azan_full_egy">أذان مصر 1 (كاملا)</string>
+    <string name="azan_full_egy2">أذان مصر 2 (كاملا)</string>
+    <string name="azan_full_egy3">أذان مصر 3 (كاملا)</string>
+    <string name="azan_haya">حي على الصلاة</string>
+    <string name="azan_makkah">تكبيرات مكة</string>
+    <string name="azan_otaiby">تكبيرات العتيبي</string>
+    <string name="azan_qatami">تكبيرات القطامي</string>
+    <string name="azan_quite">تكبيرات</string>
+    <string name="azan_salat_khair">الصلاة خير من النوم</string>
+    <string name="azan_salati">تكبيرتان</string>
+    <string name="device_feature_not_supported">جهازك لا يدعم هذه الخاصية</string>
+    <string name="option_1_search_your_city">خيار 1: البحث باسم المدينة</string>
+    <string name="search_your_city">ابحث عن مدينتك</string>
+    <string name="automatically_stop_alarm_after">إيقاف المنبه آليا بعد</string>
+    <string name="city_search_failed">لا يمكن تحديد المدينة بدقة. يرجى تجربة البحث بعنوان أدق، أو تغيير كلمات البحث، أو يمكن استخدام خيار 2</string>
+    <string name="times_invalid">الرجاء تحديد إعدادات صالحة من أجل أوقات صلاة صحيحة</string>
 </resources>

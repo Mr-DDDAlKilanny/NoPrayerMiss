@@ -1,0 +1,362 @@
+<resources>
+    <string name="app_name">মুসলিমের এলার্ম</string>
+
+    <string name="navigation_drawer_open">নেভিগেশন ড্রয়ার খুলুন</string>
+    <string name="navigation_drawer_close">নেভিগেশন ড্রয়ারটি বন্ধ করুন</string>
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">ফজর, কিয়াম বা কোনও প্রার্থনার জন্য জাগ্রত</string>
+    <string name="nav_header_desc">নেভিগেশন শিরোনাম</string>
+    <string name="action_settings">সেটিংস</string>
+    <string name="menu_home">বাড়ি</string>
+    <string name="menu_alarms">অ্যালার্ম</string>
+    <string name="menu_slideshow">স্লাইডশো</string>
+    <string name="menu_Settings">সেটিংস</string>
+    <string name="menu_share">শেয়ার করুন</string>
+    <string name="menu_send">পাঠান</string>
+    <string name="tab_text_1">টোন</string>
+
+    <string name="tab_text_2">জোরে সুর</string>
+    <string name="tab_text_3">নথি পত্র</string>
+    <string name="fajr">ফজর</string>
+    <string name="sun">সূর্যোদয়</string>
+    <string name="zuhr">জোহর</string>
+    <string name="asr">আসর</string>
+    <string name="maghrib">মাগরিব</string>
+    <string name="ishaa">ইশা</string>
+    <string name="request_app_permissinos">মুসলিম এলার্ম অ্যাপে স্বাগতম! আপনার অবস্থান ব্যবহার করে প্রার্থনার সময় গণনার জন্য অ্যাপ্লিকেশনটির অবস্থানের অনুমতি প্রয়োজন। যদি অনুরোধ করা হয় তবে আপনার অবস্থানটিতে অ্যাক্সেসের অনুমতি দিন।</string>
+    <string name="location_net">নেটওয়ার্ক (ইন্টারনেট)</string>
+    <string name="gps">জিপিএস</string>
+    <string name="rejected_permission">আপনি নিজের অবস্থান অ্যাক্সেস প্রত্যাখ্যান করেছেন। অ্যাপটি ছাড়া এটি কাজ করতে পারে না। অনুমতি অনুরোধটি আবার দেখানোর জন্য অ্যাপ্লিকেশনটি পুনরায় চালু করুন বা অ্যাপ্লিকেশন সেটিংস থেকে এই অনুমতিটি সক্ষম করুন</string>
+    <string name="cannot_get_location">আপনার অবস্থান পাওয়া যায় না। নামাজের সময় গণনা করার জন্য ফোন সেটিংসে যান এবং অবস্থান সক্ষম করুন</string>
+    <string name="config_title">দয়া করে আপনার প্রয়োজনীয়তার সাথে সালাতের সময়গুলি কনফিগার করতে কিছুক্ষণ সময় নিন।</string>
+    <string name="explain_default_config">ডিফল্টরূপে সালাত সময়গুলি মুসলিম ওয়ার্ল্ড লিগ গণনা পদ্ধতি, আসরের সময় গণনার জন্য সফিউ জুরিস্ট ব্যবহার করে কনফিগার করা হয় এবং উচ্চতর অক্ষাংশে বাসকারী লোকদের জন্য কোনও সামঞ্জস্য করে না। অন্যান্য গণনা পদ্ধতিগুলির মধ্যে রয়েছে: করাচি, আইএসএনএ, মক্কা, মিশর, তেহরান, জাফরি ​​আপনি ডিফল্ট সেটিংস ব্যবহার করতে বেছে নিতে পারেন (আপনি পরে এগুলি পরিবর্তন করতে পারেন এমন চিন্তা করবেন না) বা নীচে আপনার প্রয়োজনীয়তার জন্য সালাতের সময়গুলি কনফিগার করতে পারেন।</string>
+    <string name="title_onboarding_calc_method">প্রার্থনার সময় কনফিগার করুন</string>
+    <string name="button_configure_now">এখনই সেটিংস কনফিগার করুন \u2192</string>
+    <string name="button_use_default">ডিফল্ট সেটিংস ব্যবহার করুন \u2192</string>
+    <string name="button_prev">\u2190 আগে</string>
+
+
+    <string name="button_next">পরবর্তী \u2192</string>
+    <string name="button_done">সম্পন্ন</string>
+    <string name="calc_method">হিসাব পদ্ধতি</string>
+
+
+    <!-- Onboarding Calc method -->
+    <string name="calc_method_explain">
+        দয়া করে আপনার অঞ্চলে সালাতের জন্য গণনা পদ্ধতিটি নির্বাচন করুন। মুসলিম ওয়ার্ল্ড লীগের বেশিরভাগ মানুষের পক্ষে কাজ করা উচিত।
+    </string>
+    <string name="asr_method">আসর ফকীহ</string>
+    <string name="asr_method_explain">
+        শফিই বেশিরভাগ ব্যবহৃত হয়। যে পদ্ধতিটি আপনার পক্ষে সবচেয়ে উপযুক্ত তা দয়া করে নির্বাচন করুন। আপনি যদি নিশ্চিত না হন তবে শফিকে বাছাই করুন, আপনি পরে সর্বদা এটি পরিবর্তন করতে পারেন।
+    </string>
+    <string name="calc_method_karachi">করাচি - ইসলামিক সায়েন্সেস বিশ্ববিদ্যালয়</string>
+    <string name="calc_method_isna">আইএসএনএ - উত্তর আমেরিকার ইসলামিক সোসাইটি</string>
+    <string name="calc_method_mwl">এমডব্লিউএল - মুসলিম ওয়ার্ল্ড লিগ</string>
+    <string name="calc_method_makkah">মক্কাঃ উম্মুল কুরআ</string>
+    <string name="calc_method_egypt">EGYPT - জরিপের মিশরীয় জেনারেল অথরিটি</string>
+    <string name="calc_method_tehran">তেহরান - জিওফিজিক্স ইনস্টিটিউট, তেহরান বিশ্ববিদ্যালয়</string>
+    <string name="calc_method_jafari">জাফারি - ইথনা আশারী</string>
+    <string name="asr_method_shafii">শফেই (স্ট্যান্ডার্ড)</string>
+    <string name="asr_method_hanfi">হানফি</string>
+    <string name="time_title">সময় ফর্ম্যাট</string>
+    <string name="time_12">12 ঘন্টা (উদাহরণ: 01:00 pm)</string>
+    <string name="time_24">24 ঘন্টা (উদাহরণ: 13:00)</string>
+    <string name="high_latitude">উচ্চ অক্ষাংশ সমন্বয়</string>
+    <string name="high_latitude_explain">উচ্চ অক্ষাংশে বাস করা মানুষের জন্য, প্রার্থনার সময়গুলি ভুল হতে পারে। যদি প্রার্থনার সময়গুলি ভুল মনে হয়, তবে এই মানটি পরিবর্তন করার চেষ্টা করুন। গ্রীষ্মের মাসগুলিতে ওয়ান-সপ্তম পদ্ধতি অ্যাঙ্গেল ভিত্তিক পদ্ধতির চেয়ে ফজর সময় দেয়। আপনি যদি কোণ ভিত্তিক পদ্ধতি অনুধাবন করেন তবে দয়া করে নীচে পরিবর্তন করুন।</string>
+    <string name="high_lat_none">কোনও</string>
+    <string name="high_lat_midnight">মধ্যরাত</string>
+    <string name="high_lat_one_seventh">রাতের এক-সপ্তম</string>
+    <string name="high_lat_angle_based">কোণ ভিত্তিক</string>
+    <string name="auto_location">বিকল্প 2: স্বয়ংক্রিয় অবস্থান সনাক্তকরণ</string>
+    <string name="detect_with_gps">জিপিএস ব্যবহার করে সনাক্ত করুন</string>
+    <string name="detect_with_network">নেটওয়ার্ক ব্যবহার করে সনাক্ত করুন</string>
+    <string name="option_manual_location">বিকল্প 3: ম্যানুয়াল অবস্থান এন্ট্রি</string>
+    <string name="longitude">দ্রাঘিমাংশ …</string>
+    <string name="latitude">অক্ষাংশ…</string>
+    <string name="set_manual_location">ম্যানুয়াল অবস্থান সেট করুন</string>
+    <string name="already_set_location">ইতিমধ্যে একটি অবস্থান সেট করা আছে। আপনি যদি এটি পরিবর্তন করতে না চান তবে নীচের নেক্সট বোতামে ট্যাব করুন।</string>
+    <string name="please_enter_lng_lat">দ্রাঘিমাংশ এবং অক্ষাংশ লিখুন</string>
+    <string name="gps_not_enable">জিপিএস সক্ষম নয়। দয়া করে ওয়াইফাইয়ের নিকটবর্তী স্ক্রিন শীর্ষে ডিভাইস সেটিংস থেকে এটি সক্ষম করুন (বা আপনি নেটওয়ার্ক অবস্থান ব্যবহার করতে পারেন)</string>
+    <string name="gps_no_last_location">আপনার শেষ অবস্থানটি পাওয়া যায় না</string>
+    <string name="network_location_not_enable">নেটওয়ার্ক অবস্থান সক্ষম নয়। ডিভাইস সেটিংস থেকে এটি সক্ষম করুন</string>
+    <string name="use_gps_anyway">যাইহোক জিপিএস ব্যবহার করুন</string>
+    <string name="gps_long_time">অবস্থান অনুসন্ধানে জিপিএস ২-৩ মিনিট সময় নিতে পারে। এটি বাইরেও হওয়া দরকার। আপনি যদি নেটওয়ার্কের অবস্থান বা আপনার শেষ পরিচিত জিপিএসের অবস্থানটি চয়ন করেন তবে অনুসন্ধানটি আরও দ্রুত হতে পারে। আপনি কি নির্বাচন করবেন?</string>
+    <string name="gps_location">জিপিএসের অবস্থান</string>
+    <string name="use_my_last_location">আমার শেষ অবস্থানটি ব্যবহার করুন</string>
+    <string name="please_specify_location">দয়া করে প্রথমে অবস্থান নির্দিষ্ট করুন</string>
+    <string name="prayer_time_config">প্রার্থনার সময় কনফিগারেশন</string>
+    <string name="prayer_times">প্রার্থনার সময়</string>
+    <string name="hmonth1">মহররম</string>
+    <string name="hmonth2">সাফার</string>
+    <string name="hmonth3">রবি আল-আওয়াল</string>
+    <string name="hmonth4">রবি আল-আছির</string>
+    <string name="hmonth5">জুমদা আল-আওয়াল</string>
+    <string name="hmonth6">জুমদা এল-আখিরা</string>
+    <string name="hmonth7">রজব</string>
+    <string name="hmonth8">শাবান</string>
+    <string name="hmonth9">রমজান</string>
+    <string name="hmonth10">শাওয়াল</string>
+    <string name="hmonth11">ধু এল-কায়দা</string>
+    <string name="hmonth12">ধū l-Hijja</string>
+    <string name="gmonth1">জানুয়ারী</string>
+    <string name="gmonth2">ফেব্রুয়ারী</string>
+    <string name="gmonth3">মার্চ</string>
+    <string name="gmonth4">এপ্রিল</string>
+    <string name="gmonth5">মে</string>
+    <string name="gmonth6">জুন</string>
+    <string name="gmonth7">জুলাই</string>
+    <string name="gmonth8">আগস্ট</string>
+    <string name="gmonth9">সেপ্টেম্বর</string>
+    <string name="gmonth10">অক্টোবর</string>
+    <string name="gmonth11">নভেম্বর</string>
+    <string name="gmonth12">ডিসেম্বর</string>
+    <string name="systemLanguage">এন</string>
+    <string name="delete_alarm">অ্যালার্ম মুছুন</string>
+    <string name="skip_next_alarm">পরবর্তী অ্যালার্ম ছেড়ে যান</string>
+    <string name="unskip_next_alarm">পরবর্তী অ্যালার্মের বাদ দিন</string>
+    <string name="preview_alarm">পূর্বরূপ অ্যালার্ম</string>
+    <string name="duplicate_alarm">নকল বিপদ</string>
+    <string name="one_time">একবার</string>
+    <string name="everyday">প্রতিদিন</string>
+    <string name="friday">শুক্রবার</string>
+    <string name="saturday">শনিবার</string>
+    <string name="sunday">রবিবার</string>
+    <string name="monday">সোমবার</string>
+    <string name="tuesday">মঙ্গলবার</string>
+    <string name="wednesday">বুধবার</string>
+    <string name="thursday">বৃহস্পতিবার</string>
+
+    <string name="allDaysExpect1Day">প্রতিদিন আশা %1$s</string>
+    <string name="allDaysExpect2Days">প্রতিদিন আশা %1$s এবং %2$s</string>
+    <string name="not_connected">আপনি ইন্টারনেটের সাথে সংযুক্ত নন</string>
+    <string name="beforeTimeBy">- %1$d মিনিট</string>
+    <string name="afterTimeBy">+ %1$d মিনিট</string>
+    <string name="afterNDays">পরে %1$d দিন</string>
+    <string name="afterNHours">পরে %1$s ঘন্টার</string>
+    <string name="afterNMinutes">পরে %1$s মিনিট</string>
+    <string name="afterNHoursAndNMinutes">পরে %1$s ঘন্টার, %2$s মিনিট</string>
+    <string name="afterNDaysAndNHours">পরে %1$s দিন, %2$s ঘন্টার</string>
+    <string name="all_times">সর্বদা</string>
+    <string name="all_prayers">সমস্ত দোয়া</string>
+    <string name="time_s">সময় (গুলি):</string>
+    <string name="select">নির্বাচন করুন</string>
+    <string name="beforeTime">সময় আগে</string>
+    <string name="afterTime">সময় পরে</string>
+    <string name="repeat_days">পুনরাবৃত্তি দিন</string>
+    <string name="alarm_tune">অ্যালার্ম টোন</string>
+    <string name="default_tune">ডিফল্ট টোন</string>
+    <string name="snooze_settings">স্নুজ সেটিংস</string>
+    <string name="math_problems">গানিতিক সমস্যাগুলো</string>
+    <string name="barcode">বারকোড</string>
+    <string name="vibration">কম্পন</string>
+    <string name="Default">ডিফল্ট</string>
+    <string name="phone_shaking">ফোন কাঁপছে</string>
+    <string name="please_add_a_barcode_to_use_to_stop_alarm">অ্যালার্ম বন্ধ করতে দয়া করে একটি বারকোড যুক্ত করুন</string>
+    <string name="barcode_added">বারকোড যুক্ত হয়েছে</string>
+    <string name="barcode_captured">বারকোড বন্দী!</string>
+    <string name="do_you_want_to_save_it">আপনি কি এখনই এটি সংরক্ষণ করতে চান?</string>
+    <string name="capture_barcode">বারকোড ক্যাপচার করুন</string>
+    <string name="exit_preview">প্রস্থান পূর্বরূপ</string>
+    <string name="your_device_not_support_feature">আপনার ডিভাইস এই বৈশিষ্ট্যটি সমর্থন করে না</string>
+    <string name="problem_difficulty">সমস্যা স্তর স্তর</string>
+    <string name="num_problems">সমস্যার সংখ্যা</string>
+    <string name="alarm_label_optional">অ্যালার্ম লেবেল (ptionচ্ছিক)</string>
+    <string name="snooze_period_minutes">স্নুজ সময়কাল (কয়েক মিনিটের মধ্যে)। জিরো মানে কোনও स्नুজ নেই</string>
+    <string name="max_snooze_count">স্নুজ গণনা</string>
+    <string name="delete_barcode">বারকোড মুছুন</string>
+    <string name="are_you_sure_delete_barcode">আপনি কি নির্বাচিত বারকোড মোছার বিষয়ে নিশ্চিত?</string>
+    <string name="are_you_sure_delete_alarm">আপনি কি নির্বাচিত অ্যালার্ম মুছে ফেলার বিষয়ে নিশ্চিত?</string>
+    <string name="edit_barcode">বারকোড সম্পাদনা করুন</string>
+    <string name="you_entered_empty">আপনি খালি মূল্য প্রবেশ করিয়েছেন</string>
+    <string name="please_select_barcode">দয়া করে প্রথমে একটি বারকোড নির্বাচন করুন</string>
+    <string name="to_preview_barcode_use">বারকোড অ্যালার্মের পূর্বরূপ দেখতে, প্রথমে বেছে নিন কোন বারকোডটি অ্যালার্ম থামাতে ব্যবহার করেছিল</string>
+    <string name="difficulty_shake">কাঁপানো সমস্যা</string>
+    <string name="num_shakes">কাঁপানোর সংখ্যা</string>
+    <string name="config_shakes">কাঁপুন কনফিগার করুন</string>
+    <string name="config_math_problems">গণিতের সমস্যাগুলি কনফিগার করুন</string>
+    <string name="config_snooze">স্নুজ কনফিগার করুন</string>
+    <string name="select_barcode">বারকোড নির্বাচন করুন</string>
+    <string name="select_camera">ক্যামেরা নির্বাচন করুন</string>
+    <string name="flash">ফ্ল্যাশ</string>
+    <string name="auto_focus">অটো ফোকাস</string>
+    <string name="front_facing">সামনের মুখোমুখি</string>
+    <string name="rear_facing">পিছনের মুখোমুখি</string>
+    <string name="camera_id">ক্যামেরা আইডি:</string>
+    <string name="err_choose_one_time">আপনি যদি ওয়ান টাইম চয়ন করেন তবে আপনি অন্যান্য বিকল্পগুলিও চয়ন করতে পারবেন না। আবার চেষ্টা কর</string>
+    <string name="must_select_one_day">আপনাকে অবশ্যই পুনরাবৃত্তির দিন বা পুনরাবৃত্তি না করার জন্য এক সময় নির্বাচন করতে হবে</string>
+    <string name="when">কখন?</string>
+    <string name="err_select_prayer">আপনাকে অবশ্যই এক বা একাধিক প্রার্থনার সময় নির্বাচন করতে হবে</string>
+    <string name="for_prayer_times">প্রার্থনার সময়</string>
+    <string name="alarm_stop_method">অ্যালার্ম স্টপ পদ্ধতি</string>
+    <string name="add_alarm">অ্যালার্ম যুক্ত করুন</string>
+    <string name="edit_alarm">অ্যালার্ম সম্পাদনা করুন</string>
+    <string name="alarm_label">অ্যালার্ম লেবেল</string>
+    <string name="failled_to_play_file">ফাইল খেলতে ব্যর্থ: %1$s</string>
+    <string name="select_alarm_tune">অ্যালার্ম টোন নির্বাচন করুন</string>
+    <string name="tune_no">স্বন #%1$d</string>
+    <string name="err_tune_not_selected">আপনি কোনও স্বন নির্বাচন করেন নি। দয়া করে আবার চেষ্টা করুন বা কোনও টোন নির্বাচন না করে প্রস্থান করতে ট্যাব বাতিল করুন</string>
+    <string name="write_title_of_alarm">অ্যালার্মের জন্য একটি শিরোনাম লিখুন …</string>
+    <string name="must_select_tune">আপনাকে অবশ্যই একটি স্বন নির্বাচন করতে হবে</string>
+    <string name="less_than_minute">মিনিটেরও কম সময়ে</string>
+    <string name="please_give_permissions">স্বাভাবিকভাবে কাজ করার জন্য অ্যাপ্লিকেশনটির জন্য অনুমতি দিন দয়া করে</string>
+    <string name="go">যাওয়া</string>
+    <string name="need_sound_permission">শব্দটির পরিমাণের মাত্রা পরিবর্তন করতে সক্ষম হওয়ার জন্য এই অ্যাপ্লিকেশনটির অনুমতি প্রয়োজন। সেটিংস প্রদর্শন এবং অনুমতি প্রদানের জন্য ঠিক আছে ক্লিক করুন</string>
+    <string name="permission_required">অনুমতি প্রয়োজন</string>
+    <string name="no_not_ask">না, আবার জিজ্ঞাসা করবেন না</string>
+    <string name="changes_sound_no_affect">শব্দ স্তরের পরিবর্তনগুলি প্রয়োগ নাও হতে পারে।</string>
+    <string name="provide_permission">অনুমতি দিন</string>
+    <string name="incorrect_barcode">ভুল বারকোড। অনুগ্রহপূর্বক আবার চেষ্টা করুন</string>
+    <string name="alarm_is_snoozed_tab">অ্যালার্ম স্নুজ করা হয়েছে \ ab n ট্যাব বরখাস্ত করার জন্য</string>
+    <string name="alarm_edit_wizard">অ্যালার্ম উইজার্ড সম্পাদনা করুন</string>
+    <string name="this_wizard_alarm">এই উইজার্ডটি আপনাকে সহজ পদক্ষেপে অ্যালার্ম যুক্ত বা সম্পাদনা করতে গাইড করে। আপনি অ্যালার্মের প্রার্থনার সময়, পুনরাবৃত্তি করার দিনগুলি, অ্যালার্মের সুর, কীভাবে অ্যালার্ম বাজানো বন্ধ করতে হবে এবং আরও অনেক কিছু চয়ন করতে পারেন।</string>
+    <string name="going_to_add_new_alarm">এটি একটি নতুন অ্যালার্ম যুক্ত করতে চলেছে। অব্যাহত রাখার জন্য পরবর্তী ক্লিক করুন</string>
+    <string name="going_to_edit_alarm">এটি নীচের অ্যালার্মটি সম্পাদনা করতে চলেছে। অব্যাহত রাখার জন্য পরবর্তী ক্লিক করুন</string>
+    <string name="how_to_stop_alarm">আপনি কীভাবে এলার্ম থামাতে চান?</string>
+    <string name="specify_how_to_cancel_alarm">অ্যালার্ম বাজতে শুরু হওয়ার পরে কীভাবে বাতিল করবেন তা দয়া করে নির্দিষ্ট করুন। ডিফল্টরূপে, যখন আপনি বরখাস্ত বোতামটি ক্লিক করেন, অ্যালার্ম বাতিল হয়ে যায়। তবে আপনি কিছু সময়ের জন্য ডিভাইস কাঁপানোর পরে বাতিল করতে বা কিছু গণিত সমস্যার সমাধান করতে পারেন solve</string>
+    <string name="welcome">উইকলোম</string>
+    <string name="select_times_you_need">আপনার অ্যালার্ম সেট করার জন্য প্রয়োজনীয় সময় নির্বাচন করুন</string>
+    <string name="specify_a_time_or_more_below">অ্যালার্ম সেট করতে দয়া করে নীচে একটি সময় বা তার বেশি নির্দিষ্ট করুন। উদাহরণস্বরূপ, আপনি যদি ফজরের জন্য অ্যালার্ম সেট করতে চান তবে ফজর নির্বাচন করুন। আপনি যদি জুহমার জন্য অ্যালার্ম সেট করতে চান তবে জোহর নির্বাচন করুন</string>
+    <string name="before_or_after">আগে অথবা পরে?</string>
+    <string name="specify_whether_to_set_alarm_before_or_after_time">সময়ের আগে বা পরে অ্যালার্ম সেট করতে হবে কিনা তা নির্দিষ্ট করে দিন। উদাহরণস্বরূপ, আপনাকে জোহরের 5 মিনিটের আগে বা ফজরের 20 মিনিটের পরে অ্যালার্ম সেট করতে হবে</string>
+    <string name="hours">ঘন্টার</string>
+    <string name="minutes">মিনিট</string>
+    <string name="repeated_alarm">বারবার অ্যালার্ম</string>
+    <string name="select_weekly_days_of_repeating_alarm">অ্যালার্ম পুনরাবৃত্তি করার সাপ্তাহিক দিন নির্বাচন করুন</string>
+    <string name="select_the_weekly_days_the_alarm_will_repeat_on">অ্যালার্ম পুনরাবৃত্তি হবে সাপ্তাহিক দিন নির্বাচন করুন।</string>
+    <string name="alarm_times">অ্যালার্ম টাইমস</string>
+    <string name="alarm_days">অ্যালার্মের দিন</string>
+    <string name="select_alarm_sound">অ্যালার্ম শব্দ নির্বাচন করুন</string>
+    <string name="select_the_sound_you_want">অ্যালার্ম বাজানোর সময় আপনি যে শব্দটি বাজতে চান তা দয়া করে নির্বাচন করুন।</string>
+    <string name="do_you_want_a_snooze_for_the_alarm">আপনি কি অ্যালার্মের জন্য স্নুজ চান?</string>
+    <string name="please_specify_the_snooze_settings">অ্যালার্মের জন্য দয়া করে স্নুজ সেটিংস নির্দিষ্ট করুন। এটি আপনাকে কিছু সময় দেওয়ার জন্য এবং সেই সময়ের পরে অ্যালার্ম পুনরায় চালানোর জন্য দরকারী।</string>
+    <string name="how_many_snoozes">আপনি সর্বোচ্চ কতগুলি स्नুজ পেতে পারেন?</string>
+    <string name="none">কোনও</string>
+    <string name="unlimited">সীমাহীন</string>
+    <string name="customize">কাস্টমাইজ করুন</string>
+    <string name="snooze_period">স্নুজ সময়কাল:</string>
+    <string name="select_if_repeat_alarm">আপনি যদি এলার্ম পুনরাবৃত্তি করতে চান তবে নির্বাচন করুন</string>
+    <string name="specify_if__set_one_time_alarm_or_repeat">আপনি ওয়ানটাইম অ্যালার্ম সেট করতে চান কিনা তা নির্দিষ্ট করুন বা, সাপ্তাহিক দিনগুলিতে অ্যালার্মটি পুনরাবৃত্তি করুন</string>
+    <string name="details_of_alarm">অ্যালার্মের বিবরণ</string>
+    <string name="setting_the_details_of_alarm">অ্যালার্মের বিশদ সেট করা</string>
+    <string name="sound_volume">শব্দের স্তর</string>
+    <string name="set_the_volume_of_sound">অ্যালার্মের জন্য শোনার ভলিউমটি নীচে সেট করুন</string>
+    <string name="should_the_alarm_vibrate_your_device">অ্যালার্মটি কি আপনার ডিভাইসটি কম্পন করা উচিত?</string>
+    <string name="please_set_label_for_alarm">বাজানো স্ক্রিনে অ্যালার্ম প্রদর্শনের জন্য দয়া করে (একটি alচ্ছিক) লেবেল সেট করুন</string>
+    <string name="set_alarm_label">অ্যালার্ম লেবেল সেট করুন</string>
+    <string name="nuclear_alert">পারমাণবিক সতর্কতা</string>
+    <string name="hazard_warning">বিপত্তি সতর্কতা</string>
+    <string name="car_guard">গাড়ী গার্ড</string>
+    <string name="old_peep_alarm">পুরাতন উঁকি বিপদাশঙ্কা</string>
+    <string name="hazard_traffic">বিপত্তি ট্র্যাফিক</string>
+    <string name="annoying_surprise">বিরক্তিকর অবাক করা</string>
+    <string name="loud_tune">জোরে সুর</string>
+    <string name="rooster">মুরগি</string>
+    <string name="ambulance_vehicle">অ্যাম্বুলেন্স যানবাহন</string>
+    <string name="police">পুলিশ</string>
+    <string name="cow">গাভী</string>
+    <string name="horse">ঘোড়া</string>
+    <string name="birds">পাখি</string>
+    <string name="traffic_trouble">ট্র্যাফিক সমস্যা</string>
+    <string name="shocks">শক</string>
+    <string name="crow">কাক</string>
+    <string name="extreme_alarm">চরম বিপদ</string>
+    <string name="warning_siren">সতর্কতা সাইরেন</string>
+    <string name="annoying_tune_fixed">বিরক্তিকর সুরটি স্থির</string>
+    <string name="upward_annoying_tune">wardর্ধ্বমুখী বিরক্তিকর সুর</string>
+    <string name="bubbles">বুদবুদ</string>
+    <string name="constant_wave">কনস্ট্যান্ট ওয়েভ</string>
+    <string name="high_snoring">হাই স্নোরিং</string>
+    <string name="monkey">বানর</string>
+    <string name="metal_gear">ধাতব যন্ত্র</string>
+    <string name="old_alarm">পুরাতন এলার্ম</string>
+    <string name="tiger">বাঘ</string>
+    <string name="drops">ড্রপস</string>
+    <string name="phone_alert">ফোন সতর্কতা</string>
+    <string name="bubbles_fast">বুদবুদ দ্রুত</string>
+    <string name="wolf">নেকড়</string>
+    <string name="back">পেছনে</string>
+    <string name="next">পরবর্তী</string>
+    <string name="complete">সম্পূর্ণ</string>
+    <string name="exit">প্রস্থান</string>
+    <string name="snooze">তন্দ্রা</string>
+    <string name="shake_the_device_to_stop_alarm">অ্যালার্ম বন্ধ করতে ডিভাইসটি কাঁপুন</string>
+    <string name="shakes">কাঁপুন</string>
+    <string name="click_here_to_open_menu">অ্যাপ্লিকেশন মেনু খুলতে এবং অ্যালার্ম যুক্ত করতে এখানে ক্লিক করুন</string>
+    <string name="open_app_alarm_menu">অ্যাপ্লিকেশন এলার্ম মেনু খুলুন</string>
+    <string name="list_empty">তালিকা খালি আছে।</string>
+    <string-array name="prayer_times">
+        <item>@string/fajr</item>
+        <item>@string/sun</item>
+        <item>@string/zuhr</item>
+        <item>@string/asr</item>
+        <item>@string/maghrib</item>
+        <item>@string/ishaa</item>
+    </string-array>
+    <string-array name="languages">
+        <item>ar|100</item>
+        <item>en|100</item>
+    </string-array>
+    <string-array name="repeat_days">
+        <item>@string/one_time</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+    </string-array>
+    <string-array name="onOff">
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+    <string-array name="math_level_example">
+        <item>5 + 6</item>
+        <item>13 + 44</item>
+        <item>36 + 93 + 17</item>
+        <item>(53 x 4) + 11</item>
+        <item>(53 x 34) + 151</item>
+        <item>(755 x 57) + 6623</item>
+    </string-array>
+    <string name="add_alarm_tab">অ্যালার্ম যুক্ত করতে নীচে লাল বোতামটি ট্যাব করুন।</string>
+    <string name="dealing_with_list_of_alarms">অ্যালার্মের তালিকাসহ লেনদেন</string>
+    <string name="toturial_alarms">* একটি অ্যালার্ম সম্পাদনা করতে, তার কার্ডে আলতো চাপুন।\n* অক্ষম / সক্ষম করতে, কার্ডের চেকটি ক্লিক করুন।\n* অ্যালার্মের পূর্বরূপ দেখতে, এটিতে 3 টি বিন্দুতে ক্লিক করুন</string>
+    <string name="communicate">যোগাযোগ / শেয়ার অ্যাপ</string>
+    <string name="share_msg">জাগো ফজরের জন্য! মুসলিম প্রার্থনা অ্যালার্ম অ্যাপটি কখনই থামবে না যতক্ষণ না আপনি কিছু গণিত সমাধান করেন, আপনার ডিভাইসটি ঝাঁকান না করেন বা বারকোড স্ক্যান করেন না। এটি নিখরচায়, কোনও বিজ্ঞাপন নয়!</string>
+    <string name="just_on_time">ঠিক সময় মতো</string>
+    <string name="after_time_by">সময় পরে</string>
+    <string name="before_time_by">সময়ের আগে</string>
+    <string name="nMinutes">%1$s মিনিট</string>
+    <string name="nHours">%1$s ঘন্টার</string>
+    <string name="nHoursAndNMinutes">%1$s ঘন্টার, %2$s মিনিট</string>
+    <string name="share_app">অ্যাপ্লিকেশন ভাগ করা</string>
+    <string name="share_msg_dlg">মুসলিম প্রার্থনা এলার্ম ব্যবহার করার জন্য আপনাকে ধন্যবাদ!\nআল্লাহর কাছ থেকে থওয়াব (পুরষ্কার) পেতে এই অ্যাপটি শেয়ার করুন!</string>
+    <string name="not_now">এখন না</string>
+    <string name="alarm_ringing_service_descr">আপনি প্রার্থনার জন্য নির্বাচিত অ্যালার্ম চালায়</string>
+    <string name="alarm_is_running_tab_to_dismiss">অ্যালার্ম চলছে। খারিজ করতে আলতো চাপুন!</string>
+    <string name="battery_opts">ব্যাটারি অপ্টিমাইজেশন</string>
+    <string name="battery_msg">কিছু ডিভাইসে, অ্যান্ড্রয়েড ব্যাটারি অপ্টিমাইজেশনের কারণে অ্যাপ্লিকেশনগুলিকে চলতে বাধা দেয়। দয়া করে নিশ্চিত হয়ে নিন যে আপনি এই অ্যাপ্লিকেশনটির জন্য অপ্টিমাইজেশন অক্ষম করেছেন বা আপনি অ্যালার্মগুলি নাও পেতে পারেন!\nআপনি যদি পূর্বে সেটিংস পরীক্ষা করে থাকেন তবে দয়া করে আবার জিজ্ঞাসা করবেন না তা চয়ন করুন</string>
+    <string name="open_settings">ওপেন সেটিংস</string>
+    <string name="pls_start_from_icon">অ্যাপ্লিকেশনটি এর আইকন থেকে শুরু করুন</string>
+    <string name="cannot_start_new_alarm_old_running">নতুন অ্যালার্ম শুরু করা যায় না। চলতে একটি পুরানো অ্যালার্ম (বিজ্ঞপ্তি বার পরীক্ষা করুন)</string>
+    <string name="failed_delete_barcode_ref_records">এই বারকোডটি মোছা যাবে না কারণ এর সাথে কিছু অ্যালার্ম যুক্ত রয়েছে</string>
+    <string name="azan_final">আজান শেষ</string>
+    <string name="azan_full_abdulbasit">আজান আবদুল-বাসেত (পূর্ণ)</string>
+    <string name="azan_full_deedat">আজান (পূর্ণ)</string>
+    <string name="azan_full_egy">আজান মিশর 1 (সম্পূর্ণ)</string>
+    <string name="azan_full_egy2">আজান মিশর 2 (সম্পূর্ণ)</string>
+    <string name="azan_full_egy3">আজান মিশর 3 (সম্পূর্ণ)</string>
+    <string name="azan_haya">আজান হায়া</string>
+    <string name="azan_makkah">আজান মক্কা</string>
+    <string name="azan_otaiby">আজান ওতায়েবি</string>
+    <string name="azan_qatami">আজান কাতামি</string>
+    <string name="azan_quite">আজান</string>
+    <string name="azan_salat_khair">আজান সালাত খায়ের</string>
+    <string name="azan_salati">আজান আকবর</string>
+    <string name="device_feature_not_supported">আপনার ডিভাইস এই বৈশিষ্ট্য সমর্থন করে না</string>
+    <string name="option_1_search_your_city">বিকল্প 1: আপনার শহরের নাম সন্ধান করুন</string>
+    <string name="search_your_city">আপনার শহর অনুসন্ধান করুন</string>
+    <string name="automatically_stop_alarm_after">অ্যালার্মের পরে স্বয়ংক্রিয়ভাবে থামান</string>
+    <string name="city_search_failed">অনুসন্ধানের ফলাফলগুলি লোড করা যায় না। আরও নির্দিষ্ট ঠিকানা ব্যবহার করে দেখুন, অনুসন্ধানের পাঠ্য পরিবর্তন করুন বা আপনি বিকল্প 2 ব্যবহার করতে পারেন</string>
+    <string name="times_invalid">বৈধ প্রার্থনার সময়গুলি করার জন্য দয়া করে বৈধ সেটিংস সরবরাহ করুন</string>
+</resources>

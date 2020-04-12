@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Muslim Alarm</string>
+    <string name="app_name">Muslim\'s Alarm</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,9 +14,9 @@
     <string name="menu_Settings">Settings</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="tab_text_1">Tunes</string>
+    <string name="tab_text_1">Tones</string>
 
-    <string name="tab_text_2">Loud Tunes</string>
+    <string name="tab_text_2">Loud Tones</string>
     <string name="tab_text_3">Files</string>
     <string name="fajr">Fajr</string>
     <string name="sun">Sunrise</string>
@@ -76,14 +76,14 @@
     <string name="high_lat_midnight">Midnight</string>
     <string name="high_lat_one_seventh">One-seventh of night</string>
     <string name="high_lat_angle_based">Angle based</string>
-    <string name="auto_location">Option 1: Automatic Location Detection</string>
+    <string name="auto_location">Option 2: Automatic Location Detection</string>
     <string name="detect_with_gps">Detect using GPS</string>
     <string name="detect_with_network">Detect using Network</string>
-    <string name="option_manual_location">Option 2: Manual Location Entry</string>
+    <string name="option_manual_location">Option 3: Manual Location Entry</string>
     <string name="longitude">Longitude…</string>
     <string name="latitude">Latitude…</string>
     <string name="set_manual_location">Set manual location</string>
-    <string name="already_set_location">There is a location already set. If you do not want to change it, tab on NEXT button below.</string>
+    <string name="already_set_location">There is a location already set. If you do not want to change it, tap on NEXT button below.</string>
     <string name="please_enter_lng_lat">Please enter longitude and latitude</string>
     <string name="gps_not_enable">GPS is not enabled. Please enable it from device settings in screen top near WiFi (or you can use Network Location)</string>
     <string name="gps_no_last_location">Cannot get your last location</string>
@@ -95,6 +95,7 @@
     <string name="please_specify_location">Please specify location first</string>
     <string name="prayer_time_config">Prayer Time Configurations</string>
     <string name="prayer_times">Prayer Times</string>
+    <string name="or">OR</string>
     <string name="hmonth1">Muharram</string>
 
 
@@ -159,17 +160,14 @@
     <string name="beforeTime">Before Time</string>
     <string name="afterTime">After Time</string>
     <string name="repeat_days">Repeat Days</string>
-    <string name="alarm_tune">Alarm Tune</string>
-    <string name="default_tune">Default Tune</string>
+    <string name="alarm_tune">Alarm Tone</string>
+    <string name="default_tune">Default Tone</string>
     <string name="snooze_settings">Snooze Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="math_problems">Math Problems</string>
     <string name="barcode">Barcode</string>
     <string name="vibration">Vibration</string>
     <string name="Default">Default</string>
     <string name="phone_shaking">Phone Shaking</string>
-    <string name="title_activity_shake_config">ShakeConfigActivity</string>
-    <string name="title_activity_barcode_stop_config">BarcodeStopConfigActivity</string>
     <string name="please_add_a_barcode_to_use_to_stop_alarm">Please add a barcode to use to stop alarm</string>
     <string name="barcode_added">Barcode added</string>
     <string name="barcode_captured">Barcode captured!</string>
@@ -181,8 +179,7 @@
     <string name="num_problems">Number of Problems</string>
     <string name="alarm_label_optional">Alarm Label (Optional)</string>
     <string name="snooze_period_minutes">Snooze period (in minutes). Zero means no snooze</string>
-    <string name="max_snooze_count">Max snooze count. Zero means unlimited snoozes</string>
-    <string name="title_activity_select_ringtune">SelectRingtuneActivity</string>
+    <string name="max_snooze_count">Max snooze count</string>
     <string name="delete_barcode">Delete Barcode</string>
     <string name="are_you_sure_delete_barcode">Are you sure you want to delete the selected barcode?</string>
     <string name="are_you_sure_delete_alarm">Are you sure you want to delete the selected alarm?</string>
@@ -212,11 +209,11 @@
     <string name="edit_alarm">Edit Alarm</string>
     <string name="alarm_label">Alarm Label</string>
     <string name="failled_to_play_file">Failed to play file: %1$s</string>
-    <string name="select_alarm_tune">Select Alarm Tune</string>
-    <string name="tune_no">Tune #%1$d</string>
-    <string name="err_tune_not_selected">You didn\'t select any tune. Please try again or tab cancel to exit without selecting any tune</string>
-    <string name="write_title_of_alarm">Write a title for alarm...</string>
-    <string name="must_select_tune">You must select a tune</string>
+    <string name="select_alarm_tune">Select Alarm Tone</string>
+    <string name="tune_no">Tone #%1$d</string>
+    <string name="err_tune_not_selected">You didn\'t select any tone. Please try again or tap cancel to exit without selecting any tone</string>
+    <string name="write_title_of_alarm">Write a title for alarm…</string>
+    <string name="must_select_tune">You must select a tone</string>
     <string name="less_than_minute">In less than minute</string>
     <string name="please_give_permissions">Please give permissions for app in order to work normally</string>
     <string name="go">Go</string>
@@ -226,9 +223,9 @@
     <string name="changes_sound_no_affect">Changes to sound level may not apply.</string>
     <string name="provide_permission">Provide Permission</string>
     <string name="incorrect_barcode">Incorrect Barcode. Please try again</string>
-    <string name="alarm_is_snoozed_tab">Alarm is snoozed.\nTab to dismiss</string>
+    <string name="alarm_is_snoozed_tab">Alarm is snoozed.\nTap to dismiss</string>
     <string name="alarm_edit_wizard">Alarm Edit Wizard</string>
-    <string name="this_wizard_alarm">This wizard guides you to add or edit an alarm in easy steps.         You can can choose alarm prayer time, repeating days, alarm tune, how to stop ringing alarm, and more.</string>
+    <string name="this_wizard_alarm">This wizard guides you to add or edit an alarm in easy steps.         You can choose alarm prayer time, repeating days, alarm tone, how to stop ringing alarm, and more.</string>
     <string name="going_to_add_new_alarm">This is going to add a new alarm. Click next to continue</string>
     <string name="going_to_edit_alarm">This is going to edit the following alarm. Click next to continue</string>
     <string name="how_to_stop_alarm">How do you want to stop alarm?</string>
@@ -303,7 +300,7 @@
     <string name="old_peep_alarm">Old Peep Alarm</string>
     <string name="hazard_traffic">Hazard Traffic</string>
     <string name="annoying_surprise">Annoying Surprise</string>
-    <string name="loud_tune">Loud Tune</string>
+    <string name="loud_tune">Loud Tone</string>
     <string name="rooster">Rooster</string>
     <string name="ambulance_vehicle">Ambulance Vehicle</string>
     <string name="police">Police</string>
@@ -315,8 +312,8 @@
     <string name="crow">Crow</string>
     <string name="extreme_alarm">Extreme Alarm</string>
     <string name="warning_siren">Warning Siren</string>
-    <string name="annoying_tune_fixed">Annoying Tune Fixed</string>
-    <string name="upward_annoying_tune">Upward Annoying Tune</string>
+    <string name="annoying_tune_fixed">Annoying Tone Fixed</string>
+    <string name="upward_annoying_tune">Upward Annoying Tone</string>
     <string name="bubbles">Bubbles</string>
     <string name="constant_wave">Constant Wave</string>
     <string name="high_snoring">High Snoring</string>
@@ -338,9 +335,9 @@
     <string name="click_here_to_open_menu">Click here to open application menu and add alarms</string>
     <string name="open_app_alarm_menu">Open App Alarm Menu</string>
     <string name="list_empty">List is empty.</string>
-    <string name="add_alarm_tab">To add alarm, tab the red button below.</string>
+    <string name="add_alarm_tab">To add alarm, tap the red button below.</string>
     <string name="dealing_with_list_of_alarms">Dealing with List of Alarms</string>
-    <string name="toturial_alarms">* To edit an alarm, tab on its card.\n*To Disable/Enable, click the check in the card.\n*To Preview alarm, click on the 3 dots on it</string>
+    <string name="toturial_alarms">* To edit an alarm, tap on its card.\n*To Disable/Enable, click the check in the card.\n*To Preview alarm, click on the 3 dots on it</string>
     <string name="communicate">Communicate / Share App</string>
     <string name="share_msg">Wakeup for Fajr! Muslim Prayer Alarm App will never stop unitl you solve some math, shake you device, or scan a barcode. It is Free, no Ads!</string>
     <string name="just_on_time">Exactly on time</string>
@@ -349,15 +346,34 @@
     <string name="nMinutes">%1$s min</string>
     <string name="nHours">%1$s hour(s)</string>
     <string name="nHoursAndNMinutes">%1$s hours, %2$s min</string>
-    <string name="share_app">Share Appٍ</string>
+    <string name="share_app">Share App</string>
     <string name="share_msg_dlg">Thank you for using Muslim Prayer Alarm!\nPlease share this app to gain Thawab (reward) from Allah!</string>
     <string name="not_now">Not Now</string>
     <string name="alarm_ringing_service_descr">Runs the alarm you selected for Prayer</string>
-    <string name="alarm_is_running_tab_to_dismiss">Alarm is Running. Tab to Dismiss !</string>
+    <string name="alarm_is_running_tab_to_dismiss">Alarm is Running. Tap to Dismiss !</string>
     <string name="battery_opts">Battery Optimizations</string>
     <string name="battery_msg">On some devices, android prevents apps from running due to battery optimizations. Please make sure you disable optimizations for this app or you may not receive alarms!\nIf you checked previously the Settings, please choose Do Not Ask Again</string>
     <string name="open_settings">Open Settings</string>
     <string name="pls_start_from_icon">Please start app from its icon</string>
     <string name="cannot_start_new_alarm_old_running">Cannot start new alarm. An old alarm in running (check notification bar)</string>
     <string name="failed_delete_barcode_ref_records">Cannot delete this barcode because some alarms are linked to it</string>
+    <string name="azan_final">Azan End</string>
+    <string name="azan_full_abdulbasit">Azan Abdul-Baaset (Full)</string>
+    <string name="azan_full_deedat">Azan (Full)</string>
+    <string name="azan_full_egy">Azan Egypt 1 (Full)</string>
+    <string name="azan_full_egy2">Azan Egypt 2 (Full)</string>
+    <string name="azan_full_egy3">Azan Egypt 3 (Full)</string>
+    <string name="azan_haya">Azan Hayya</string>
+    <string name="azan_makkah">Azan Mekkah</string>
+    <string name="azan_otaiby">Azan Otaybi</string>
+    <string name="azan_qatami">Azan Qatami</string>
+    <string name="azan_quite">Azan</string>
+    <string name="azan_salat_khair">Azan Salat Khayr</string>
+    <string name="azan_salati">Azan Akbar</string>
+    <string name="device_feature_not_supported">Your device does not support this feature</string>
+    <string name="option_1_search_your_city">Option 1: Search your city name</string>
+    <string name="search_your_city">Search Your City</string>
+    <string name="automatically_stop_alarm_after">Automatically stop alarm after</string>
+    <string name="city_search_failed">Cannot load search results. Try a more specific address, change your search text, or you can use option 2</string>
+    <string name="times_invalid">Please provide valid settings to make valid pray times</string>
 </resources>

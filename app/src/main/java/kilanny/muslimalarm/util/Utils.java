@@ -4,8 +4,10 @@ import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -13,14 +15,25 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.arch.core.util.Function;
 import androidx.core.app.AlarmManagerCompat;
 import androidx.core.util.Pair;
 import androidx.preference.PreferenceManager;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -215,6 +228,35 @@ public class Utils {
         }
         // we should never get here ?
         throw new UnsupportedOperationException();
+    }
+
+    public static void showConfirm(Context context, String title, String msg,
+                                   String okText, String cancelText,
+                                   DialogInterface.OnClickListener ok,
+                                   DialogInterface.OnClickListener cancel) {
+        new AlertDialog.Builder(context)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(title)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(okText, ok)
+                .setNegativeButton(cancelText, cancel)
+                .show();
+    }
+
+    public static boolean isValidTimes(Map<String, String> calcResult) {
+        for (String value : calcResult.values()) {
+            if (value.equals(PrayTime.InvalidTime))
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidTimes(Context context) {
+        AppSettings appSettings = AppSettings.getInstance(context);
+        if (!appSettings.isDefaultSet()) return false;
+        return Utils.isValidTimes(PrayTime.getPrayerTimes(context, 0,
+                appSettings.getLatFor(0), appSettings.getLngFor(0)));
     }
 
     public static String getPrayerNames(Context context, Alarm alarm) {
@@ -430,6 +472,98 @@ public class Utils {
                 manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public static void showAlert(Context context, String title, String message,
+                                 @Nullable DialogInterface.OnDismissListener onDismissListener) {
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setOnDismissListener(onDismissListener)
+                .show();
+    }
+
+    public static androidx.appcompat.app.AlertDialog showIndeterminateProgressDialog(Context context,
+                                                                                     String title,
+                                                                                     boolean cancelable) {
+        int llPadding = 30;
+        LinearLayout ll = new LinearLayout(context);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        ll.setPadding(llPadding, llPadding, llPadding, llPadding);
+        ll.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams llParam = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        llParam.gravity = Gravity.CENTER;
+        ll.setLayoutParams(llParam);
+
+        ProgressBar progressBar = new ProgressBar(context);
+        progressBar.setIndeterminate(true);
+        progressBar.setPadding(0, 0, llPadding, 0);
+        progressBar.setLayoutParams(llParam);
+
+        llParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        llParam.gravity = Gravity.CENTER;
+        TextView tvText = new TextView(context);
+        tvText.setText(title);
+        tvText.setTextColor(Color.parseColor("#000000"));
+        tvText.setTextSize(20);
+        tvText.setLayoutParams(llParam);
+
+        ll.addView(progressBar);
+        ll.addView(tvText);
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+        builder.setCancelable(cancelable);
+        builder.setView(ll);
+
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(dialog.getWindow().getAttributes());
+            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setAttributes(layoutParams);
+        }
+        return dialog;
+    }
+
+    public static boolean isGooglePlayServicesAvailable(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            try {
+                int errorCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
+                switch (errorCode) {
+                    case ConnectionResult.SUCCESS:
+                        Log.d("isGmsAvailable", "SUCCESS");
+                        // Google Play Services installed and up to date
+                        return true;
+                    case ConnectionResult.SERVICE_MISSING:
+                        Log.d("isGmsAvailable", "MISSING");
+                        // Google Play services is missing on this device.
+                        break;
+                    case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                        Log.d("isGmsAvailable", "VERSION_UPDATE_REQUIRED");
+                        // The installed version of Google Play services is out of date.
+                        break;
+                    case ConnectionResult.SERVICE_DISABLED:
+                        Log.d("isGmsAvailable", "DISABLED");
+                        // The installed version of Google Play services has been disabled on this device.
+                        break;
+                    case ConnectionResult.SERVICE_INVALID:
+                        Log.d("isGmsAvailable", "INVALID");
+                        // The version of the Google Play services installed on this device is not authentic.
+                        break;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
         return false;

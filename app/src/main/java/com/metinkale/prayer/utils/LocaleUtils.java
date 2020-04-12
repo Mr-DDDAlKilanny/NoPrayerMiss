@@ -217,7 +217,7 @@ public class LocaleUtils {
 
     @NonNull
     public static String formatDate(@NonNull HijriDate date) {
-        String format = "MM/DD/YYYY";
+        String format = "DD MMM YYYY";
         format = format.replace("DD", az(date.getDay(), 2));
 
         if (format.contains("MMM")) {
@@ -238,7 +238,7 @@ public class LocaleUtils {
 
     @NonNull
     public static String formatDate(@NonNull LocalDate date) {
-        String format = "MM/dd/yyyy";
+        String format = "dd/MM/yyyy";
         format = format.replace("DD", az(date.getDayOfMonth(), 2));
 
         try {

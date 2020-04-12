@@ -51,21 +51,25 @@ public class AlarmRingingService extends Service {
 
     private static final int NOTIFICATION_ID = 1441;
     public static final int MAX_SECONDS_ATTEMPT = 60;
+    public static final int ALARM_DISMISS_SNOOZE = 1;
+    public static final int ALARM_DISMISS_DONE = 2;
+    public static final int ALARM_DISMISS_MAX_RING = 3;
 
     private final IBinder binder = new LocalBinder();
     private Alarm mAlarm;
     private int mAlarmTime;
     private boolean mIsPreview;
     private boolean mIsVibrating;
-    private Timer mDismissTimer;
+    private Timer mDismissTimer, mMaxRingingTimeTimer;
     private MediaPlayer mediaPlayer;
     private Vibrator mVibrator;
     private int mOldUserSoundVolume = 0;
     private AudioManager mAudioManager;
     private Date startDate;
     private Handler mHandler;
-    private int mCountDownProgress;
+    private int mSolveAlarmCountDownProgress;
     private int mCountAttemptDismiss = 0;
+    private int mRingStartSecondsCounter;
     public Function<Integer, Void> onCountDownChanged;
 
     public AlarmRingingService() {
@@ -83,7 +87,7 @@ public class AlarmRingingService extends Service {
         return channelId;
     }
 
-    private Notification initNotification(String alarmLabel, String channelId) {
+    private Notification initNotification(String alarmLabel) {
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 1,
                 getStartActivityIntent(),
@@ -92,7 +96,7 @@ public class AlarmRingingService extends Service {
         NotificationCompat.Builder notificationBuilder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationBuilder = new NotificationCompat.Builder(this,
-                    createNotificationChannel(channelId));
+                    createNotificationChannel(AlarmRingingService.CHANNEL_ID));
         } else {
             notificationBuilder = new NotificationCompat.Builder(this);
         }
@@ -148,7 +152,7 @@ public class AlarmRingingService extends Service {
             mAlarmTime = intent.getIntExtra(ARG_ALARM_TIME, 0);
         }
         mHandler = new Handler();
-        startForeground(NOTIFICATION_ID, initNotification(mAlarm.alarmLabel, CHANNEL_ID));
+        startForeground(NOTIFICATION_ID, initNotification(mAlarm.alarmLabel));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mOldUserSoundVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -165,8 +169,7 @@ public class AlarmRingingService extends Service {
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         startRinging();
         startDate = new Date();
-        AnalyticsTrackers.getInstance(this).logAlarmRing(mAlarm);
-
+        AnalyticsTrackers.getInstance(this).logAlarmRing(mAlarm, mIsPreview);
         //startActivity(getStartActivityIntent());
         return START_REDELIVER_INTENT;
     }
@@ -180,6 +183,10 @@ public class AlarmRingingService extends Service {
             mediaPlayer.pause();
             mediaPlayer.seekTo(0);
         }
+        if (mMaxRingingTimeTimer != null) {
+            mMaxRingingTimeTimer.cancel();
+            mMaxRingingTimeTimer = null;
+        }
     }
 
     private void startRinging() {
@@ -192,10 +199,27 @@ public class AlarmRingingService extends Service {
                     new long[]{5000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000}, 0);
             mIsVibrating = true;
         }
+        if (mAlarm.maxMinsRinging != null) {
+            if (mMaxRingingTimeTimer != null)
+                mMaxRingingTimeTimer.cancel();
+            mRingStartSecondsCounter = 0;
+            mMaxRingingTimeTimer = new Timer();
+            mMaxRingingTimeTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    ++mRingStartSecondsCounter;
+                    if (mRingStartSecondsCounter >= mAlarm.maxMinsRinging * 60) {
+                        mMaxRingingTimeTimer.cancel();
+                        mMaxRingingTimeTimer = null;
+                        onDismissed(ALARM_DISMISS_MAX_RING);
+                    }
+                }
+            }, 1000, 1000);
+        }
     }
 
-    public void resetCountDown() {
-        mCountDownProgress = MAX_SECONDS_ATTEMPT;
+    public void resetSolveAlarmCountDown() {
+        mSolveAlarmCountDownProgress = MAX_SECONDS_ATTEMPT;
     }
 
     public boolean onAttemptingDismissAlarm() {
@@ -205,23 +229,18 @@ public class AlarmRingingService extends Service {
             stopRinging();
         cancelAttemptingDismissAlarm(false);
         mDismissTimer = new Timer();
-        resetCountDown();
+        resetSolveAlarmCountDown();
         mDismissTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (mCountDownProgress > 0)
-                    --mCountDownProgress;
+                if (mSolveAlarmCountDownProgress > 0)
+                    --mSolveAlarmCountDownProgress;
                 else {
                     mDismissTimer.cancel();
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            startRinging();
-                        }
-                    });
+                    mHandler.post(() -> startRinging());
                 }
                 if (onCountDownChanged != null)
-                    onCountDownChanged.apply(mCountDownProgress);
+                    onCountDownChanged.apply(mSolveAlarmCountDownProgress);
             }
         }, 1000, 1000);
         return silent;
@@ -241,24 +260,21 @@ public class AlarmRingingService extends Service {
             mAlarm.snoozedToTime = System.currentTimeMillis() + mAlarm.snoozeMins * 60000;
             ++mAlarm.snoozedCount;
 
-            Utils.runInBackground(new Function<Pair<Context, Alarm>, Pair<Context, Alarm[]>>() {
-                @Override
-                public Pair<Context, Alarm[]> apply(Pair<Context, Alarm> input) {
-                    AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
-                    alarmDao.update(input.second);
-                    return new Pair<>(input.first, alarmDao.getAll());
-                }
-            }, new Function<Pair<Context, Alarm[]>, Void>() {
-                @Override
-                public Void apply(Pair<Context, Alarm[]> input) {
-                    Utils.scheduleAndDeletePrevious(input.first, input.second);
-                    return null;
-                }
+            Utils.runInBackground(input -> {
+                AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
+                alarmDao.update(input.second);
+                return new Pair<>(input.first, alarmDao.getAll());
+            }, input -> {
+                Utils.scheduleAndDeletePrevious(input.first, input.second);
+                return null;
             }, new Pair<>(getApplicationContext(), mAlarm));
         }
     }
 
-    public void onDismissed(final boolean isDone) {
+    public synchronized void onDismissed(final int isDone) {
+        if (mediaPlayer == null) {
+            return; //already dismissed !!
+        }
         if (mDismissTimer != null) {
             mDismissTimer.cancel();
             mDismissTimer = null;
@@ -275,38 +291,34 @@ public class AlarmRingingService extends Service {
         int mins = (int) (System.currentTimeMillis() - startDate.getTime()) / 60000;
         if (mIsPreview) {
             AnalyticsTrackers.getInstance(this).logAlarmPreviewed(mAlarm);
-        } else if (!isDone) {
+        } else if (isDone == ALARM_DISMISS_SNOOZE) {
             AnalyticsTrackers.getInstance(this).logAlarmSnoozed(mAlarm, mins);
-        } else {
+        } else if (isDone == ALARM_DISMISS_DONE) {
             AnalyticsTrackers.getInstance(this).logAlarmDismissed(mAlarm, mins);
+        } else if (isDone == ALARM_DISMISS_MAX_RING) {
+            AnalyticsTrackers.getInstance(this).logAlarmMaxRing(mAlarm);
         }
-        Utils.runInBackground(new Function<Pair<Context, Alarm>, Pair<Context, Alarm[]>>() {
-            @Override
-            public Pair<Context, Alarm[]> apply(Pair<Context, Alarm> input) {
-                AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
-                input.second.skippedTimeFlag = 0;
-                input.second.skippedAlarmTime = null;
-                if (isDone) {
-                    input.second.snoozedCount = 0;
-                    input.second.snoozedToTime = null;
+        Utils.runInBackground(input -> {
+            AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
+            input.second.skippedTimeFlag = 0;
+            input.second.skippedAlarmTime = null;
+            if (isDone == ALARM_DISMISS_DONE || isDone == ALARM_DISMISS_MAX_RING) {
+                input.second.snoozedCount = 0;
+                input.second.snoozedToTime = null;
 
-                    if (input.second.weekDayFlags == Weekday.NO_REPEAT) {
-                        input.second.oneTimeLeftAlarmsTimeFlags &= ~mAlarmTime;
-                        if (input.second.oneTimeLeftAlarmsTimeFlags == 0) { // done!
-                            input.second.enabled = false;
-                        }
+                if (input.second.weekDayFlags == Weekday.NO_REPEAT) {
+                    input.second.oneTimeLeftAlarmsTimeFlags &= ~mAlarmTime;
+                    if (input.second.oneTimeLeftAlarmsTimeFlags == 0) { // done!
+                        input.second.enabled = false;
                     }
                 }
-                alarmDao.update(input.second);
-                return new Pair<>(input.first, alarmDao.getAll());
             }
-        }, new Function<Pair<Context, Alarm[]>, Void>() {
-            @Override
-            public Void apply(Pair<Context, Alarm[]> input) {
-                Utils.scheduleAndDeletePrevious(input.first, input.second);
-                stopSelf();
-                return null;
-            }
+            alarmDao.update(input.second);
+            return new Pair<>(input.first, alarmDao.getAll());
+        }, input -> {
+            Utils.scheduleAndDeletePrevious(input.first, input.second);
+            stopSelf();
+            return null;
         }, new Pair<>(getApplicationContext(), mAlarm));
     }
 

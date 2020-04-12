@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 // Make sure to apply this plugin *after* the Android plugin
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 apply plugin: 'com.trello.victor'
 
 android {
@@ -8,9 +10,11 @@ android {
         applicationId "kilanny.muslimalarm"
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 9
-        versionName "1.113"
+        versionCode 11
+        versionName "1.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     sourceSets {
         main {
@@ -22,6 +26,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 victor {
@@ -48,7 +56,6 @@ dependencies {
     implementation 'joda-time:joda-time:2.9.6:no-tzdb'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.12"
     def room_version = "1.1.1"
@@ -59,7 +66,11 @@ dependencies {
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
     implementation 'com.stepstone.stepper:material-stepper:4.3.1'
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
-    implementation 'com.amplitude:android-sdk:2.16.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    //implementation 'com.google.android.libraries.places:places:2.2.0'
+    //implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

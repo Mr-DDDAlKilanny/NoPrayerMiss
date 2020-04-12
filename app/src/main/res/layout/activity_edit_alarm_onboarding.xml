@@ -5,4 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:ms_showErrorStateEnabled="true"
-    app:ms_stepperType="progress_bar" />
+    app:ms_nextNavigationButtonStyle="?materialButtonOutlinedStyle"
+    app:ms_stepperType="progress_bar" /><!--TODO: fix back button style !? -->

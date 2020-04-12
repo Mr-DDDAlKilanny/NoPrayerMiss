@@ -2,12 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="@dimen/space_half"
         tools:context=".fragments.alarmedit.SelectSnoozeEditAlarmFragment">
 
         <TextView
@@ -24,6 +26,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:layout_marginTop="@dimen/space_x2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/how_many_snoozes"
@@ -33,23 +36,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <RadioGroup
                 android:id="@+id/radioGroupMaxSnoozes"
-                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radioNoSnoozes"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/none" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radioUnlimitedSnoozes"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/unlimited" />
@@ -61,12 +65,26 @@
                     android:text="@string/customize" />
             </RadioGroup>
 
-            <NumberPicker
-                android:id="@+id/numPickerSnoozeCount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:hint="@string/max_snooze_count"
+                android:id="@+id/snoozeCountBox"
+                app:errorEnabled="true">
+
+                <AutoCompleteTextView
+                    android:id="@+id/numPickerSnoozeCount"
+                    android:inputType="none"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -92,11 +110,60 @@
                 android:text="@string/minutes"
                 android:textSize="19sp" />
 
-            <NumberPicker
-                android:id="@+id/numMins"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space" />
+                android:layout_margin="4dp"
+                android:hint="@string/minutes"
+                app:errorEnabled="true"
+                app:helperText="1 2 3 ..59"
+                app:helperTextEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/numMins"
+                    android:hint="@string/minutes"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/automatically_stop_alarm_after"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:hint="@string/minutes"
+                app:errorEnabled="true">
+
+                <AutoCompleteTextView
+                    android:id="@+id/numMaxMins"
+                    android:inputType="none"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
     </LinearLayout>

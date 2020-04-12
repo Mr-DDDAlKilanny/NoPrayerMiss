@@ -1,5 +1,6 @@
 package kilanny.muslimalarm.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -34,8 +35,7 @@ public class ConfigOnboardingActivity extends AppCompatActivity
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
 
-    private int mCardIndex = 0;
-
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,17 +45,18 @@ public class ConfigOnboardingActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         // Instantiate a ViewPager and a PagerAdapter.
         Intent intent = getIntent();
-        mCardIndex = intent.getIntExtra(EXTRA_CARD_INDEX, 0);
+        int mCardIndex = intent.getIntExtra(EXTRA_CARD_INDEX, 0);
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), mCardIndex);
+        mPager.beginFakeDrag(); //To disable swipe
         mPager.setAdapter(mPagerAdapter);
     }
 
     private static boolean isAllPermissionsAccepted(int[] grantResults) {
         // If request is cancelled, the result arrays are empty.
         if (grantResults.length == 0) return false;
-        for (int i = 0; i < grantResults.length; ++i) {
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED)
+        for (int grantResult : grantResults) {
+            if (grantResult != PackageManager.PERMISSION_GRANTED)
                 return false;
         }
         return true;
@@ -63,20 +64,18 @@ public class ConfigOnboardingActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
+                                           @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST: {
-                if (isAllPermissionsAccepted(grantResults)) {
-                    if (mPagerAdapter != null && mPagerAdapter.locationFragment != null)
-                        mPagerAdapter.locationFragment.onPermissionGranted();
-                } else {
-                    new AlertDialog.Builder(this)
-                            .setTitle(R.string.app_name)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setMessage(R.string.rejected_permission)
-                            .show();
-                }
+        if (requestCode == PERMISSIONS_REQUEST) {
+            if (isAllPermissionsAccepted(grantResults)) {
+                if (mPagerAdapter != null && mPagerAdapter.locationFragment != null)
+                    mPagerAdapter.locationFragment.onPermissionGranted();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.app_name)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage(R.string.rejected_permission)
+                        .show();
             }
         }
     }
@@ -97,7 +96,10 @@ public class ConfigOnboardingActivity extends AppCompatActivity
     public void onOptionSelected() {
         AnalyticsTrackers.getInstance(this).logSetup(mPager.getCurrentItem());
         if (mPager.getCurrentItem() + 1 == mPagerAdapter.getCount()) {
-            AppSettings.getInstance(this).set(AppSettings.Key.HAS_DEFAULT_SET, true);
+            AppSettings appSettings = AppSettings.getInstance(this);
+            if (!appSettings.isDefaultSet())
+                AnalyticsTrackers.getInstance(this).logNewUserEndConfig();
+            appSettings.set(AppSettings.Key.HAS_DEFAULT_SET, true);
             Intent data = new Intent();
             if (getParent() == null) {
                 setResult(RESULT_OK, data);
@@ -111,15 +113,16 @@ public class ConfigOnboardingActivity extends AppCompatActivity
         }
     }
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         int mCardIndex = 0;
-        public OnboardingLocationFragment locationFragment;
+        OnboardingLocationFragment locationFragment;
 
-        public ScreenSlidePagerAdapter(FragmentManager fm, int cardIndex) {
-            super(fm);
+        ScreenSlidePagerAdapter(FragmentManager fm, int cardIndex) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             mCardIndex = cardIndex;
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             switch (position) {
@@ -134,7 +137,7 @@ public class ConfigOnboardingActivity extends AppCompatActivity
                 case 4:
                     return OnboardingTimeFormatFragment.newInstance(mCardIndex);
             }
-            return null;
+            throw new IllegalArgumentException("position of Fragment out of range");
         }
 
         @Override

@@ -78,7 +78,7 @@ public class PrayTime {
     public static final int FLOATING = 3; // floating point number
     // Time Names
     private ArrayList<String> timeNames;
-    private String InvalidTime; // The string used for invalid times
+    public static final String InvalidTime = "-----"; // The string used for invalid times
     // --------------------- Technical Settings --------------------
     private int numIterations; // number of iterations needed to compute times
     // ------------------- Calc Method Parameters --------------------
@@ -112,8 +112,6 @@ public class PrayTime {
         timeNames.add("Sunset");
         timeNames.add("Maghrib");
         timeNames.add("Isha");
-
-        InvalidTime = "-----"; // The string used for invalid times
 
         // --------------------- Technical Settings --------------------
 
@@ -690,7 +688,7 @@ public class PrayTime {
 
         //Get offset from UTC, accounting for DST
         int defaultTzOffsetMs = defaultCalc.get(Calendar.ZONE_OFFSET) + defaultCalc.get(Calendar.DST_OFFSET);
-        double timezone = defaultTzOffsetMs / (1000 * 60 * 60);
+        int timezone = defaultTzOffsetMs / (1000 * 60 * 60);
         // Test Prayer times here
         PrayTime prayers = new PrayTime();
 
@@ -716,6 +714,42 @@ public class PrayTime {
 
         for (int i = 0; i < prayerTimes.size(); i++) {
             System.out.println(prayerNames.get(i) + " - " + prayerTimes.get(i));
+            result.put(prayerNames.get(i), prayerTimes.get(i));
+        }
+
+        return result;
+    }
+
+    public static LinkedHashMap<String, String> getPrayerTimes(int caclMethod,
+                                                               int asrJuristic,
+                                                               int adjustHighLats,
+                                                               double lat,
+                                                               double lng,
+                                                               int timeFormat,
+                                                               int year,
+                                                               int month,
+                                                               int day,
+                                                               int tzOffset,
+                                                               int tzDst) {
+        //Get offset from UTC, accounting for DST
+        int defaultTzOffsetMs = tzOffset + tzDst;
+        int timezone = defaultTzOffsetMs / (1000 * 60 * 60);
+        // Test Prayer times here
+        PrayTime prayers = new PrayTime();
+        prayers.setTimeFormat(timeFormat);
+        prayers.setCalcMethod(caclMethod);
+        prayers.setAsrJuristic(asrJuristic);
+        prayers.setAdjustHighLats(adjustHighLats);
+
+        int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
+        prayers.tune(offsets);
+
+        ArrayList<String> prayerTimes = prayers.getDatePrayerTimes(year, month, day,
+                lat, lng, timezone);
+        ArrayList<String> prayerNames = prayers.getTimeNames();
+        LinkedHashMap<String, String> result = new LinkedHashMap<>();
+
+        for (int i = 0; i < prayerTimes.size(); i++) {
             result.put(prayerNames.get(i), prayerTimes.get(i));
         }
 

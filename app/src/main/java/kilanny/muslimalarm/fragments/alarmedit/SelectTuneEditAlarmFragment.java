@@ -64,7 +64,7 @@ public class SelectTuneEditAlarmFragment extends EditAlarmFragment {
         View root = inflater.inflate(R.layout.fragment_select_tune_edit_alarm, container,
                 false);
         ListView listView = root.findViewById(R.id.listViewTunes);
-        Tune[] tunes = Tune.getTunes();
+        Tune[] tunes = Tune.getTunes(0);
         mAdapter = new SelectTuneAdapter(root.getContext(), tunes);
         listView.setAdapter(mAdapter);
         boolean found = false;
@@ -80,6 +80,12 @@ public class SelectTuneEditAlarmFragment extends EditAlarmFragment {
                 break;
             }
         return mView = root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        SelectTuneAdapter.stopPlayback();
+        super.onDestroyView();
     }
 
     @Override

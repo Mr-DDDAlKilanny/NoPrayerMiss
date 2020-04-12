@@ -54,7 +54,7 @@ public class PrayerTimesHomeFragment extends Fragment {
         if (lat > -1) {
             Map<String, String> prayerTimes = PrayTime.getPrayerTimes(getContext(), 0, lat, lng);
             TextView txtDate = mView.findViewById(R.id.date);
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
             txtDate.setText(dateFormat.format(new Date()));
             TextView txtHijri = mView.findViewById(R.id.hicri);
             txtHijri.setText(LocaleUtils.formatDate(HijriDate.now()));

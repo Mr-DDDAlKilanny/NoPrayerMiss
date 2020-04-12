@@ -1,22 +1,26 @@
 package kilanny.muslimalarm.fragments.alarmedit;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.RadioGroup;
-
+import com.google.android.material.textfield.TextInputEditText;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+
+import java.util.Locale;
 
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.Alarm;
@@ -29,6 +33,8 @@ import kilanny.muslimalarm.data.Alarm;
 public class SelectSnoozeEditAlarmFragment extends EditAlarmFragment {
 
     private View mView;
+    private String[] mMaxMinsValues, mSnoozeCountValues;
+    private int mDuration;
 
     public SelectSnoozeEditAlarmFragment() {
         // Required empty public constructor
@@ -56,33 +62,56 @@ public class SelectSnoozeEditAlarmFragment extends EditAlarmFragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_select_snooze_edit_alarm, container, false);
 
-        final NumberPicker numberPickerPeriod = mView.findViewById(R.id.numMins);
-        numberPickerPeriod.setMinValue(1);
-        numberPickerPeriod.setMaxValue(59);
-        numberPickerPeriod.setValue(Math.max(1, mAlarm.snoozeMins));
+        final TextInputEditText numberPickerPeriod = mView.findViewById(R.id.numMins);
+        numberPickerPeriod.setText(String.format(Locale.ENGLISH, "%d",
+                Math.max(1, mAlarm.snoozeMins)));
 
-        final NumberPicker numberPickerCount = mView.findViewById(R.id.numPickerSnoozeCount);
-        numberPickerCount.setMinValue(1);
-        numberPickerCount.setMaxValue(99);
-        numberPickerCount.setValue(Math.max(1, mAlarm.snoozeCount));
+        final AutoCompleteTextView numberPickerCount = mView.findViewById(R.id.numPickerSnoozeCount);
+        mSnoozeCountValues = new String[99];
+        for (int i = 0; i < mSnoozeCountValues.length; ++i) {
+            mSnoozeCountValues[i] = String.format(Locale.getDefault(), "%d", i + 1);
+        }
+        numberPickerCount.setAdapter(new ArrayAdapter<>(getContext(),
+                R.layout.cat_exposed_dropdown_popup_item, mSnoozeCountValues));
+        numberPickerCount.setOnTouchListener((v, event) -> {
+            numberPickerCount.showDropDown();
+            return true;
+        });
+        numberPickerCount.setText(mSnoozeCountValues[mAlarm.snoozeCount]);
+        ((ArrayAdapter) numberPickerCount.getAdapter()).getFilter().filter(null);
+
+        AutoCompleteTextView numMaxMins = mView.findViewById(R.id.numMaxMins);
+        mMaxMinsValues = new String[91];
+        mMaxMinsValues[0] = getString(R.string.none);
+        for (int i = 1; i < mMaxMinsValues.length; ++i) {
+            mMaxMinsValues[i] = getString(R.string.afterNMinutes,
+                    String.format(Locale.getDefault(), "%d", i));
+        }
+        numMaxMins.setAdapter(new ArrayAdapter<>(getContext(),
+                R.layout.cat_exposed_dropdown_popup_item, mMaxMinsValues));
+        numMaxMins.setOnTouchListener((v, event) -> {
+            numMaxMins.showDropDown();
+            return true;
+        });
+        numMaxMins.setText(mMaxMinsValues[mAlarm.maxMinsRinging == null ? 0 : mAlarm.maxMinsRinging]);
+        ((ArrayAdapter) numMaxMins.getAdapter()).getFilter().filter(null);
 
         RadioGroup radioGroupMaxSnoozes = mView.findViewById(R.id.radioGroupMaxSnoozes);
-        radioGroupMaxSnoozes.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                LinearLayout layout = mView.findViewById(R.id.layoutSnoozePeriod);
-                numberPickerCount.setVisibility(
-                        radioGroup.getCheckedRadioButtonId() == R.id.radioSpecifiedSnoozes ?
-                                View.VISIBLE : View.INVISIBLE);
-                layout.setVisibility(radioGroup.getCheckedRadioButtonId() == R.id.radioNoSnoozes ?
-                        View.INVISIBLE : View.VISIBLE);
-            }
+        radioGroupMaxSnoozes.setOnCheckedChangeListener((radioGroup, i) -> {
+            LinearLayout layout = mView.findViewById(R.id.layoutSnoozePeriod);
+            View snoozeCountBox = mView.findViewById(R.id.snoozeCountBox);
+            snoozeCountBox.setVisibility(
+                    radioGroup.getCheckedRadioButtonId() == R.id.radioSpecifiedSnoozes ?
+                            View.VISIBLE : View.INVISIBLE);
+            layout.setVisibility(radioGroup.getCheckedRadioButtonId() == R.id.radioNoSnoozes ?
+                    View.INVISIBLE : View.VISIBLE);
         });
         if (mAlarm.snoozeMins == 0) {
             AppCompatRadioButton radioButton = mView.findViewById(R.id.radioNoSnoozes);
@@ -103,22 +132,47 @@ public class SelectSnoozeEditAlarmFragment extends EditAlarmFragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        cancelError();
+    }
+
+    private void cancelError() {
+        TextInputEditText numberPickerPeriod = mView.findViewById(R.id.numMins);
+        numberPickerPeriod.setError(null);
+    }
+
+    @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
         RadioGroup radioGroup = mView.findViewById(R.id.radioGroupMaxSnoozes);
-        NumberPicker numberPickerPeriod = mView.findViewById(R.id.numMins);
-        NumberPicker numberPickerCount = mView.findViewById(R.id.numPickerSnoozeCount);
+        AutoCompleteTextView numberPickerCount = mView.findViewById(R.id.numPickerSnoozeCount);
+        AutoCompleteTextView numMaxMins = mView.findViewById(R.id.numMaxMins);
+        String max = numMaxMins.getText().toString();
+        for (int i = 0; i < mMaxMinsValues.length; ++i) {
+            if (mMaxMinsValues[i].equals(max)) {
+                mAlarm.maxMinsRinging = i == 0 ? null : i;
+                break;
+            }
+        }
+        max = numberPickerCount.getText().toString();
+        for (int i = 0; i < mSnoozeCountValues.length; ++i) {
+            if (mSnoozeCountValues[i].equals(max)) {
+                mAlarm.snoozeCount = i + 1;
+                break;
+            }
+        }
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.radioNoSnoozes:
                 mAlarm.snoozeMins = 0;
                 mAlarm.snoozeCount = 0;
                 break;
             case R.id.radioUnlimitedSnoozes:
-                mAlarm.snoozeMins = numberPickerPeriod.getValue();
+                mAlarm.snoozeMins = mDuration;
                 mAlarm.snoozeCount = 0;
                 break;
             case R.id.radioSpecifiedSnoozes:
-                mAlarm.snoozeMins = numberPickerPeriod.getValue();
-                mAlarm.snoozeCount = numberPickerCount.getValue();
+                mAlarm.snoozeMins = mDuration;
+                //mAlarm.snoozeCount = numberPickerCount.getValue();
                 break;
         }
         mListener.onComplete(mAlarm);
@@ -127,17 +181,34 @@ public class SelectSnoozeEditAlarmFragment extends EditAlarmFragment {
 
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+        cancelError();
         callback.goToPrevStep();
     }
 
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        cancelError();
+        RadioGroup radioGroup = mView.findViewById(R.id.radioGroupMaxSnoozes);
+        TextInputEditText numberPickerPeriod = mView.findViewById(R.id.numMins);
+        mDuration = 0;
+        if (radioGroup.getCheckedRadioButtonId() != R.id.radioNoSnoozes) {
+            try {
+                mDuration = Integer.parseInt(numberPickerPeriod.getText().toString());
+                if (mDuration < 1 || mDuration > 59)
+                    throw new Exception("");
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+                numberPickerPeriod.setError("1 .. 59");
+                return new VerificationError("");
+            }
+        }
         return null;
     }
 
     @Override
     public void onSelected() {
+        cancelError();
     }
 
     @Override

@@ -3,26 +3,27 @@ package kilanny.muslimalarm.fragments;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.arch.core.util.Function;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -70,8 +71,16 @@ public class AlarmsHomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        onDataSetChanged(); // show recalced left times
+        onDataSetChanged(null); // show recalced left times
         mCanUpdateTime = true;
+        FloatingActionButton fab = mView.findViewById(R.id.fab);
+        fab.setRotation(0);
+        ViewCompat.animate(fab)
+                .rotation(360)
+                .withLayer()
+                .setDuration(1000)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
     }
 
     @Override
@@ -80,32 +89,26 @@ public class AlarmsHomeFragment extends Fragment {
         mCanUpdateTime = false;
     }
 
-    public void onDataSetChanged() {
+    public void onDataSetChanged(Runnable onDone) {
         mAdapter.clear();
-        Utils.runInBackground(new Function<Context, Alarm[]>() {
-            @Override
-            public Alarm[] apply(Context input) {
-                return AppDb.getInstance(input).alarmDao().getAll();
-            }
-        }, new Function<Alarm[], Void>() {
-            @Override
-            public Void apply(Alarm[] input) {
-                if (mAdapter.getCount() == 0) { // prevent duplicate threads adds
-                    mAdapter.addAll(input);
-                    mAdapter.notifyDataSetChanged();
-                    if (input.length > 0 && getContext() != null) {
-                        boolean oneEnabled = false;
-                        for (Alarm alarm : input)
-                            if (alarm.enabled) {
-                                oneEnabled = true;
-                                break;
-                            }
-                        if (oneEnabled && !batteryOptimizationAd(getContext()) && new Random().nextInt(5) == 0)
-                            shareAd(getContext());
-                    }
+        Utils.runInBackground(input -> AppDb.getInstance(input).alarmDao().getAll(), input -> {
+            if (mAdapter.getCount() == 0) { // prevent duplicate threads adds
+                mAdapter.addAll(input);
+                mAdapter.notifyDataSetChanged();
+                if (input.length > 0 && getContext() != null) {
+                    boolean oneEnabled = false;
+                    for (Alarm alarm : input)
+                        if (alarm.enabled) {
+                            oneEnabled = true;
+                            break;
+                        }
+                    if (oneEnabled && !batteryOptimizationAd(getContext()) && new Random().nextInt(5) == 0)
+                        shareAd(getContext());
                 }
-                return null;
             }
+            if (onDone != null)
+                onDone.run();
+            return null;
         }, getContext());
     }
 
@@ -117,23 +120,15 @@ public class AlarmsHomeFragment extends Fragment {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle(R.string.battery_opts)
                     .setMessage(R.string.battery_msg)
-                    .setPositiveButton(R.string.open_settings, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent();
-                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", context.getPackageName(), null);
-                            intent.setData(uri);
-                            context.startActivity(intent);
-                        }
+                    .setPositiveButton(R.string.open_settings, (dialogInterface, i) -> {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                        intent.setData(uri);
+                        context.startActivity(intent);
                     })
                     .setNeutralButton(android.R.string.cancel, null)
-                    .setNegativeButton(R.string.no_not_ask, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            response.setData(-1, context);
-                        }
-                    })
+                    .setNegativeButton(R.string.no_not_ask, (dialogInterface, i) -> response.setData(-1, context))
                     .show();
             return true;
         } else
@@ -187,29 +182,19 @@ public class AlarmsHomeFragment extends Fragment {
         View permissionCheckLayout = mView.findViewById(R.id.permissionCheckLayout);
         final Intent intent = isNeedingAutoStartupPermission(mView.getContext());
         permissionCheckLayout.setVisibility(intent == null ? View.GONE : View.VISIBLE);
-        permissionCheckLayout.findViewById(R.id.btnPermissions).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.getContext().startActivity(intent);
-            }
-        });
+        permissionCheckLayout.findViewById(R.id.btnPermissions)
+                .setOnClickListener(view -> view.getContext().startActivity(intent));
 
         ListView listView = mView.findViewById(R.id.listView);
-        mAdapter = new AlarmListAdapter(getContext(), new Function<Alarm, Void>() {
-            @Override
-            public Void apply(Alarm input) {
-                mListener.onEditAlarm(input);
-                return null;
-            }
-        }, new Function<Void, Void>() {
-            @Override
-            public Void apply(Void input) {
-                onDataSetChanged();
-                return null;
-            }
+        mAdapter = new AlarmListAdapter(getContext(), input -> {
+            mListener.onEditAlarm(input);
+            return null;
+        }, input -> {
+            onDataSetChanged(null);
+            return null;
         });
         listView.setAdapter(mAdapter);
-        onDataSetChanged();
+        onDataSetChanged(null);
         mAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -231,22 +216,18 @@ public class AlarmsHomeFragment extends Fragment {
             public void run() {
                 if (!mCanUpdateTime)
                     return;
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+                handler.post(() -> mAdapter.notifyDataSetChanged());
             }
         }, 30000, 30000);
 
         FloatingActionButton fab = mView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.onAddNewAlarm();
-            }
-        });
+        fab.setOnClickListener(view -> mListener.onAddNewAlarm());
+        listView.setOnScrollListener(new AutoHideFabScrollListener(listView, fab));
+
+        SwipeRefreshLayout listViewLayout = mView.findViewById(R.id.listViewLayout);
+        listViewLayout.setOnRefreshListener(() ->
+                onDataSetChanged(() -> listViewLayout.setRefreshing(false)));
+
         return mView;
     }
 
@@ -289,18 +270,14 @@ public class AlarmsHomeFragment extends Fragment {
         builder.setTitle(R.string.share_app);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(R.string.share_msg_dlg);
-        builder.setPositiveButton(R.string.menu_share, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-                response.setData(1, context);
-                Utils.displayShareActivity(context);
-            }
+        builder.setPositiveButton(R.string.menu_share, (dialog, id) -> {
+            dialog.cancel();
+            response.setData(1, context);
+            Utils.displayShareActivity(context);
         });
-        builder.setNegativeButton(R.string.not_now, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-                response.setData(-1, context);
-            }
+        builder.setNegativeButton(R.string.not_now, (dialog, id) -> {
+            dialog.cancel();
+            response.setData(-1, context);
         });
         builder.create().show();
     }
@@ -312,6 +289,46 @@ public class AlarmsHomeFragment extends Fragment {
         if (mUpdateTimesTimer != null) {
             mUpdateTimesTimer.cancel();
             mUpdateTimesTimer = null;
+        }
+    }
+
+    private static class AutoHideFabScrollListener implements AbsListView.OnScrollListener {
+
+        private int mLastFirstVisibleItem = -1;
+        private int mLastFirstVisibleItemTop = -1;
+        private ListView listView;
+        private FloatingActionButton fab;
+
+        private AutoHideFabScrollListener(ListView listView, FloatingActionButton fab) {
+            this.listView = listView;
+            this.fab = fab;
+        }
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (view.getId() == listView.getId()) {
+                final int currentFirstVisibleItem = listView.getFirstVisiblePosition();
+                int currentFirstVisibleItemTop = listView.getChildAt(0).getTop();
+                ;
+                if (currentFirstVisibleItem > mLastFirstVisibleItem) {
+                    fab.hide();
+                } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
+                    fab.show();
+                } else {
+                    if (currentFirstVisibleItemTop < mLastFirstVisibleItemTop) {
+                        fab.hide();
+                    } else if (currentFirstVisibleItemTop > mLastFirstVisibleItemTop) {
+                        fab.show();
+                    }
+                }
+
+                mLastFirstVisibleItemTop = currentFirstVisibleItemTop;
+                mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         }
     }
 

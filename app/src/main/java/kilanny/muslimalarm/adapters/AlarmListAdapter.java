@@ -1,16 +1,17 @@
 package kilanny.muslimalarm.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.InsetDrawable;
+import android.os.Build;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,9 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.arch.core.util.Function;
+import androidx.core.view.ViewCompat;
+
+import com.google.android.material.internal.ViewUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,11 +39,14 @@ import kilanny.muslimalarm.data.AlarmDao;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.AppSettings;
 import kilanny.muslimalarm.data.Weekday;
+import kilanny.muslimalarm.util.AnalyticsTrackers;
 import kilanny.muslimalarm.util.PrayTime;
 import kilanny.muslimalarm.util.Utils;
 
 public class AlarmListAdapter extends ArrayAdapter<Alarm>
         implements PopupMenu.OnMenuItemClickListener {
+
+    private static final int ICON_MARGIN = 8;
 
     private final SimpleDateFormat timeF;
     private final Function<Alarm, Void> onAlarmEdit;
@@ -85,26 +92,20 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
 
         final Context context = rowView.getContext();
         if (alarm.snoozedToTime != null) {
-            rowView.findViewById(R.id.btnDismiss).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, AlarmRingBroadcastReceiver.class);
-                    intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
-                    intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, false);
-                    intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME,
-                            alarm.weekDayFlags == Weekday.NO_REPEAT ? alarm.timeFlags : 0);
-                    context.sendBroadcast(intent);
-                }
+            rowView.findViewById(R.id.btnDismiss).setOnClickListener(view -> {
+                Intent intent = new Intent(context, AlarmRingBroadcastReceiver.class);
+                intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
+                intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, false);
+                intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM_TIME,
+                        alarm.weekDayFlags == Weekday.NO_REPEAT ? alarm.timeFlags : 0);
+                context.sendBroadcast(intent);
             });
             return rowView;
         }
 
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mIsPendingOperation)
-                    onAlarmEdit.apply(alarm);
-            }
+        rowView.setOnClickListener(view -> {
+            if (!mIsPendingOperation)
+                onAlarmEdit.apply(alarm);
         });
         final AppCompatTextView alarmTime = rowView.findViewById(R.id.alarmTime);
         AppCompatTextView alarmTimeAfterSkip = rowView.findViewById(R.id.alarmTimeAfterSkip);
@@ -145,47 +146,38 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         AppCompatCheckBox chkAlarmEnabled = rowView.findViewById(R.id.chkAlarmEnabled);
         chkAlarmEnabled.setEnabled(alarm.snoozedToTime == null);
         chkAlarmEnabled.setChecked(alarm.enabled);
-        chkAlarmEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
-                compoundButton.setEnabled(false);
-                Utils.runInBackground(new Function<Context, Pair<Context, Alarm[]>>() {
-                    @Override
-                    public Pair<Context, Alarm[]> apply(Context input) {
-                        // if any other operations running wait them first
-                        while (mIsPendingOperation) {
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        mIsPendingOperation = true;
-                        alarm.enabled = b;
-                        if (b) {
-                            alarm.oneTimeLeftAlarmsTimeFlags = alarm.timeFlags;
-                            alarm.snoozedCount = 0;
-                            alarm.snoozedToTime = null;
-                            alarm.skippedTimeFlag = 0;
-                            alarm.skippedAlarmTime = null;
-                        }
-                        AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
-                        alarmDao.update(alarm);
-                        return new Pair<>(context, alarmDao.getAll());
+        chkAlarmEnabled.setOnCheckedChangeListener((compoundButton, b) -> {
+            compoundButton.setEnabled(false);
+            Utils.runInBackground(input -> {
+                // if any other operations running wait them first
+                while (mIsPendingOperation) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                }, new Function<Pair<Context, Alarm[]>, Void>() {
-                    @Override
-                    public Void apply(Pair<Context, Alarm[]> input) {
-                        mIsPendingOperation = false;
-                        compoundButton.setEnabled(true);
-                        clear();
-                        addAll(input.second);
-                        notifyDataSetChanged();
-                        Utils.scheduleAndDeletePrevious(input.first, input.second);
-                        return null;
-                    }
-                }, compoundButton.getContext());
-            }
+                }
+                mIsPendingOperation = true;
+                alarm.enabled = b;
+                if (b) {
+                    alarm.oneTimeLeftAlarmsTimeFlags = alarm.timeFlags;
+                    alarm.snoozedCount = 0;
+                    alarm.snoozedToTime = null;
+                    alarm.skippedTimeFlag = 0;
+                    alarm.skippedAlarmTime = null;
+                }
+                AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
+                alarmDao.update(alarm);
+                return new Pair<>(context, alarmDao.getAll());
+            }, input -> {
+                mIsPendingOperation = false;
+                compoundButton.setEnabled(true);
+                clear();
+                addAll(input.second);
+                notifyDataSetChanged();
+                Utils.scheduleAndDeletePrevious(input.first, input.second);
+                return null;
+            }, compoundButton.getContext());
         });
 
         AppCompatTextView prayerName = rowView.findViewById(R.id.prayerName);
@@ -214,34 +206,51 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
 
         final AppCompatImageButton imgDots = rowView.findViewById(R.id.imgDots);
         imgDots.setEnabled(alarm.snoozedToTime == null);
-        imgDots.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mIsPendingOperation || alarm.snoozedToTime != null)
-                    return;
-                mClickedAlarm = alarm;
-                PopupMenu popupMenu = new PopupMenu(context, imgDots);
-                popupMenu.inflate(R.menu.menu_list_item_alarm);
-                MenuBuilder menu = (MenuBuilder) popupMenu.getMenu();
-                MenuItem itemSkip = menu.findItem(R.id.mnuSkipNextAlarm);
-                if (mClickedAlarm.enabled) {
-                    itemSkip.setEnabled(true);
-                    if (mClickedAlarm.skippedAlarmTime == null
-                            || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
-                        itemSkip.setTitle(R.string.skip_next_alarm);
+        imgDots.setOnClickListener(view -> {
+            if (mIsPendingOperation || alarm.snoozedToTime != null)
+                return;
+            mClickedAlarm = alarm;
+            PopupMenu popupMenu = new PopupMenu(context, imgDots);
+            popupMenu.inflate(R.menu.menu_list_item_alarm);
+            MenuBuilder menu = (MenuBuilder) popupMenu.getMenu();
+            menu.setOptionalIconsVisible(true);
+            for (MenuItem item : menu.getVisibleItems()) {
+                int iconMarginPx = (int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, ICON_MARGIN, getContext().getResources().getDisplayMetrics());
+
+                if (item.getIcon() != null) {
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                        item.setIcon(new InsetDrawable(item.getIcon(), iconMarginPx, 0, iconMarginPx, 0));
                     } else {
-                        itemSkip.setTitle(R.string.unskip_next_alarm);
+                        item.setIcon(new InsetDrawable(item.getIcon(), iconMarginPx, 0, iconMarginPx, 0) {
+                            @Override
+                            public int getIntrinsicWidth() {
+                                return getIntrinsicHeight() + iconMarginPx + iconMarginPx;
+                            }
+                        });
                     }
-                } else {
-                    itemSkip.setEnabled(false);
                 }
-                popupMenu.setOnMenuItemClickListener(AlarmListAdapter.this);
-                MenuPopupHelper menuHelper = new MenuPopupHelper(getContext(), menu, imgDots);
-                menuHelper.setForceShowIcon(true);
-                menuHelper.show();
             }
+            MenuItem itemSkip = menu.findItem(R.id.mnuSkipNextAlarm);
+            if (mClickedAlarm.enabled) {
+                itemSkip.setEnabled(true);
+                if (mClickedAlarm.skippedAlarmTime == null
+                        || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
+                    itemSkip.setTitle(R.string.skip_next_alarm);
+                } else {
+                    itemSkip.setTitle(R.string.unskip_next_alarm);
+                }
+            } else {
+                itemSkip.setEnabled(false);
+            }
+            popupMenu.setOnMenuItemClickListener(this);
+            MenuPopupHelper menuHelper = new MenuPopupHelper(getContext(), menu, imgDots);
+            menuHelper.setForceShowIcon(true);
+            menuHelper.show();
         });
 
+        float elevation = ViewUtils.dpToPx(getContext(), 16);
+        ViewCompat.setElevation(rowView, elevation);
         return rowView;
     }
 
@@ -250,28 +259,20 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                 .setTitle(R.string.delete_alarm)
                 .setMessage(R.string.are_you_sure_delete_alarm)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mIsPendingOperation = true;
-                        Utils.runInBackground(new Function<Pair<Context, Alarm>, Pair<Pair<Context, Alarm>, Alarm[]>>() {
-                            @Override
-                            public Pair<Pair<Context, Alarm>, Alarm[]> apply(Pair<Context, Alarm> input) {
-                                AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
-                                alarmDao.delete(input.second);
-                                return new Pair<>(new Pair<>(input.first, input.second), alarmDao.getAll());
-                            }
-                        }, new Function<Pair<Pair<Context, Alarm>, Alarm[]>, Void>() {
-                            @Override
-                            public Void apply(Pair<Pair<Context, Alarm>, Alarm[]> input) {
-                                remove(input.first.second);
-                                notifyDataSetChanged();
-                                Utils.scheduleAndDeletePrevious(input.first.first, input.second);
-                                mIsPendingOperation = false;
-                                return null;
-                            }
-                        }, new Pair<>(getContext(), mClickedAlarm));
-                    }
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    mIsPendingOperation = true;
+                    Utils.runInBackground(input -> {
+                        AlarmDao alarmDao = AppDb.getInstance(input.first).alarmDao();
+                        alarmDao.delete(input.second);
+                        AnalyticsTrackers.getInstance(input.first).logAlarmDeleted(input.second);
+                        return new Pair<>(new Pair<>(input.first, input.second), alarmDao.getAll());
+                    }, input -> {
+                        remove(input.first.second);
+                        notifyDataSetChanged();
+                        Utils.scheduleAndDeletePrevious(input.first.first, input.second);
+                        mIsPendingOperation = false;
+                        return null;
+                    }, new Pair<>(getContext(), mClickedAlarm));
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
@@ -279,68 +280,57 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
 
     private void onDuplicateAlarm() {
         mIsPendingOperation = true;
-        Utils.runInBackground(new Function<Context, Void>() {
-            @Override
-            public Void apply(Context input) {
-                Alarm alarm = mClickedAlarm.copy();
-                alarm.id = 0;
-                alarm.snoozedCount = 0;
-                alarm.snoozedToTime = null;
-                alarm.skippedTimeFlag = 0;
-                alarm.skippedAlarmTime = null;
-                AppDb.getInstance(input).alarmDao().insert(alarm);
-                return null;
-            }
-        }, new Function<Void, Void>() {
-            @Override
-            public Void apply(Void input) {
-                mIsPendingOperation = false;
-                onNeedRefresh.apply(null);
-                return null;
-            }
+        Utils.runInBackground((Function<Context, Void>) input -> {
+            Alarm alarm = mClickedAlarm.copy();
+            alarm.id = 0;
+            alarm.snoozedCount = 0;
+            alarm.snoozedToTime = null;
+            alarm.skippedTimeFlag = 0;
+            alarm.skippedAlarmTime = null;
+            AppDb.getInstance(input).alarmDao().insert(alarm);
+            return null;
+        }, input -> {
+            mIsPendingOperation = false;
+            onNeedRefresh.apply(null);
+            return null;
         }, getContext());
     }
 
     private void onSkipNextAlarm() {
         mIsPendingOperation = true;
-        Utils.runInBackground(new Function<Context, Pair<Context, Alarm[]>>() {
-            @Override
-            public Pair<Context, Alarm[]> apply(Context input) {
-                if (mClickedAlarm.weekDayFlags == Weekday.NO_REPEAT) {
-                    if (mClickedAlarm.skippedTimeFlag == 0
-                            || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
-                        Utils.NextAlarmInfo next = Utils.getNextAlarmDate(input, mClickedAlarm);
-                        mClickedAlarm.skippedTimeFlag = next.timeFlag;
-                        mClickedAlarm.oneTimeLeftAlarmsTimeFlags &= ~next.timeFlag;
-                        if (mClickedAlarm.oneTimeLeftAlarmsTimeFlags == 0)
-                            mClickedAlarm.enabled = false;
-                    } else {
-                        mClickedAlarm.oneTimeLeftAlarmsTimeFlags |= mClickedAlarm.skippedTimeFlag;
-                        mClickedAlarm.skippedTimeFlag = 0;
-                    }
+        Utils.runInBackground(input -> {
+            if (mClickedAlarm.weekDayFlags == Weekday.NO_REPEAT) {
+                if (mClickedAlarm.skippedTimeFlag == 0
+                        || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
+                    Utils.NextAlarmInfo next = Utils.getNextAlarmDate(input, mClickedAlarm);
+                    mClickedAlarm.skippedTimeFlag = next.timeFlag;
+                    mClickedAlarm.oneTimeLeftAlarmsTimeFlags &= ~next.timeFlag;
+                    if (mClickedAlarm.oneTimeLeftAlarmsTimeFlags == 0)
+                        mClickedAlarm.enabled = false;
                 } else {
-                    if (mClickedAlarm.skippedTimeFlag == 0
-                            || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
-                        Utils.NextAlarmInfo next = Utils.getNextAlarmDate(input, mClickedAlarm);
-                        mClickedAlarm.skippedTimeFlag = next.timeFlag;
-                        mClickedAlarm.skippedAlarmTime = next.date.getTime();
-                    } else {
-                        mClickedAlarm.skippedAlarmTime = null;
-                        mClickedAlarm.skippedTimeFlag = 0;
-                    }
+                    mClickedAlarm.oneTimeLeftAlarmsTimeFlags |= mClickedAlarm.skippedTimeFlag;
+                    mClickedAlarm.skippedTimeFlag = 0;
                 }
-                AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
-                alarmDao.update(mClickedAlarm);
-                return new Pair<>(input, alarmDao.getAll());
+            } else {
+                if (mClickedAlarm.skippedTimeFlag == 0
+                        || mClickedAlarm.skippedAlarmTime < System.currentTimeMillis()) {
+                    Utils.NextAlarmInfo next = Utils.getNextAlarmDate(input, mClickedAlarm);
+                    mClickedAlarm.skippedTimeFlag = next.timeFlag;
+                    mClickedAlarm.skippedAlarmTime = next.date.getTime();
+                } else {
+                    mClickedAlarm.skippedAlarmTime = null;
+                    mClickedAlarm.skippedTimeFlag = 0;
+                }
             }
-        }, new Function<Pair<Context, Alarm[]>, Void>() {
-            @Override
-            public Void apply(Pair<Context, Alarm[]> input) {
-                mIsPendingOperation = false;
-                Utils.scheduleAndDeletePrevious(input.first, input.second);
-                notifyDataSetChanged();
-                return null;
-            }
+            AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
+            alarmDao.update(mClickedAlarm);
+            AnalyticsTrackers.getInstance(input).logAlarmSkipped(mClickedAlarm);
+            return new Pair<>(input, alarmDao.getAll());
+        }, input -> {
+            mIsPendingOperation = false;
+            Utils.scheduleAndDeletePrevious(input.first, input.second);
+            notifyDataSetChanged();
+            return null;
         }, getContext());
     }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight">
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatRadioButton
         android:id="@+id/radioSelected"
@@ -33,8 +34,7 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnEdit"
-        android:src="@android:drawable/ic_menu_edit"
-        android:scaleType="fitXY"
+        app:srcCompat="@drawable/baseline_edit_24"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/btnDelete"
         android:layout_toLeftOf="@id/btnDelete"
@@ -43,8 +43,7 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnDelete"
-        android:src="@android:drawable/ic_menu_delete"
-        android:scaleType="fitXY"
+        app:srcCompat="@drawable/baseline_delete_forever_24"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
