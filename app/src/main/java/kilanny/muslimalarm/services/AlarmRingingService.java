@@ -47,6 +47,8 @@ public class AlarmRingingService extends Service {
     public static final String ARG_IS_PREVIEW = "isPreview";
     public static final String ARG_ALARM = "alarm";
     public static final String ARG_ALARM_TIME = "mAlarmTime";
+    public static final String ACTION_MAX_RING_DISMISSES
+            = "kilanny.muslimalarm.services.AlarmRingingService.ACTION_MAX_RING_DISMISSES";
     private static final String CHANNEL_ID = "kilanny.muslimalarm.services.AlarmRingingService";
 
     private static final int NOTIFICATION_ID = 1441;
@@ -211,7 +213,10 @@ public class AlarmRingingService extends Service {
                     if (mRingStartSecondsCounter >= mAlarm.maxMinsRinging * 60) {
                         mMaxRingingTimeTimer.cancel();
                         mMaxRingingTimeTimer = null;
-                        onDismissed(ALARM_DISMISS_MAX_RING);
+                        mHandler.post(() -> {
+                            sendBroadcast(new Intent(ACTION_MAX_RING_DISMISSES));
+                            onDismissed(ALARM_DISMISS_MAX_RING);
+                        });
                     }
                 }
             }, 1000, 1000);

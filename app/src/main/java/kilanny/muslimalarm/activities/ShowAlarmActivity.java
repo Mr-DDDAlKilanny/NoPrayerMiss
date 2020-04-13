@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.util.Function;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -52,6 +54,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     private Date fetchBarcodeFromDbDate;
     private int currentAlarmFTime;
     private AlarmRingingService.LocalBinder mBinder;
+    private boolean mServiceMaxRingDismissed = false;
+    private BroadcastReceiver mServiceMaxRingBroadcastReceiver;
 
     private boolean checkServiceRunning() {
         if (!Utils.isServiceRunning(this, AlarmRingingService.class)) {
@@ -94,23 +98,15 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
         Button previewBtn = findViewById(R.id.btnExitPreview);
         previewBtn.setVisibility(mIsPreview ? View.VISIBLE : View.GONE);
-        previewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDismissed(false);
-            }
-        });
+        previewBtn.setOnClickListener(view -> onDismissed(false));
 
         if (mAlarm.dismissAlarmType == Alarm.DISMISS_ALARM_BARCODE) {
             if (savedInstanceState == null) {
                 fetchBarcodeFromDbDate = new Date();
-                Utils.runInBackground(new Function<Context, Void>() {
-                    @Override
-                    public Void apply(Context input) {
-                        mBarcode = AppDb.getInstance(input).barcodeDao()
-                                .getById(mAlarm.dismissAlarmBarcodeId).getCode();
-                        return null;
-                    }
+                Utils.runInBackground((Function<Context, Void>) input -> {
+                    mBarcode = AppDb.getInstance(input).barcodeDao()
+                            .getById(mAlarm.dismissAlarmBarcodeId).getCode();
+                    return null;
                 }, null, this);
             } else {
                 mBarcode = savedInstanceState.getString(ARG_BARCODE);
@@ -133,6 +129,17 @@ public class ShowAlarmActivity extends AppCompatActivity implements
         super.onStart();
         //sometimes user can start this activity from history
         if (!checkServiceRunning()) return;
+        mServiceMaxRingBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (AlarmRingingService.ACTION_MAX_RING_DISMISSES.equals(intent.getAction())) {
+                    mServiceMaxRingDismissed = true;
+                    finish();
+                }
+            }
+        };
+        registerReceiver(mServiceMaxRingBroadcastReceiver,
+                new IntentFilter(AlarmRingingService.ACTION_MAX_RING_DISMISSES));
         bindService(new Intent(this, AlarmRingingService.class), this, BIND_ABOVE_CLIENT);
         cancelAttempt();
     }
@@ -151,10 +158,15 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        if (mBinder != null) {
+        unregisterReceiver(mServiceMaxRingBroadcastReceiver);
+        if (!mServiceMaxRingDismissed && mBinder != null) {
             mBinder.getService().cancelAttemptingDismissAlarm(true);
         }
-        unbindService(this);
+        try {
+            unbindService(this);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace(); //maybe mServiceMaxRingBroadcastReceiver
+        }
     }
 
     @Override

@@ -91,8 +91,9 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             rowView = convertView;
 
         final Context context = rowView.getContext();
-        if (alarm.snoozedToTime != null) {
-            rowView.findViewById(R.id.btnDismiss).setOnClickListener(view -> {
+        View dismiss = rowView.findViewById(R.id.btnDismiss);
+        if (alarm.snoozedToTime != null && dismiss != null) {
+            dismiss.setOnClickListener(view -> {
                 Intent intent = new Intent(context, AlarmRingBroadcastReceiver.class);
                 intent.putExtra(AlarmRingBroadcastReceiver.ARG_ALARM, alarm);
                 intent.putExtra(AlarmRingBroadcastReceiver.ARG_IS_PREVIEW, false);
