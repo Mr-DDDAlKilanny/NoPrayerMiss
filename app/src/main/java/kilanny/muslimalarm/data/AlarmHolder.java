@@ -6,11 +6,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
 
 import org.joda.time.DateTime;
 
@@ -25,7 +26,7 @@ public class AlarmHolder extends RecyclerView.ViewHolder implements PopupMenu.On
     private final AppCompatCheckBox mCheckboxEnabled;
     private final AppCompatTextView mtxtPrayerName, mtxtDays, mtxtTime;
     private final AppCompatImageView mIcon;
-    private final AppCompatImageButton mbtnDots;
+    private final MaterialButton mbtnDots;
 
     private static final int[] weekdays = {
             R.string.friday,
@@ -53,7 +54,7 @@ public class AlarmHolder extends RecyclerView.ViewHolder implements PopupMenu.On
         mtxtDays = itemView.findViewById(R.id.alarmDays);
         mtxtTime = itemView.findViewById(R.id.alarmTime);
         mIcon = itemView.findViewById(R.id.alarmTypeIcon);
-        mbtnDots = itemView.findViewById(R.id.imgDots);
+        mbtnDots = itemView.findViewById(R.id.btnActions);
     }
 
     public void bind() {

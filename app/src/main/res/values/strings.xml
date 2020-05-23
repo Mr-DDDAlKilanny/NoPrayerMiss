@@ -376,4 +376,10 @@
     <string name="automatically_stop_alarm_after">Automatically stop alarm after</string>
     <string name="city_search_failed">Cannot load search results. Try a more specific address, change your search text, or you can use option 2</string>
     <string name="times_invalid">Please provide valid settings to make valid pray times</string>
+    <string name="qeyam">Night prayer</string>
+    <string name="daily_five_prayers">Daily five prayers</string>
+    <string name="select_percentage_descr">Please select the percentage of night for alarm. For example, to pray the last &#8531; of night, select %%66</string>
+    <string name="of_night">After %%%1$d of night</string>
+    <string name="min_5_per_night">Percentage must be at least %%5</string>
+    <string name="actions">Actions</string>
 </resources>

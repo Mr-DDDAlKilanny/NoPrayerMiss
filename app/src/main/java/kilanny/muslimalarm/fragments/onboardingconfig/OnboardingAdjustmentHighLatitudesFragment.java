@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
 
@@ -89,8 +91,8 @@ public class OnboardingAdjustmentHighLatitudesFragment extends OnboardingBaseFra
 
     @Override
     public void onDestroyView() {
-        for (int i = 0; i < views.length; ++i)
-            views[i] = null;
+        if (views != null)
+            Arrays.fill(views, null);
         super.onDestroyView();
     }
 
@@ -115,21 +117,22 @@ public class OnboardingAdjustmentHighLatitudesFragment extends OnboardingBaseFra
     public void onClick(View v) {
         if (v.getId() == R.id.next) {
             mListener.onOptionSelected();
-
         } else if (v.getId() == R.id.prev) {
             getActivity().onBackPressed();
-
         } else {
-            for (int i=0; i < views.length; i++) {
-                TextView tv = views[i];
-                if (tv.getId() == v.getId()) {
-                    tv.setSelected(true);
-                    AppSettings.getInstance(getActivity()).setHighLatitudeAdjustmentMethodFor(mParam1, i);
-                } else {
-                    tv.setSelected(false);
+            if (v instanceof TextView) {
+                AppSettings settings = AppSettings.getInstance(getActivity());
+                settings.setHighLatitudeAdjustmentMethodFor(mParam1, Integer.parseInt((String) v.getTag()));
+                if (views != null) {
+                    for (TextView t : views) {
+                        if (t != null) {
+                            t.setSelected(false);
+                        }
+                    }
                 }
+                v.setSelected(true);
+                mListener.onOptionSelected();
             }
-            mListener.onOptionSelected();
         }
 
     }

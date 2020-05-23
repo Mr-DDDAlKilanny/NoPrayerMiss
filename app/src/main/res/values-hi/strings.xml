@@ -358,4 +358,10 @@
     <string name="automatically_stop_alarm_after">स्वचालित रूप से  के बाद अलार्म बंद करो</string>
     <string name="city_search_failed">खोज परिणामों को लोड नहीं कर सकता। अधिक विशिष्ट पते का प्रयास करें, अपने खोज पाठ को बदलें, या आप विकल्प 2  का उपयोग कर सकते हैं</string>
     <string name="times_invalid">कृपया मान्य प्रार्थना समय बनाने के लिए मान्य सेटिंग्स प्रदान करें</string>
+    <string name="qeyam">रात की प्रार्थना</string>
+    <string name="daily_five_prayers">दैनिक पाँच प्रार्थनाएँ</string>
+    <string name="select_percentage_descr">कृपया अलार्म के लिए रात का प्रतिशत चुनें। उदाहरण के लिए, अंतिम &#8531; प्रार्थना करने के लिए; रात का,%%66 का चयन करें</string>
+    <string name="of_night">रात के %%%1$d बीत जाने के बाद</string>
+    <string name="min_5_per_night">प्रतिशत कम से कम %%5 होना चाहिए</string>
+    <string name="actions">क्रिया</string>
 </resources>

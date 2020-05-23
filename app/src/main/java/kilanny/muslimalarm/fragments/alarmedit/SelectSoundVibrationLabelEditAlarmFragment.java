@@ -94,33 +94,25 @@ public class SelectSoundVibrationLabelEditAlarmFragment extends EditAlarmFragmen
 
         SwitchCompat switchCompat = mView.findViewById(R.id.switchVibration);
         switchCompat.setChecked(mAlarm.vibrationEnabled);
-        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mAlarm.vibrationEnabled = b;
-            }
-        });
-        mView.findViewById(R.id.btnSetAlarmLabel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final AppCompatEditText input = new AppCompatEditText(view.getContext());
-                // Specify the type of input expected
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                input.setText(mAlarm.alarmLabel);
-                input.setHint(R.string.write_title_of_alarm);
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle(getString(R.string.alarm_label))
-                        .setView(input)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Editable text = input.getText();
-                                mAlarm.alarmLabel = text == null ? null : text.toString();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-            }
+        switchCompat.setOnCheckedChangeListener((compoundButton, b) -> mAlarm.vibrationEnabled = b);
+        mView.findViewById(R.id.btnSetAlarmLabel).setOnClickListener(view -> {
+            final AppCompatEditText input = new AppCompatEditText(view.getContext());
+            // Specify the type of input expected
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            input.setText(mAlarm.alarmLabel);
+            input.setHint(R.string.write_title_of_alarm);
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle(getString(R.string.alarm_label))
+                    .setView(input)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Editable text = input.getText();
+                            mAlarm.alarmLabel = text == null ? null : text.toString();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
         });
         return mView;
     }

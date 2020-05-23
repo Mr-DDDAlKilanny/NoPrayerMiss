@@ -107,7 +107,7 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_location, container, false);
-        mWebView = new WebView(getContext());
+        mWebView = new WebView(getContext().getApplicationContext()); // API 21 bug
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -253,6 +253,10 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
 
     @Override
     public void onDestroyView() {
+        if (mWebView != null) {
+            mWebView.destroy();
+            mWebView = null;
+        }
         mView = null;
         super.onDestroyView();
     }

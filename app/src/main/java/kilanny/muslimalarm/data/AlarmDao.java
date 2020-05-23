@@ -9,7 +9,7 @@ import androidx.room.Update;
 @Dao
 public interface AlarmDao {
 
-    @Query("SELECT * FROM alarm ORDER BY id")
+    @Query("SELECT * FROM alarm ORDER BY enabled DESC, id")
     Alarm[] getAll();
 
     @Query("SELECT * FROM alarm WHERE enabled = 1 ORDER BY id")

@@ -207,9 +207,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAddNewAlarm() {
-        startActivityForResult(new Intent(this, EditAlarmOnboardingActivity.class),
-                REQUEST_ADD_ALARM);
+    public void onAddNewAlarm(boolean isFivePrayers) {
+        Intent intent = new Intent(this, EditAlarmOnboardingActivity.class);
+        intent.putExtra(EditAlarmOnboardingActivity.ARG_IS_FIVE_PRAYERS, isFivePrayers);
+        startActivityForResult(intent, REQUEST_ADD_ALARM);
     }
 
     @Override

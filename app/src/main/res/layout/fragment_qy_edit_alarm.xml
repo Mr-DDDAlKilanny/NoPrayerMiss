@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/qeyam"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_percentage_descr"
+            android:textSize="15sp" />
+
+        <!--        <com.google.android.material.button.MaterialButtonToggleGroup-->
+        <!--            android:id="@+id/alarmTypeButtons"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:paddingTop="@dimen/space"-->
+        <!--            app:singleSelection="true"-->
+        <!--            app:checkedButton="@id/buttonFivePrayers"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content">-->
+        <!--            <Button-->
+        <!--                android:id="@+id/buttonFivePrayers"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="@string/daily_five_prayers"-->
+        <!--                style="?attr/materialButtonOutlinedStyle" />-->
+        <!--            <Button-->
+        <!--                android:id="@+id/buttonNightPrayer"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="@string/qeyam"-->
+        <!--                style="?attr/materialButtonOutlinedStyle" />-->
+        <!--        </com.google.android.material.button.MaterialButtonToggleGroup>-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekNightPercentage"
+                    android:max="99"
+                    android:min="5"
+                    android:progress="66"
+                    android:layout_toStartOf="@id/txtPercentage"
+                    android:layout_toLeftOf="@id/txtPercentage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="66%"
+                    android:id="@+id/txtPercentage"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

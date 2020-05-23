@@ -357,4 +357,10 @@
     <string name="automatically_stop_alarm_after">Автоматически останавливать тревогу после</string>
     <string name="city_search_failed">Не удается загрузить результаты поиска. Попробуйте более конкретный адрес, измените текст поиска, или вы можете использовать вариант 2</string>
     <string name="times_invalid">Пожалуйста, предоставьте действительные настройки, чтобы сделать правильное время молитвы</string>
+    <string name="qeyam">Ночная молитва</string>
+    <string name="daily_five_prayers">Ежедневно пять молитв</string>
+    <string name="select_percentage_descr">Пожалуйста, выберите процент ночи для тревоги. Например, молиться последним &#8531; ночи, выберите %%66</string>
+    <string name="of_night">После %%%1$d ночи прошло</string>
+    <string name="min_5_per_night">Процент должен быть не менее %%5</string>
+    <string name="actions">действия</string>
 </resources>

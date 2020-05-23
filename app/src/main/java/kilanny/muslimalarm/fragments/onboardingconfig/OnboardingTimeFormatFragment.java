@@ -1,11 +1,14 @@
 package kilanny.muslimalarm.fragments.onboardingconfig;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.AppSettings;
@@ -94,7 +97,7 @@ public class OnboardingTimeFormatFragment extends OnboardingBaseFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         try {
             mListener = (OnOnboardingOptionSelectedListener) activity;
@@ -112,20 +115,20 @@ public class OnboardingTimeFormatFragment extends OnboardingBaseFragment {
 
     @Override
     public void onClick(View v) {
-        AppSettings settings = AppSettings.getInstance(getActivity());
         if (v.getId() == R.id.next) {
             mListener.onOptionSelected();
         } else if (v.getId() == R.id.prev) {
             getActivity().onBackPressed();
-        } else if (v.getId() == m12h.getId()) {
-            m12h.setSelected(true);
-            m24h.setSelected(false);
-            settings.setTimeFormatFor(mParam1, PrayTime.TIME_12);
-            mListener.onOptionSelected();
-        } else if (v.getId() == m24h.getId()) {
-            m12h.setSelected(false);
-            m24h.setSelected(true);
-            settings.setTimeFormatFor(mParam1, PrayTime.TIME_24);
+        } else if (v instanceof TextView) {
+            AppSettings settings = AppSettings.getInstance(getActivity());
+            int sel = Integer.parseInt(v.getTag().toString());
+            settings.setTimeFormatFor(mParam1, sel);
+            v.setSelected(true);
+            if (sel == 1 && m24h != null) {
+                m24h.setSelected(false);
+            } else if (sel == 0 && m12h != null) {
+                m12h.setSelected(false);
+            }
             mListener.onOptionSelected();
         }
     }

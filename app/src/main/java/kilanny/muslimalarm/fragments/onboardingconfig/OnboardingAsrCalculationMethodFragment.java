@@ -114,21 +114,25 @@ public class OnboardingAsrCalculationMethodFragment  extends OnboardingBaseFragm
 
     @Override
     public void onClick(View v) {
-        AppSettings settings = AppSettings.getInstance(getActivity());
         if (v.getId() == R.id.next) {
             mListener.onOptionSelected();
         } else if (v.getId() == R.id.prev) {
             getActivity().onBackPressed();
-        } else if (v.getId() == mShafii.getId()) {
-            mShafii.setSelected(true);
-            mHanfi.setSelected(false);
-            settings.setAsrMethodFor(mParam1, PrayTime.SHAFII);
-            mListener.onOptionSelected();
-        } else if (v.getId() == mHanfi.getId()) {
-            mShafii.setSelected(false);
-            mHanfi.setSelected(true);
-            settings.setAsrMethodFor(mParam1, PrayTime.HANAFI);
-            mListener.onOptionSelected();
+        } else if (v instanceof TextView) {
+            AppSettings settings = AppSettings.getInstance(getActivity());
+            if (v.getTag().toString().equals("0")) {
+                v.setSelected(true);
+                if (mHanfi != null)
+                    mHanfi.setSelected(false);
+                settings.setAsrMethodFor(mParam1, PrayTime.SHAFII);
+                mListener.onOptionSelected();
+            } else if (v.getTag().toString().equals("1")) {
+                if (mShafii != null)
+                    mShafii.setSelected(false);
+                v.setSelected(true);
+                settings.setAsrMethodFor(mParam1, PrayTime.HANAFI);
+                mListener.onOptionSelected();
+            }
         }
     }
 }

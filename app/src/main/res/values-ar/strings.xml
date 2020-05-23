@@ -318,4 +318,10 @@
     <string name="automatically_stop_alarm_after">إيقاف المنبه آليا بعد</string>
     <string name="city_search_failed">لا يمكن تحديد المدينة بدقة. يرجى تجربة البحث بعنوان أدق، أو تغيير كلمات البحث، أو يمكن استخدام خيار 2</string>
     <string name="times_invalid">الرجاء تحديد إعدادات صالحة من أجل أوقات صلاة صحيحة</string>
+    <string name="qeyam">قيام الليل</string>
+    <string name="daily_five_prayers">الصلاوات الخمس</string>
+    <string name="select_percentage_descr">الرجاء تحديد نسبة الليل. على سبيل المثال، للاستيقاظ عند آخر &#8531; من الليل، حدد نسبة 66%%</string>
+    <string name="of_night">بعد مضي %%%1$d من الليل</string>
+    <string name="min_5_per_night">يجب ألا تقل النسبة عن %%5</string>
+    <string name="actions">إجراءات</string>
 </resources>

@@ -67,14 +67,11 @@ public class SelectDaysEditAlarmFragment extends EditAlarmFragment {
         // Inflate the layout for this fragment
         final View root = inflater.inflate(R.layout.fragment_select_days_edit_alarm, container, false);
         RadioGroup radioGroup = root.findViewById(R.id.radioGroupOneTimeRepeat);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (radioGroup.getCheckedRadioButtonId() == R.id.radioOneTime)
-                    root.findViewById(R.id.cardRepeatDays).setVisibility(View.GONE);
-                else
-                    root.findViewById(R.id.cardRepeatDays).setVisibility(View.VISIBLE);
-            }
+        radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
+            if (radioGroup1.getCheckedRadioButtonId() == R.id.radioOneTime)
+                root.findViewById(R.id.cardRepeatDays).setVisibility(View.GONE);
+            else
+                root.findViewById(R.id.cardRepeatDays).setVisibility(View.VISIBLE);
         });
         if (mAlarm.weekDayFlags == Weekday.NO_REPEAT) {
             AppCompatRadioButton radioButton = root.findViewById(R.id.radioOneTime);

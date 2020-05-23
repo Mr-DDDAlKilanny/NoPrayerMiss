@@ -16,12 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.OvershootInterpolator;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.ViewCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -38,6 +42,7 @@ import kilanny.muslimalarm.adapters.AlarmListAdapter;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.SerializableInFile;
+import kilanny.muslimalarm.databinding.FragmentAlarmsBinding;
 import kilanny.muslimalarm.util.Utils;
 
 /**
@@ -47,6 +52,10 @@ import kilanny.muslimalarm.util.Utils;
  */
 public class AlarmsHomeFragment extends Fragment {
 
+    private FragmentAlarmsBinding binding;
+    private Animation fabOpenAnimation;
+    private Animation fabCloseAnimation;
+    private boolean isFabMenuOpen = false;
     private OnFragmentInteractionListener mListener;
     private AlarmListAdapter mAdapter;
     private boolean mCanUpdateTime = true;
@@ -73,7 +82,7 @@ public class AlarmsHomeFragment extends Fragment {
         super.onResume();
         onDataSetChanged(null); // show recalced left times
         mCanUpdateTime = true;
-        FloatingActionButton fab = mView.findViewById(R.id.fab);
+        FloatingActionButton fab = binding.baseFloatingActionButton;
         fab.setRotation(0);
         ViewCompat.animate(fab)
                 .rotation(360)
@@ -220,13 +229,18 @@ public class AlarmsHomeFragment extends Fragment {
             }
         }, 30000, 30000);
 
-        FloatingActionButton fab = mView.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> mListener.onAddNewAlarm());
-        listView.setOnScrollListener(new AutoHideFabScrollListener(listView, fab));
+        binding = DataBindingUtil.bind(mView);
+        binding.setFabHandler(new FabHandler());
+        fabOpenAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
+        fabCloseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
+        listView.setOnScrollListener(new AutoHideFabScrollListener(listView, binding.baseFloatingActionButton));
 
         SwipeRefreshLayout listViewLayout = mView.findViewById(R.id.listViewLayout);
-        listViewLayout.setOnRefreshListener(() ->
-                onDataSetChanged(() -> listViewLayout.setRefreshing(false)));
+        listViewLayout.setOnRefreshListener(() -> {
+            if (mAdapter != null && mAdapter.mIsPendingOperation)
+                return;
+            onDataSetChanged(() -> listViewLayout.setRefreshing(false));
+        });
 
         return mView;
     }
@@ -332,8 +346,54 @@ public class AlarmsHomeFragment extends Fragment {
         }
     }
 
+    private void expandFabMenu() {
+        ViewCompat.animate(binding.baseFloatingActionButton)
+                .rotation(45.0F)
+                .withLayer()
+                .setDuration(300)
+                .setInterpolator(new OvershootInterpolator(10.0F))
+                .start();
+        binding.fivePrayersLayout.startAnimation(fabOpenAnimation);
+        binding.qeyamLayout.startAnimation(fabOpenAnimation);
+        binding.fivePrayersFab.setClickable(true);
+        binding.nightPrayerFab.setClickable(true);
+        isFabMenuOpen = true;
+    }
+
+    private void collapseFabMenu() {
+        ViewCompat.animate(binding.baseFloatingActionButton)
+                .rotation(0.0F)
+                .withLayer()
+                .setDuration(300)
+                .setInterpolator(new OvershootInterpolator(10.0F))
+                .start();
+        binding.fivePrayersLayout.startAnimation(fabCloseAnimation);
+        binding.qeyamLayout.startAnimation(fabCloseAnimation);
+        binding.fivePrayersFab.setClickable(false);
+        binding.nightPrayerFab.setClickable(false);
+        isFabMenuOpen = false;
+    }
+
+    public class FabHandler {
+
+        public void onBaseFabClick(View view) {
+            if (isFabMenuOpen)
+                collapseFabMenu();
+            else
+                expandFabMenu();
+        }
+
+        public void onNightPrayerFabClick(View view) {
+            mListener.onAddNewAlarm(false);
+        }
+
+        public void onFivePrayersFabClick(View view) {
+            mListener.onAddNewAlarm(true);
+        }
+    }
+
     public interface OnFragmentInteractionListener {
-        void onAddNewAlarm();
+        void onAddNewAlarm(boolean isFivePrayers);
 
         void onEditAlarm(Alarm alarm);
     }

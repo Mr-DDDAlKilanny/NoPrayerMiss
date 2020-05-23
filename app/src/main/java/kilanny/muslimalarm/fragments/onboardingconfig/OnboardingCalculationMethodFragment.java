@@ -73,7 +73,7 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
             ((AppCompatActivity) mListener).getSupportActionBar().setTitle(R.string.title_onboarding_calc_method);
         }
 
-        TextView title = (TextView) view.findViewById(R.id.card_title);
+        TextView title = view.findViewById(R.id.card_title);
         title.setText(R.string.calc_method);
 
         options[0] = (TextView) view.findViewById(R.id.karachi);
@@ -100,7 +100,8 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
 
     @Override
     public void onDestroyView() {
-        Arrays.fill(options, null);
+        if (options != null)
+            Arrays.fill(options, null);
         super.onDestroyView();
     }
 
@@ -130,15 +131,19 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
             getActivity().onBackPressed();
             return;
         }
-        for (TextView t : options) {
-            if (t.getId() == v.getId()) {
-                AppSettings settings = AppSettings.getInstance(getActivity());
-                settings.setCalcMethodFor(mCalculationIdx, Integer.parseInt((String) t.getTag()));
-                t.setSelected(true);
-                mListener.onOptionSelected();
-            } else {
-                t.setSelected(false);
+        if (v instanceof TextView) {
+            TextView textView = (TextView) v;
+            AppSettings settings = AppSettings.getInstance(getActivity());
+            settings.setCalcMethodFor(mCalculationIdx, Integer.parseInt((String) textView.getTag()));
+            if (options != null) {
+                for (TextView t : options) {
+                    if (t != null) {
+                        t.setSelected(false);
+                    }
+                }
             }
+            textView.setSelected(true);
+            mListener.onOptionSelected();
         }
     }
 }

@@ -128,7 +128,7 @@ public class SelectSnoozeEditAlarmFragment extends EditAlarmFragment {
 
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
-        throw new RuntimeException();
+        //throw new RuntimeException(); //TODO: invoked sometimes on fast next !!
     }
 
     @Override

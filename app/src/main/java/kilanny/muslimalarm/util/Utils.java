@@ -82,16 +82,20 @@ public class Utils {
         return 1 << (dw <= 5 ? 5 - dw : dw == 6 ? 6 : 5);
     }
 
-    private static Date getTimeAsDate(Calendar calendar, int offsetDays, String time, int diffMins) {
+    private static Date getTimeAsDate(Calendar calendar, int offsetDays, int h, int m, int diffMins) {
         DateTime offset = new DateTime(calendar.getTime()).plusDays(offsetDays);
-        String s[] = time.split(":");
         DateTime to = new DateTime(offset.year().get(), offset.monthOfYear().get(),
-                offset.dayOfMonth().get(), Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+                offset.dayOfMonth().get(), h, m);
         if (diffMins > 0)
             to = to.plusMinutes(diffMins);
         else
             to = to.minusMinutes(-diffMins);
         return to.toDate();
+    }
+
+    private static Date getTimeAsDate(Calendar calendar, int offsetDays, String time, int diffMins) {
+        String s[] = time.split(":");
+        return getTimeAsDate(calendar, offsetDays, Integer.parseInt(s[0]), Integer.parseInt(s[1]), diffMins);
     }
 
     public static String getLeftTimeToDate(Context context, Date date) {
@@ -126,7 +130,12 @@ public class Utils {
         context.startActivity(sendIntent);
     }
 
-    public static String getTimeOffsetDescription(@NonNull Context context, int mins) {
+    public static String getTimeOffsetDescription(@NonNull Context context, Alarm alarm) {
+        if (alarm.timeFlags == Alarm.TIME_QEYAM) {
+            return context.getString(R.string.of_night,
+                    alarm.qeyamAlarmPercentageOfNightPeriod);
+        }
+        int mins = alarm.timeAlarmDiffMinutes;
         if (mins == 0)
             return context.getString(R.string.just_on_time);
         String s = context.getString(mins > 0 ? R.string.after_time_by : R.string.before_time_by);
@@ -155,6 +164,15 @@ public class Utils {
         } catch (NumberFormatException ex) { //TODO: calculated pray time can be NaN
             return -1;
         }
+    }
+
+    private static int calcNightPeriod(String maghribTime, String fajrTime) {
+        int m = timeAsMins(maghribTime),
+                f = timeAsMins(fajrTime);
+        if (m <= f)
+            return f - m;
+        else
+            return (24 * 60 - m) + f;
     }
 
     public static NextAlarmInfo getNextAlarmDate(Context context, Alarm alarm) {
@@ -193,13 +211,27 @@ public class Utils {
                 Map<String, String> times = PrayTime.getPrayerTimes(context, 0,
                         settings.getLatFor(0), settings.getLngFor(0),
                         PrayTime.TIME_24, new DateTime(from).plusDays(o).toDate());
-                for (int i = 0; i < timeNames.length; ++i) {
-                    int t = timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes;
-                    int f = 1 << (5 - i);
-                    if ((alarm.oneTimeLeftAlarmsTimeFlags & f) != 0 && (o > 0 || t > ct))
+                if (alarm.timeFlags != Alarm.TIME_QEYAM) {
+                    for (int i = 0; i < timeNames.length; ++i) {
+                        int t = timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes;
+                        int f = 1 << (5 - i);
+                        if ((alarm.oneTimeLeftAlarmsTimeFlags & f) != 0 &&
+                                (o > 0 || t + alarm.timeAlarmDiffMinutes > ct)) {
+                            return new NextAlarmInfo(alarm,
+                                    getTimeAsDate(calendar, o, times.get(timeNames[i]), alarm.timeAlarmDiffMinutes),
+                                    f);
+                        }
+                    }
+                } else {
+                    String maghrib = times.get(timeNames[4]);
+                    int t = (Math.round(calcNightPeriod(maghrib, times.get(timeNames[0]))
+                            * alarm.qeyamAlarmPercentageOfNightPeriod / 100.0f)
+                            + timeAsMins(maghrib)) % (24 * 60);
+                    if (o > 0 || t + alarm.timeAlarmDiffMinutes > ct) {
                         return new NextAlarmInfo(alarm,
-                                getTimeAsDate(calendar, o, times.get(timeNames[i]), alarm.timeAlarmDiffMinutes),
-                                f);
+                                getTimeAsDate(calendar, o, t / 60, t % 60, alarm.timeAlarmDiffMinutes),
+                                alarm.timeFlags);
+                    }
                 }
             }
             // we should never get here ?
@@ -215,13 +247,25 @@ public class Utils {
                 Map<String, String> times = PrayTime.getPrayerTimes(context, 0,
                         settings.getLatFor(0), settings.getLngFor(0),
                         PrayTime.TIME_24, new DateTime(from).plusDays(j).toDate());
-                for (int i = 0; i < timeNames.length; ++i) {
-                    int f = 1 << (5 - i);
-                    if ((alarm.timeFlags & f) != 0 &&
-                            (j > 0 || ct < timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes)) {
+                if (alarm.timeFlags != Alarm.TIME_QEYAM) {
+                    for (int i = 0; i < timeNames.length; ++i) {
+                        int f = 1 << (5 - i);
+                        if ((alarm.timeFlags & f) != 0 &&
+                                (j > 0 || ct < timeAsMins(times.get(timeNames[i])) + alarm.timeAlarmDiffMinutes)) {
+                            return new NextAlarmInfo(alarm,
+                                    getTimeAsDate(calendar, j, times.get(timeNames[i]), alarm.timeAlarmDiffMinutes),
+                                    f);
+                        }
+                    }
+                } else {
+                    String maghrib = times.get(timeNames[4]);
+                    int t = (Math.round(calcNightPeriod(maghrib, times.get(timeNames[0]))
+                            * alarm.qeyamAlarmPercentageOfNightPeriod / 100.0f)
+                            + timeAsMins(maghrib)) % (24 * 60);
+                    if (j > 0 || t + alarm.timeAlarmDiffMinutes > ct) {
                         return new NextAlarmInfo(alarm,
-                                getTimeAsDate(calendar, j, times.get(timeNames[i]), alarm.timeAlarmDiffMinutes),
-                                f);
+                                getTimeAsDate(calendar, j, t / 60, t % 60, alarm.timeAlarmDiffMinutes),
+                                alarm.timeFlags);
                     }
                 }
             }
@@ -260,6 +304,8 @@ public class Utils {
     }
 
     public static String getPrayerNames(Context context, Alarm alarm) {
+        if (alarm.timeFlags == Alarm.TIME_QEYAM)
+            return context.getString(R.string.qeyam);
         String[] prayerNames = context.getResources().getStringArray(R.array.prayer_times);
         StringBuilder b = new StringBuilder();
         for (int i = 0; i < 6; ++i) {
@@ -323,6 +369,9 @@ public class Utils {
                 break;
             case Alarm.TIME_ISHAA:
                 time = context.getString(R.string.ishaa);
+                break;
+            case Alarm.TIME_QEYAM:
+                time = context.getString(R.string.qeyam);
                 break;
             default:
                 time = "";

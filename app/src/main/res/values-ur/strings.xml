@@ -359,4 +359,10 @@
     <string name="automatically_stop_alarm_after">خود بخود الارم کے بعد روکیں</string>
     <string name="city_search_failed">تلاش کے نتائج کو لوڈ نہیں کیا جاسکتا۔ زیادہ مخصوص پتہ آزمائیں ، تلاش کا متن تبدیل کریں ، یا آپ آپشن 2 استعمال کرسکتے ہیں</string>
     <string name="times_invalid">براہ کرم نماز کے صحیح اوقات بنانے کے لئے صحیح ترتیبات فراہم کریں</string>
+    <string name="qeyam">رات کی نماز</string>
+    <string name="daily_five_prayers">روزانہ پانچ نمازیں</string>
+    <string name="select_percentage_descr">براہ کرم الارم کے لئے رات کا فیصد منتخب کریں۔ مثال کے طور پر ، آخری &#8531; دعا کرنا؛ رات کو ،%%66 منتخب کریں</string>
+    <string name="of_night">رات کا %%%1$d گزرنے کے بعد</string>
+    <string name="min_5_per_night">فیصد کم از کم %%5 ہونا ضروری ہے</string>
+    <string name="actions">عمل</string>
 </resources>

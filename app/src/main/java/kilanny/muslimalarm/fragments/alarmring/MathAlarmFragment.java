@@ -172,13 +172,8 @@ public class MathAlarmFragment extends ShowAlarmFragment implements View.OnClick
             @Override
             public void run() {
                 mWrongAnswerTimer = null;
-                new Handler(context.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mBtnAccept.setImageDrawable(
-                                context.getResources().getDrawable(R.drawable.okay_icon));
-                    }
-                });
+                new Handler(context.getMainLooper()).post(() -> mBtnAccept.setImageResource(
+                        R.drawable.outline_done_outline_24));
             }
         }, 2000);
         mTxtUserInput.setText("؟");

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.alarmring.MathAlarmFragment">
 
     <RelativeLayout
@@ -165,7 +166,7 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnAccept"
-                android:src="@drawable/okay_icon"
+                app:srcCompat="@drawable/outline_done_outline_24"
                 android:scaleType="centerInside"
                 android:layout_below="@id/btnOne"
                 android:layout_alignLeft="@id/btnOne"
@@ -200,7 +201,7 @@
                 android:layout_alignTop="@id/btnZero"
                 android:layout_alignBottom="@id/btnZero"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="24dp" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

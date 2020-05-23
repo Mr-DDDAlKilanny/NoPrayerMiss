@@ -359,4 +359,10 @@
     <string name="automatically_stop_alarm_after">অ্যালার্মের পরে স্বয়ংক্রিয়ভাবে থামান</string>
     <string name="city_search_failed">অনুসন্ধানের ফলাফলগুলি লোড করা যায় না। আরও নির্দিষ্ট ঠিকানা ব্যবহার করে দেখুন, অনুসন্ধানের পাঠ্য পরিবর্তন করুন বা আপনি বিকল্প 2 ব্যবহার করতে পারেন</string>
     <string name="times_invalid">বৈধ প্রার্থনার সময়গুলি করার জন্য দয়া করে বৈধ সেটিংস সরবরাহ করুন</string>
+    <string name="qeyam">রাতের প্রার্থনা</string>
+    <string name="daily_five_prayers">প্রতিদিন পাঁচ ওয়াক্ত নামাজ</string>
+    <string name="select_percentage_descr">অ্যালার্মের জন্য দয়া করে রাতের শতাংশ নির্বাচন করুন। উদাহরণস্বরূপ, সর্বশেষ &#8531; প্রার্থনা করা; রাতে,%%66 নির্বাচন করুন</string>
+    <string name="of_night">পরে %%%1$d রাত কেটে গেছে</string>
+    <string name="min_5_per_night">শতাংশ অবশ্যই কমপক্ষে %%5 হতে হবে</string>
+    <string name="actions">ক্রিয়াকলাপ</string>
 </resources>

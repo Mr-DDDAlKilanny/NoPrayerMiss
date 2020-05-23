@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Barcode.class, Alarm.class}, version = 2, exportSchema = false)
+@Database(entities = {Barcode.class, Alarm.class}, version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDb extends RoomDatabase {
 
@@ -25,6 +25,15 @@ public abstract class AppDb extends RoomDatabase {
         };
     }
 
+    private static Migration MIGRATION_2_3() {
+        return new Migration(2, 3) {
+            @Override
+            public void migrate(@NonNull SupportSQLiteDatabase database) {
+                database.execSQL("ALTER TABLE alarm ADD COLUMN qeyam_night_percentage INTEGER");
+            }
+        };
+    }
+
     public abstract BarcodeDao barcodeDao();
 
     public abstract AlarmDao alarmDao();
@@ -34,7 +43,7 @@ public abstract class AppDb extends RoomDatabase {
             return instance;
         instance = Room.databaseBuilder(context.getApplicationContext(), AppDb.class,
                 "app-db")
-                .addMigrations(MIGRATION_1_2())
+                .addMigrations(MIGRATION_1_2(), MIGRATION_2_3())
                 .build();
         return instance;
     }

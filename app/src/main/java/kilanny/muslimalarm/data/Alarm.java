@@ -34,6 +34,7 @@ public class Alarm implements Parcelable {
     public static final int TIME_ASR = 1 << 2;
     public static final int TIME_MAGHRIB = 1 << 1;
     public static final int TIME_ISHAA = 1;
+    public static final int TIME_QEYAM = 1 << 6;
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -64,6 +65,9 @@ public class Alarm implements Parcelable {
 
     @ColumnInfo(name = "dismiss_alarm_barcode_id")
     public Integer dismissAlarmBarcodeId;
+
+    @ColumnInfo(name = "qeyam_night_percentage")
+    public Integer qeyamAlarmPercentageOfNightPeriod;
 
     @ColumnInfo(name = "max_mins_ringing")
     public Integer maxMinsRinging;
@@ -147,6 +151,11 @@ public class Alarm implements Parcelable {
         } else {
             maxMinsRinging = in.readInt();
         }
+        if (in.readByte() == 0) {
+            qeyamAlarmPercentageOfNightPeriod = null;
+        } else {
+            qeyamAlarmPercentageOfNightPeriod = in.readInt();
+        }
     }
 
     public Alarm copy() {
@@ -177,6 +186,7 @@ public class Alarm implements Parcelable {
         jsonObject.put("snoozedToTime", snoozedToTime);
         jsonObject.put("snoozedCount", snoozedCount);
         jsonObject.put("maxMinsRinging", maxMinsRinging);
+        jsonObject.put("qeyamAlarmPercentageOfNightPeriod", qeyamAlarmPercentageOfNightPeriod);
         return jsonObject.toString();
     }
 
@@ -233,6 +243,12 @@ public class Alarm implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(maxMinsRinging);
         }
+        if (qeyamAlarmPercentageOfNightPeriod == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(qeyamAlarmPercentageOfNightPeriod);
+        }
     }
 
     @Override
@@ -269,6 +285,8 @@ public class Alarm implements Parcelable {
         alarm.alarmTune = jsonObject.getInt("alarmTune");
         if (jsonObject.has("maxMinsRinging"))
             alarm.maxMinsRinging = jsonObject.getInt("maxMinsRinging");
+        if (jsonObject.has("qeyamAlarmPercentageOfNightPeriod"))
+            alarm.qeyamAlarmPercentageOfNightPeriod = jsonObject.getInt("qeyamAlarmPercentageOfNightPeriod");
         return alarm;
     }
 

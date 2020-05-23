@@ -19,13 +19,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.arch.core.util.Function;
 import androidx.core.view.ViewCompat;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.internal.ViewUtils;
 
 import java.text.SimpleDateFormat;
@@ -52,7 +52,7 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
     private final Function<Alarm, Void> onAlarmEdit;
     private final Function<Void, Void> onNeedRefresh;
     private Alarm mClickedAlarm;
-    private boolean mIsPendingOperation = false;
+    public boolean mIsPendingOperation = false;
 
     public AlarmListAdapter(@NonNull Context context, @NonNull Function<Alarm, Void> onAlarmEdit,
                             @NonNull Function<Void, Void> onNeedRefresh) {
@@ -147,8 +147,9 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         AppCompatCheckBox chkAlarmEnabled = rowView.findViewById(R.id.chkAlarmEnabled);
         chkAlarmEnabled.setEnabled(alarm.snoozedToTime == null);
         chkAlarmEnabled.setChecked(alarm.enabled);
-        chkAlarmEnabled.setOnCheckedChangeListener((compoundButton, b) -> {
-            compoundButton.setEnabled(false);
+        chkAlarmEnabled.setOnClickListener(v -> {
+            boolean b = ((AppCompatCheckBox) v).isChecked();
+            v.setEnabled(false);
             Utils.runInBackground(input -> {
                 // if any other operations running wait them first
                 while (mIsPendingOperation) {
@@ -172,20 +173,20 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
                 return new Pair<>(context, alarmDao.getAll());
             }, input -> {
                 mIsPendingOperation = false;
-                compoundButton.setEnabled(true);
+                v.setEnabled(true);
                 clear();
                 addAll(input.second);
                 notifyDataSetChanged();
                 Utils.scheduleAndDeletePrevious(input.first, input.second);
                 return null;
-            }, compoundButton.getContext());
+            }, v.getContext());
         });
 
         AppCompatTextView prayerName = rowView.findViewById(R.id.prayerName);
         prayerName.setText(Utils.getPrayerNames(context, alarm));
 
         AppCompatTextView timeOffset = rowView.findViewById(R.id.timeOffset);
-        timeOffset.setText(Utils.getTimeOffsetDescription(context, alarm.timeAlarmDiffMinutes));
+        timeOffset.setText(Utils.getTimeOffsetDescription(context, alarm));
 
         AppCompatTextView alarmDays = rowView.findViewById(R.id.alarmDays);
         alarmDays.setText(Utils.getAlarmDays(context, alarm));
@@ -205,7 +206,7 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         AppCompatImageView alarmTypeIcon = rowView.findViewById(R.id.alarmTypeIcon);
         alarmTypeIcon.setImageResource(res);
 
-        final AppCompatImageButton imgDots = rowView.findViewById(R.id.imgDots);
+        final MaterialButton imgDots = rowView.findViewById(R.id.btnActions);
         imgDots.setEnabled(alarm.snoozedToTime == null);
         imgDots.setOnClickListener(view -> {
             if (mIsPendingOperation || alarm.snoozedToTime != null)

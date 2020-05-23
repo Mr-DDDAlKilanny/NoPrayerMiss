@@ -355,4 +355,10 @@
     <string name="automatically_stop_alarm_after">Arrête automatiquement l\'alarme après</string>
     <string name="city_search_failed">Impossible de charger les résultats de la recherche. Essayez une adresse plus spécifique, modifiez le texte de recherche ou utilisez l\'option 2</string>
     <string name="times_invalid">Veuillez fournir des paramètres valides pour effectuer des heures de prière valides</string>
+    <string name="qeyam">Prière de la nuit</string>
+    <string name="daily_five_prayers">Cinq prières quotidiennes</string>
+    <string name="select_percentage_descr">Veuillez sélectionner le pourcentage de nuit pour l\'alarme. Par exemple, pour prier le dernier &#8531; de nuit, sélectionnez %%66</string>
+    <string name="of_night">Après %%%1$d de la nuit passée</string>
+    <string name="min_5_per_night">Le pourcentage doit être d\'au moins %%5</string>
+    <string name="actions">Actions</string>
 </resources>
