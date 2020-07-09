@@ -158,7 +158,11 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(mServiceMaxRingBroadcastReceiver);
+        try {
+            unregisterReceiver(mServiceMaxRingBroadcastReceiver);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         if (!mServiceMaxRingDismissed && mBinder != null) {
             mBinder.getService().cancelAttemptingDismissAlarm(true);
         }

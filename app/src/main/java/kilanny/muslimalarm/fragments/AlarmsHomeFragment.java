@@ -4,6 +4,7 @@ package kilanny.muslimalarm.fragments;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.DataSetObserver;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,6 +92,17 @@ public class AlarmsHomeFragment extends Fragment {
                 .setDuration(1000)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!pref.getBoolean("noShowAlarmTutorial", false)) {
+            Utils.showConfirm(getContext(),
+                    getString(R.string.dealing_with_list_of_alarms),
+                    getString(R.string.toturial_alarms),
+                    getString(android.R.string.ok),
+                    getString(R.string.no_not_ask),
+                    null,
+                    (dialog, which) -> pref.edit().putBoolean("noShowAlarmTutorial", true).apply());
+        }
     }
 
     @Override
@@ -179,7 +192,6 @@ public class AlarmsHomeFragment extends Fragment {
 
     private void onDataSetObserved() {
         mView.findViewById(R.id.emptyLayout).setVisibility(mAdapter.getCount() > 0 ? View.GONE : View.VISIBLE);
-        mView.findViewById(R.id.tutorialLayout).setVisibility(mAdapter.getCount() == 1 ? View.VISIBLE : View.GONE);
     }
 
     @Override

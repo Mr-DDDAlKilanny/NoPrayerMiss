@@ -10,8 +10,8 @@ android {
         applicationId "kilanny.muslimalarm"
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 15
-        versionName "1.4.0.0"
+        versionCode 16
+        versionName "1.4.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

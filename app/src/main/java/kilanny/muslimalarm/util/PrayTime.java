@@ -148,7 +148,7 @@ public class PrayTime {
         methodParams.put(KARACHI, Kvalues);
 
         // ISNA
-        double[] Ivalues = {15, 1, 0, 0, 15};
+        double[] Ivalues = {17.5, 1, 0, 0, 15};
         methodParams.put(ISNA, Ivalues);
 
         // MWL

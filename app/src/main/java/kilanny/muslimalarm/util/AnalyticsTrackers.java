@@ -3,6 +3,7 @@ package kilanny.muslimalarm.util;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Locale;
@@ -164,6 +165,15 @@ public final class AnalyticsTrackers {
         bundle.putInt("alarm_soundLevel", alarm.soundLevel);
         bundle.putInt("alarm_timeAlarmDiffMinutes", alarm.timeAlarmDiffMinutes);
         bundle.putBoolean("alarm_vibrationEnabled", alarm.vibrationEnabled);
+    }
+
+    public void logException(Throwable throwable) {
+        if (!canMakeAnalytics()) return;
+        try {
+            Crashlytics.logException(throwable);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private AnalyticsTrackers(Context context) {

@@ -77,13 +77,23 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         }
     }
 
+    private boolean checkConvertView(View convertView, boolean isSnoozed) {
+        if (convertView == null)
+            return false;
+        if (!isSnoozed)
+            return convertView.findViewById(R.id.chkAlarmEnabled) != null;
+        else
+            return convertView.findViewById(R.id.btnDismiss) != null;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View rowView;
         final Alarm alarm = getItem(position);
-        if (convertView == null) {
-            int res = alarm.snoozedToTime != null ? R.layout.list_item_alarm_snoozed
+        boolean isSnoozed = alarm.snoozedToTime != null;
+        if (!checkConvertView(convertView, isSnoozed)) {
+            int res = isSnoozed ? R.layout.list_item_alarm_snoozed
                     : R.layout.list_item_alarm;
             rowView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                     .inflate(res, parent, false);

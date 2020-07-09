@@ -5,9 +5,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -24,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.arch.core.util.Function;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
@@ -74,6 +78,21 @@ public class AlarmRingingService extends Service {
     private int mRingStartSecondsCounter;
     public Function<Integer, Void> onCountDownChanged;
 
+    private BroadcastReceiver mDelNotifBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (CHANNEL_ID.equals(intent.getAction())) {
+                try {
+                    NotificationManagerCompat.from(context)
+                            .notify(NOTIFICATION_ID, initNotification(mAlarm.alarmLabel));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    AnalyticsTrackers.getInstance(context).logException(ex);
+                }
+            }
+        }
+    };
+
     public AlarmRingingService() {
     }
 
@@ -83,6 +102,8 @@ public class AlarmRingingService extends Service {
         NotificationChannel channel = new NotificationChannel(channelId, channelName,
                 NotificationManager.IMPORTANCE_HIGH);
         channel.setLightColor(Color.BLUE);
+        channel.enableLights(true);
+        channel.setDescription(channelName);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         nm.createNotificationChannel(channel);
@@ -109,8 +130,19 @@ public class AlarmRingingService extends Service {
         return notificationBuilder.setContentIntent(pendingIntent)
                 .setContent(remoteViews)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setOngoing(true)
+                .setChannelId(CHANNEL_ID)
+                .setLocalOnly(false)
+                .setUsesChronometer(true)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setFullScreenIntent(pendingIntent, true)
+                //Hawawii devices can still cancel ongoing notification!!? so listen for that
+                .setDeleteIntent(PendingIntent.getBroadcast(this, 3,
+                        new Intent(CHANNEL_ID),
+                        PendingIntent.FLAG_UPDATE_CURRENT))
                 .build();
     }
 
@@ -155,6 +187,7 @@ public class AlarmRingingService extends Service {
         }
         mHandler = new Handler();
         startForeground(NOTIFICATION_ID, initNotification(mAlarm.alarmLabel));
+        registerReceiver(mDelNotifBroadcastReceiver, new IntentFilter(CHANNEL_ID));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mOldUserSoundVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -322,6 +355,11 @@ public class AlarmRingingService extends Service {
             return new Pair<>(input.first, alarmDao.getAll());
         }, input -> {
             Utils.scheduleAndDeletePrevious(input.first, input.second);
+            try {
+                unregisterReceiver(mDelNotifBroadcastReceiver);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             stopSelf();
             return null;
         }, new Pair<>(getApplicationContext(), mAlarm));
