@@ -11,6 +11,7 @@ import com.stepstone.stepper.StepperLayout;
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.adapters.Edit5AlarmStepperAdapter;
 import kilanny.muslimalarm.adapters.EditAlarmStepperAdapter;
+import kilanny.muslimalarm.adapters.EditCustomTimeStepperAdapter;
 import kilanny.muslimalarm.adapters.EditQiyamAlarmStepperAdapter;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.fragments.AlarmStopMethodFragment;
@@ -40,7 +41,12 @@ public class EditAlarmOnboardingActivity extends AppCompatActivity implements
             alarm.snoozeMins = 5;
             alarm.snoozeCount = 3;
             alarm.enabled = true;
-            if (!getIntent().getBooleanExtra(ARG_IS_FIVE_PRAYERS, false)) {
+            String s = getIntent().getStringExtra(ARG_IS_FIVE_PRAYERS);
+            if (s == null || s.length() == 0) {
+                alarm.timeFlags = Alarm.TIME_CUSTOM;
+                alarm.timeAlarmDiffMinutes = 0;
+                alarm.customTime = 9 * 60;
+            } else if (!Boolean.parseBoolean(s)) {
                 alarm.timeFlags = Alarm.TIME_QEYAM;
                 alarm.timeAlarmDiffMinutes = 0;
             } else {
@@ -52,7 +58,10 @@ public class EditAlarmOnboardingActivity extends AppCompatActivity implements
         }
 
         StepperLayout stepperLayout = findViewById(R.id.stepperLayout);
-        if (alarm.timeFlags == Alarm.TIME_QEYAM) {
+        if (alarm.timeFlags == Alarm.TIME_CUSTOM) {
+            mAdapter = new EditCustomTimeStepperAdapter(getSupportFragmentManager(),
+                    this, alarm);
+        } else if (alarm.timeFlags == Alarm.TIME_QEYAM) {
             mAdapter = new EditQiyamAlarmStepperAdapter(getSupportFragmentManager(),
                     this, alarm);
         } else {

@@ -61,6 +61,13 @@ public class AlarmRingingService extends Service {
     public static final int ALARM_DISMISS_DONE = 2;
     public static final int ALARM_DISMISS_MAX_RING = 3;
 
+    private static AlarmRingingService mInstance;
+
+    @Nullable
+    public static AlarmRingingService getCurrentInstance() {
+        return mInstance;
+    }
+
     private final IBinder binder = new LocalBinder();
     private Alarm mAlarm;
     private int mAlarmTime;
@@ -93,7 +100,16 @@ public class AlarmRingingService extends Service {
         }
     };
 
+    public Alarm getAlarm() {
+        return mAlarm;
+    }
+
+    public int getAlarmTime() {
+        return mAlarmTime;
+    }
+
     public AlarmRingingService() {
+        mInstance = this;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -360,6 +376,7 @@ public class AlarmRingingService extends Service {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            mInstance = null;
             stopSelf();
             return null;
         }, new Pair<>(getApplicationContext(), mAlarm));

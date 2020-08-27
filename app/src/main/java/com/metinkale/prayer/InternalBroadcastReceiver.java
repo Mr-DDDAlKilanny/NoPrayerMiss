@@ -50,11 +50,6 @@ public class InternalBroadcastReceiver extends BroadcastReceiver {
         this.context = context;
     }
 
-
-    protected InternalBroadcastReceiver() {
-        this(App.get());
-    }
-
     public void register() {
         IntentFilter filter = new IntentFilter();
         if (this instanceof OnStartListener) {

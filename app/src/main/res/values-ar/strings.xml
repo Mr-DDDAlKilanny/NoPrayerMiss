@@ -324,4 +324,5 @@
     <string name="of_night">بعد مضي %%%1$d من الليل</string>
     <string name="min_5_per_night">يجب ألا تقل النسبة عن %%5</string>
     <string name="actions">إجراءات</string>
+    <string name="custom_time">وقت مخصص</string>
 </resources>

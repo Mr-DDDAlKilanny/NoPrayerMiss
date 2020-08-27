@@ -138,7 +138,7 @@
             android:id="@+id/qeyamLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/baseFloatingActionButton"
+            android:layout_above="@+id/customTimeLayout"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/space"
@@ -167,6 +167,45 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{FabHandler::onNightPrayerFabClick}"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/baseline_alarm_add_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/customTimeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/baseFloatingActionButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/space"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/shape_fab_label"
+                android:elevation="2dp"
+                android:fontFamily="sans-serif"
+                android:padding="5dip"
+                android:text="@string/custom_time"
+                android:textColor="@android:color/white"
+                android:typeface="normal" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/customTimeFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{FabHandler::onCustomTimeFabClick}"
                 app:fabSize="mini"
                 app:srcCompat="@drawable/asld_clock_timer" />
 

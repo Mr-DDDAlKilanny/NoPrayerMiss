@@ -382,4 +382,5 @@
     <string name="of_night">After %%%1$d of night</string>
     <string name="min_5_per_night">Percentage must be at least %%5</string>
     <string name="actions">Actions</string>
+    <string name="custom_time">Custom Time</string>
 </resources>

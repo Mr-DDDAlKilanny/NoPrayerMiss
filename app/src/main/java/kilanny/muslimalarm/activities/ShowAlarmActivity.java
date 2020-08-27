@@ -86,9 +86,17 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
         if (savedInstanceState == null) {
             mAlarm = getIntent().getParcelableExtra(ARG_ALARM);
-            if (mAlarm == null)
-                throw new RuntimeException("An alarm must be passed to this activity");
-            currentAlarmFTime = getIntent().getIntExtra(ARG_ALARM_TIME, 0);
+            if (mAlarm == null) {
+                //TODO: HACK - Find-out why intent extras are not coming with Galaxy phones
+                AlarmRingingService currentInstance = AlarmRingingService.getCurrentInstance();
+                if (currentInstance != null) {
+                    mAlarm = currentInstance.getAlarm();
+                    currentAlarmFTime = currentInstance.getAlarmTime();
+                } else
+                    throw new RuntimeException("An alarm must be passed to this activity");
+            } else {
+                currentAlarmFTime = getIntent().getIntExtra(ARG_ALARM_TIME, 0);
+            }
         } else {
             mAlarm = savedInstanceState.getParcelable(ARG_ALARM);
             currentAlarmFTime = savedInstanceState.getInt(ARG_ALARM_TIME);

@@ -74,15 +74,15 @@ public class LocaleUtils {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            LocaleList localeList = getLocales();
+            LocaleList localeList = getLocales(c);
             LocaleList.setDefault(localeList);
             config.setLocales(localeList);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Locale locale = getLocale();
+            Locale locale = getLocale(c);
             config.setLocale(locale);
             Locale.setDefault(locale);
         } else {
-            Locale locale = getLocale();
+            Locale locale = getLocale(c);
             config.locale = locale;
             Locale.setDefault(locale);
         }
@@ -92,9 +92,9 @@ public class LocaleUtils {
     }
 
 
-    public static CharSequence formatTimeForHTML(LocalTime localTime) {
-        String time = formatTime(localTime);
-        AppSettings settings = AppSettings.getInstance(App.get().getApplicationContext());
+    public static CharSequence formatTimeForHTML(Context context, LocalTime localTime) {
+        String time = formatTime(context, localTime);
+        AppSettings settings = AppSettings.getInstance(context);
         if (settings.getTimeFormatFor(0) != PrayTime.TIME_12) {
             return time;
         }
@@ -112,9 +112,9 @@ public class LocaleUtils {
 
 
     @NonNull
-    public static String formatTime(LocalTime localTime) {
+    public static String formatTime(Context context, LocalTime localTime) {
         String time = localTime == null ? "00:00" : localTime.toString("HH:mm");
-        AppSettings settings = AppSettings.getInstance(App.get().getApplicationContext());
+        AppSettings settings = AppSettings.getInstance(context);
         if (settings.getTimeFormatFor(0) == PrayTime.TIME_12 && time.contains(":")) {
             try {
                 String fix = time.substring(0, time.indexOf(":"));
@@ -141,20 +141,20 @@ public class LocaleUtils {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
-    public static LocaleList getLocales() {
-        return LocaleList.forLanguageTags(getLocalesCompat().toLanguageTags());
+    public static LocaleList getLocales(Context context) {
+        return LocaleList.forLanguageTags(getLocalesCompat(context).toLanguageTags());
     }
 
 
     @NonNull
-    public static LocaleListCompat getLocalesCompat() {
-        AppSettings settings = AppSettings.getInstance(App.get().getApplicationContext());
+    public static LocaleListCompat getLocalesCompat(Context context) {
+        AppSettings settings = AppSettings.getInstance(context);
         if ("system".equals(settings.getString("language", "system")))
             return DEFAULT_LOCALES;
 
-        Locale locale = LocaleUtils.getLocale();
+        Locale locale = LocaleUtils.getLocale(context);
         ArrayList<Locale> locales = new ArrayList<>(DEFAULT_LOCALES.size() + 1);
-        locales.add(LocaleUtils.getLocale());
+        locales.add(LocaleUtils.getLocale(context));
         for (int i = 0; i < DEFAULT_LOCALES.size(); i++) {
             Locale l = DEFAULT_LOCALES.get(i);
             if (!locales.contains(locale)) {
@@ -165,8 +165,8 @@ public class LocaleUtils {
     }
 
     @NonNull
-    public static Locale getLocale() {
-        AppSettings settings = AppSettings.getInstance(App.get().getApplicationContext());
+    public static Locale getLocale(Context context) {
+        AppSettings settings = AppSettings.getInstance(context);
         String language = settings.getString("language", "system");
         if ("system".equals(language))
             return DEFAULT_LOCALES.get(0);
@@ -176,8 +176,8 @@ public class LocaleUtils {
 
 
     @NonNull
-    public static String getLanguage(@Size(min = 1) String... allow) {
-        Locale lang = LocaleUtils.getLocale();
+    public static String getLanguage(Context context, @Size(min = 1) String... allow) {
+        Locale lang = LocaleUtils.getLocale(context);
         Locale[] locales = new Locale[allow.length];
         for (int i = 0; i < allow.length; i++) {
             locales[i] = new Locale(allow[i]);
@@ -192,18 +192,18 @@ public class LocaleUtils {
     }
 
     @NonNull
-    private static String getGregMonth(@IntRange(from = 0, to = 11) int which) {
-        AppSettings settings = AppSettings.getInstance(App.get().getApplicationContext());
+    private static String getGregMonth(Context context, @IntRange(from = 0, to = 11) int which) {
+        AppSettings settings = AppSettings.getInstance(context);
         String language = settings.getString("language", "system");
         if (language.equals("system"))
-            return new DateFormatSymbols(getLocale()).getMonths()[which];
+            return new DateFormatSymbols(getLocale(context)).getMonths()[which];
         else
-            return App.get().getResources().getString(GMONTHS[which]);
+            return context.getResources().getString(GMONTHS[which]);
     }
 
     @NonNull
-    private static String getHijriMonth(@IntRange(from = 0, to = 11) int which) {
-        return App.get().getResources().getString(HMONTHS[which]);
+    private static String getHijriMonth(Context context, @IntRange(from = 0, to = 11) int which) {
+        return context.getResources().getString(HMONTHS[which]);
     }
 
 
@@ -216,13 +216,13 @@ public class LocaleUtils {
     }
 
     @NonNull
-    public static String formatDate(@NonNull HijriDate date) {
+    public static String formatDate(Context context, @NonNull HijriDate date) {
         String format = "DD MMM YYYY";
         format = format.replace("DD", az(date.getDay(), 2));
 
         if (format.contains("MMM")) {
             try {
-                format = format.replace("MMM", getHijriMonth(date.getMonth() - 1));
+                format = format.replace("MMM", getHijriMonth(context, date.getMonth() - 1));
 
             } catch (ArrayIndexOutOfBoundsException ex) {
                 ex.printStackTrace();
@@ -237,12 +237,12 @@ public class LocaleUtils {
 
 
     @NonNull
-    public static String formatDate(@NonNull LocalDate date) {
+    public static String formatDate(Context context, @NonNull LocalDate date) {
         String format = "dd/MM/yyyy";
         format = format.replace("DD", az(date.getDayOfMonth(), 2));
 
         try {
-            format = format.replace("MMM", getGregMonth(date.getMonthOfYear() - 1));
+            format = format.replace("MMM", getGregMonth(context, date.getMonthOfYear() - 1));
 
 
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -274,18 +274,16 @@ public class LocaleUtils {
         Configuration configuration = res.getConfiguration();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            configuration.setLocale(getLocale());
-            LocaleList localeList = getLocales();
+            configuration.setLocale(getLocale(context));
+            LocaleList localeList = getLocales(context);
             LocaleList.setDefault(localeList);
             configuration.setLocales(localeList);
             context = context.createConfigurationContext(configuration);
-
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(getLocale());
+            configuration.setLocale(getLocale(context));
             context = context.createConfigurationContext(configuration);
-
         } else {
-            configuration.locale = getLocale();
+            configuration.locale = getLocale(context);
             res.updateConfiguration(configuration, res.getDisplayMetrics());
         }
 
@@ -309,20 +307,20 @@ public class LocaleUtils {
             return progress;
         }
 
-        public String getDisplayLanguage() {
+        public String getDisplayLanguage(Context context) {
             if (language.equals("system"))
-                return App.get().getResources().getString(R.string.systemLanguage);
+                return context.getResources().getString(R.string.systemLanguage);
             if (language.equals("ku"))
                 return "Kurdî";
             Locale locale = new Locale(language);
             return locale.getDisplayLanguage(locale);
         }
 
-        public CharSequence getDisplayText() {
+        public CharSequence getDisplayText(Context context) {
             if (getProgress() < 0)
-                return getDisplayLanguage();
+                return getDisplayLanguage(context);
             else
-                return Html.fromHtml(getDisplayLanguage() + "&nbsp;<small>(" + getProgress() + "%)</small>");
+                return Html.fromHtml(getDisplayLanguage(context) + "&nbsp;<small>(" + getProgress() + "%)</small>");
         }
     }
 

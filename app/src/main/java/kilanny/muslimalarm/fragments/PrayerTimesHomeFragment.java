@@ -57,7 +57,7 @@ public class PrayerTimesHomeFragment extends Fragment {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
             txtDate.setText(dateFormat.format(new Date()));
             TextView txtHijri = mView.findViewById(R.id.hicri);
-            txtHijri.setText(LocaleUtils.formatDate(HijriDate.now()));
+            txtHijri.setText(LocaleUtils.formatDate(getContext(), HijriDate.now(getContext())));
 
             TextView fajr = (TextView) mView.findViewById(R.id.fajrTime);
             TextView dhuhr = (TextView) mView.findViewById(R.id.zuhrTime);

@@ -1,7 +1,9 @@
 package kilanny.muslimalarm.adapters;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
@@ -24,9 +26,13 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.arch.core.util.Function;
 import androidx.core.view.ViewCompat;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.internal.ViewUtils;
+
+import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -114,6 +120,39 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
             return rowView;
         }
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String json = pref.getString("nextAlarmJson", null);
+        Alarm nextAlarm = null;
+        if (json != null) {
+            try {
+                nextAlarm = Alarm.fromJson(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Invalid JSON", e);
+            }
+        }
+        ((MaterialCardView) rowView).setStrokeColor(nextAlarm != null && nextAlarm.id == alarm.id ?
+                context.getResources().getColor(R.color.ms_material_blue_500)
+                : context.getResources().getColor(R.color.ms_material_grey_400));
+        ValueAnimator oldAnimator = (ValueAnimator) rowView.getTag();
+        if (oldAnimator != null) {
+            oldAnimator.cancel();
+            rowView.setTag(null);
+            ((MaterialCardView) rowView).setStrokeWidth(4);
+        }
+        if (nextAlarm != null && nextAlarm.id == alarm.id) {
+            ValueAnimator animation = ValueAnimator.ofInt(1, 2, 3, 4);
+            animation.setRepeatCount(ValueAnimator.INFINITE);
+            animation.setRepeatMode(ValueAnimator.REVERSE);
+            animation.addUpdateListener(animation1 -> {
+                ((MaterialCardView) rowView).setStrokeWidth((Integer) animation1.getAnimatedValue());
+                ((MaterialCardView) rowView).setCardElevation(8 + (Integer) animation1.getAnimatedValue());
+            });
+            animation.setDuration(1300);
+            animation.start();
+            rowView.setTag(animation);
+        }
+
         rowView.setOnClickListener(view -> {
             if (!mIsPendingOperation)
                 onAlarmEdit.apply(alarm);
@@ -196,7 +235,12 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm>
         prayerName.setText(Utils.getPrayerNames(context, alarm));
 
         AppCompatTextView timeOffset = rowView.findViewById(R.id.timeOffset);
-        timeOffset.setText(Utils.getTimeOffsetDescription(context, alarm));
+        if (alarm.timeFlags != Alarm.TIME_CUSTOM) {
+            timeOffset.setVisibility(View.VISIBLE);
+            timeOffset.setText(Utils.getTimeOffsetDescription(context, alarm));
+        } else {
+            timeOffset.setVisibility(View.GONE);
+        }
 
         AppCompatTextView alarmDays = rowView.findViewById(R.id.alarmDays);
         alarmDays.setText(Utils.getAlarmDays(context, alarm));

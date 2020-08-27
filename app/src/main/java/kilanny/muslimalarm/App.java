@@ -24,8 +24,6 @@ import kilanny.muslimalarm.util.Utils;
 
 public class App extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static App sApp;
-
     @NonNull
     private Handler mHandler = new Handler();
 
@@ -40,24 +38,8 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
         }
     };
 
-
-    @NonNull
-    public static App get() {
-        return sApp;
-    }
-
-    public static void setApp(App app) {
-        sApp = app;
-    }
-
-    @NonNull
-    public Handler getHandler() {
-        return mHandler;
-    }
-
     public App() {
         super();
-        sApp = this;
     }
 
 

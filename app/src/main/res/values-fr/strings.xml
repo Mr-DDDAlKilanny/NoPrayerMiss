@@ -361,4 +361,5 @@
     <string name="of_night">Après %%%1$d de la nuit passée</string>
     <string name="min_5_per_night">Le pourcentage doit être d\'au moins %%5</string>
     <string name="actions">Actions</string>
+    <string name="custom_time">Heure personnalisée</string>
 </resources>

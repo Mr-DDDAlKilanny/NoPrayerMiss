@@ -365,4 +365,5 @@
     <string name="of_night">পরে %%%1$d রাত কেটে গেছে</string>
     <string name="min_5_per_night">শতাংশ অবশ্যই কমপক্ষে %%5 হতে হবে</string>
     <string name="actions">ক্রিয়াকলাপ</string>
+    <string name="custom_time">কাস্টম সময়</string>
 </resources>

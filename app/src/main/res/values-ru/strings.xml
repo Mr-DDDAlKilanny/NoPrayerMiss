@@ -363,4 +363,5 @@
     <string name="of_night">После %%%1$d ночи прошло</string>
     <string name="min_5_per_night">Процент должен быть не менее %%5</string>
     <string name="actions">действия</string>
+    <string name="custom_time">Пользовательское время</string>
 </resources>

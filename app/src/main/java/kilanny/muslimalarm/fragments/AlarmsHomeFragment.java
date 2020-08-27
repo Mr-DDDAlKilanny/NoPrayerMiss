@@ -335,7 +335,7 @@ public class AlarmsHomeFragment extends Fragment {
             if (view.getId() == listView.getId()) {
                 final int currentFirstVisibleItem = listView.getFirstVisiblePosition();
                 int currentFirstVisibleItemTop = listView.getChildAt(0).getTop();
-                ;
+
                 if (currentFirstVisibleItem > mLastFirstVisibleItem) {
                     fab.hide();
                 } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
@@ -367,8 +367,10 @@ public class AlarmsHomeFragment extends Fragment {
                 .start();
         binding.fivePrayersLayout.startAnimation(fabOpenAnimation);
         binding.qeyamLayout.startAnimation(fabOpenAnimation);
+        binding.customTimeLayout.startAnimation(fabOpenAnimation);
         binding.fivePrayersFab.setClickable(true);
         binding.nightPrayerFab.setClickable(true);
+        binding.customTimeFab.setClickable(true);
         isFabMenuOpen = true;
     }
 
@@ -381,8 +383,10 @@ public class AlarmsHomeFragment extends Fragment {
                 .start();
         binding.fivePrayersLayout.startAnimation(fabCloseAnimation);
         binding.qeyamLayout.startAnimation(fabCloseAnimation);
+        binding.customTimeLayout.startAnimation(fabCloseAnimation);
         binding.fivePrayersFab.setClickable(false);
         binding.nightPrayerFab.setClickable(false);
+        binding.customTimeFab.setClickable(false);
         isFabMenuOpen = false;
     }
 
@@ -399,13 +403,17 @@ public class AlarmsHomeFragment extends Fragment {
             mListener.onAddNewAlarm(false);
         }
 
+        public void onCustomTimeFabClick(View view) {
+            mListener.onAddNewAlarm(null);
+        }
+
         public void onFivePrayersFabClick(View view) {
             mListener.onAddNewAlarm(true);
         }
     }
 
     public interface OnFragmentInteractionListener {
-        void onAddNewAlarm(boolean isFivePrayers);
+        void onAddNewAlarm(Boolean isFivePrayers);
 
         void onEditAlarm(Alarm alarm);
     }

@@ -365,4 +365,5 @@
     <string name="of_night">رات کا %%%1$d گزرنے کے بعد</string>
     <string name="min_5_per_night">فیصد کم از کم %%5 ہونا ضروری ہے</string>
     <string name="actions">عمل</string>
+    <string name="custom_time">کسٹم ٹائم</string>
 </resources>

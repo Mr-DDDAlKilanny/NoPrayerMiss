@@ -35,12 +35,16 @@ public class Alarm implements Parcelable {
     public static final int TIME_MAGHRIB = 1 << 1;
     public static final int TIME_ISHAA = 1;
     public static final int TIME_QEYAM = 1 << 6;
+    public static final int TIME_CUSTOM = -1;
 
     @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo(name = "time_flags")
     public int timeFlags;
+
+    @ColumnInfo(name = "custom_time")
+    public Integer customTime;
 
     @ColumnInfo(name = "one_time_left_flags")
     public int oneTimeLeftAlarmsTimeFlags;
@@ -156,6 +160,11 @@ public class Alarm implements Parcelable {
         } else {
             qeyamAlarmPercentageOfNightPeriod = in.readInt();
         }
+        if (in.readByte() == 0) {
+            customTime = null;
+        } else {
+            customTime = in.readInt();
+        }
     }
 
     public Alarm copy() {
@@ -187,6 +196,7 @@ public class Alarm implements Parcelable {
         jsonObject.put("snoozedCount", snoozedCount);
         jsonObject.put("maxMinsRinging", maxMinsRinging);
         jsonObject.put("qeyamAlarmPercentageOfNightPeriod", qeyamAlarmPercentageOfNightPeriod);
+        jsonObject.put("customTime", customTime);
         return jsonObject.toString();
     }
 
@@ -249,6 +259,12 @@ public class Alarm implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(qeyamAlarmPercentageOfNightPeriod);
         }
+        if (customTime == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(customTime);
+        }
     }
 
     @Override
@@ -287,6 +303,8 @@ public class Alarm implements Parcelable {
             alarm.maxMinsRinging = jsonObject.getInt("maxMinsRinging");
         if (jsonObject.has("qeyamAlarmPercentageOfNightPeriod"))
             alarm.qeyamAlarmPercentageOfNightPeriod = jsonObject.getInt("qeyamAlarmPercentageOfNightPeriod");
+        if (jsonObject.has("customTime"))
+            alarm.customTime = jsonObject.getInt("customTime");
         return alarm;
     }
 
