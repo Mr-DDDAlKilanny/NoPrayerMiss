@@ -42,10 +42,22 @@
         android:scaleY="0.80"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/fajr"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fabEditHijriDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date"
         tools:text="HIJRI" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabEditHijriDate"
+        app:srcCompat="@drawable/baseline_swap_vert_black_18"
+        app:layout_constraintTop_toTopOf="@id/hicri"
+        app:layout_constraintBottom_toBottomOf="@id/hicri"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        app:backgroundTint="@color/design_default_color_on_primary"
+        app:fabSize="mini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.metinkale.prayer.times.utils.AutoResizeTextView
         android:id="@+id/fajr"

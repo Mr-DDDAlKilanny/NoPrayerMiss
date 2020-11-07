@@ -33,6 +33,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -94,7 +96,8 @@ public class AlarmsHomeFragment extends Fragment {
                 .start();
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if (!pref.getBoolean("noShowAlarmTutorial", false)) {
+        if (!pref.getBoolean("noShowAlarmTutorial", false) &&
+                mAdapter != null && mAdapter.getCount() > 0) {
             Utils.showConfirm(getContext(),
                     getString(R.string.dealing_with_list_of_alarms),
                     getString(R.string.toturial_alarms),
@@ -115,6 +118,18 @@ public class AlarmsHomeFragment extends Fragment {
         mAdapter.clear();
         Utils.runInBackground(input -> AppDb.getInstance(input).alarmDao().getAll(), input -> {
             if (mAdapter.getCount() == 0) { // prevent duplicate threads adds
+                Arrays.sort(input, (o1, o2) -> {
+                    if (o1.enabled != o2.enabled) {
+                        if (o1.enabled)
+                            return -1;
+                        return 1;
+                    } else if (!o1.enabled) {
+                        return o1.id - o2.id;
+                    }
+                    Utils.NextAlarmInfo n1 = Utils.getNextAlarmDate(getContext(), o1);
+                    Utils.NextAlarmInfo n2 = Utils.getNextAlarmDate(getContext(), o2);
+                    return (int) (n1.date.getTime() - n2.date.getTime());
+                });
                 mAdapter.addAll(input);
                 mAdapter.notifyDataSetChanged();
                 if (input.length > 0 && getContext() != null) {

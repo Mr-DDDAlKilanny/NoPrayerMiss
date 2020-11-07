@@ -3,8 +3,8 @@ package kilanny.muslimalarm.util;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.Locale;
 
@@ -170,7 +170,7 @@ public final class AnalyticsTrackers {
     public void logException(Throwable throwable) {
         if (!canMakeAnalytics()) return;
         try {
-            Crashlytics.logException(throwable);
+            FirebaseCrashlytics.getInstance().recordException(throwable);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
