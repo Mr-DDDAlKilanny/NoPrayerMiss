@@ -56,6 +56,16 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     private AlarmRingingService.LocalBinder mBinder;
     private boolean mServiceMaxRingDismissed = false;
     private BroadcastReceiver mServiceMaxRingBroadcastReceiver;
+    private final BroadcastReceiver mAlarmReplaceBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (AlarmRingingService.ACTION_REPLACE_ALARM.equals(intent.getAction())) {
+                mAlarm = intent.getParcelableExtra(AlarmRingingService.ARG_ALARM);
+                currentAlarmFTime = intent.getIntExtra(AlarmRingingService.ARG_ALARM_TIME, 0);
+                mIsPreview = intent.getBooleanExtra(AlarmRingingService.ARG_IS_PREVIEW, false);
+            }
+        }
+    };
 
     private boolean checkServiceRunning() {
         if (!Utils.isServiceRunning(this, AlarmRingingService.class)) {
@@ -79,6 +89,8 @@ public class ShowAlarmActivity extends AppCompatActivity implements
 
         //sometimes user can start this activity from history
         if (!checkServiceRunning()) return;
+        registerReceiver(mAlarmReplaceBroadcastReceiver,
+                new IntentFilter(AlarmRingingService.ACTION_REPLACE_ALARM));
         if (savedInstanceState == null)
             mIsPreview = getIntent().getBooleanExtra(ARG_IS_PREVIEW, false);
         else
@@ -179,6 +191,16 @@ public class ShowAlarmActivity extends AppCompatActivity implements
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace(); //maybe mServiceMaxRingBroadcastReceiver
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            unregisterReceiver(mAlarmReplaceBroadcastReceiver);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        super.onDestroy();
     }
 
     @Override

@@ -48,6 +48,8 @@ import kilanny.muslimalarm.util.Utils;
 
 public class AlarmRingingService extends Service {
 
+    public static final String ACTION_REPLACE_ALARM
+            = "kilanny.muslimalarm.services.AlarmRingingService.ACTION_REPLACE_ALARM";
     public static final String ARG_IS_PREVIEW = "isPreview";
     public static final String ARG_ALARM = "alarm";
     public static final String ARG_ALARM_TIME = "mAlarmTime";
@@ -96,6 +98,18 @@ public class AlarmRingingService extends Service {
                     ex.printStackTrace();
                     AnalyticsTrackers.getInstance(context).logException(ex);
                 }
+            }
+        }
+    };
+
+    private final BroadcastReceiver mAlarmReplaceBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_REPLACE_ALARM.equals(intent.getAction())) {
+                Alarm alarm = intent.getParcelableExtra(ARG_ALARM);
+                int alarmTime = intent.getIntExtra(ARG_ALARM_TIME, 0);
+                boolean isPreview = intent.getBooleanExtra(ARG_IS_PREVIEW, false);
+                cancelAttemptingDismissAlarm(true);
             }
         }
     };
@@ -238,6 +252,8 @@ public class AlarmRingingService extends Service {
             mMaxRingingTimeTimer.cancel();
             mMaxRingingTimeTimer = null;
         }
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        pref.edit().remove("currentRingingAlarm").commit();
     }
 
     private void startRinging() {
@@ -269,6 +285,12 @@ public class AlarmRingingService extends Service {
                     }
                 }
             }, 1000, 1000);
+        }
+        try {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+            pref.edit().putString("currentRingingAlarm", mAlarm.toJson()).commit();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

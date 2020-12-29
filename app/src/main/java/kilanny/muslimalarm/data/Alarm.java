@@ -106,6 +106,9 @@ public class Alarm implements Parcelable {
     @ColumnInfo(name = "snoozed_count")
     public int snoozedCount;
 
+    @ColumnInfo(name = "stop_for_next_alarm", defaultValue = "0")
+    public boolean stopForNextAlarm;
+
     public Alarm() {
     }
 
@@ -165,6 +168,7 @@ public class Alarm implements Parcelable {
         } else {
             customTime = in.readInt();
         }
+        stopForNextAlarm = in.readByte() != 0;
     }
 
     public Alarm copy() {
@@ -197,6 +201,7 @@ public class Alarm implements Parcelable {
         jsonObject.put("maxMinsRinging", maxMinsRinging);
         jsonObject.put("qeyamAlarmPercentageOfNightPeriod", qeyamAlarmPercentageOfNightPeriod);
         jsonObject.put("customTime", customTime);
+        jsonObject.put("stopForNextAlarm", stopForNextAlarm);
         return jsonObject.toString();
     }
 
@@ -265,6 +270,7 @@ public class Alarm implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(customTime);
         }
+        dest.writeByte((byte) (stopForNextAlarm ? 1 : 0));
     }
 
     @Override
@@ -305,6 +311,8 @@ public class Alarm implements Parcelable {
             alarm.qeyamAlarmPercentageOfNightPeriod = jsonObject.getInt("qeyamAlarmPercentageOfNightPeriod");
         if (jsonObject.has("customTime"))
             alarm.customTime = jsonObject.getInt("customTime");
+        if (jsonObject.has("stopForNextAlarm"))
+            alarm.stopForNextAlarm = jsonObject.getBoolean("stopForNextAlarm");
         return alarm;
     }
 

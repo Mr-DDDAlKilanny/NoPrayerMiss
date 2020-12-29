@@ -465,18 +465,11 @@ public class Utils {
     }
 
     public static void scheduleAndDeletePreviousBackground(Context context) {
-        Utils.runInBackground(new Function<Context, Pair<Context, Alarm[]>>() {
-            @Override
-            public Pair<Context, Alarm[]> apply(Context input) {
-                return new Pair<>(input, AppDb.getInstance(input).alarmDao().getAll());
-            }
-        }, new Function<Pair<Context, Alarm[]>, Void>() {
-            @Override
-            public Void apply(Pair<Context, Alarm[]> input) {
-                scheduleAndDeletePrevious(input.first, input.second);
-                return null;
-            }
-        }, context);
+        runInBackground(input -> new Pair<>(input, AppDb.getInstance(input).alarmDao().getAll()),
+                input -> {
+                    scheduleAndDeletePrevious(input.first, input.second);
+                    return null;
+                }, context);
     }
 
     private static PendingIntent getAlarmPendingIntent(Context context, Alarm alarm, int timeFlag) {
@@ -490,22 +483,13 @@ public class Utils {
     }
 
     public static void scheduleAndDeletePrevious(Context context, Alarm... alarms) {
-        NextAlarmInfo nearestAlarm = null, fajrAlarm = null;
+        NextAlarmInfo nearestAlarm = null;
         for (Alarm alarm : alarms) {
             if (alarm.enabled) {
                 NextAlarmInfo nextAlarm = getNextAlarmDate(context, alarm);
-                if ((nextAlarm.timeFlag & Alarm.TIME_FAJR) != 0
-                        && (fajrAlarm == null || nextAlarm.date.getTime() < fajrAlarm.date.getTime())) {
-                    fajrAlarm = nextAlarm;
-                }
                 if (nearestAlarm == null || nextAlarm.date.getTime() < nearestAlarm.date.getTime())
                     nearestAlarm = nextAlarm;
             }
-        }
-        if (fajrAlarm != null
-                && nearestAlarm.date.getTime() >= fajrAlarm.date.getTime()
-                && nearestAlarm.timeFlag == Alarm.TIME_QEYAM) {
-            nearestAlarm = fajrAlarm;
         }
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);

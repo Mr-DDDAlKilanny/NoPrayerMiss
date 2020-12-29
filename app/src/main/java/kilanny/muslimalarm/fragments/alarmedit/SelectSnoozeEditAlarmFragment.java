@@ -84,7 +84,7 @@ public class SelectSnoozeEditAlarmFragment extends EditAlarmFragment {
             numberPickerCount.showDropDown();
             return true;
         });
-        numberPickerCount.setText(mSnoozeCountValues[mAlarm.snoozeCount - 1]);
+        numberPickerCount.setText(mSnoozeCountValues[Math.max(mAlarm.snoozeCount - 1, 0)]);
         ((ArrayAdapter) numberPickerCount.getAdapter()).getFilter().filter(null);
 
         AutoCompleteTextView numMaxMins = mView.findViewById(R.id.numMaxMins);

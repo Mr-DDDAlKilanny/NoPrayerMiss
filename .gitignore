@@ -24,3 +24,7 @@ node_modules/
 aws-exports.js
 awsconfiguration.json
 /app/google-services.json
+*.jks
+*.pem
+*.pepk
+/app/src/main/res/values/secret_strings.xml
