@@ -45,6 +45,7 @@
     <string name="asr_method">Asr Juristic</string>
     <string name="asr_method_explain">"Шафии является стандартом, наиболее часто используемым. Пожалуйста, выберите метод, который подходит вам лучше всего. Если вы не уверены, оставьте Shafii выбранным, вы всегда можете изменить его позже.\n    "</string>
     <string name="calc_method_karachi">КАРАЧИ - Университет исламских наук</string>
+    <string name="calc_method_oman">Оман</string>
 
     <string name="calc_method_isna">ИСНА - Исламское общество Северной Америки</string>
     <string name="calc_method_mwl">MWL - Всемирная мусульманская лига</string>

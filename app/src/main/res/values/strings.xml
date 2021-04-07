@@ -55,6 +55,7 @@
         If you are not sure, leave Shafii selected, you can always change it later.
     </string>
     <string name="calc_method_karachi">KARACHI - University of Islamic Sciences</string>
+    <string name="calc_method_oman">OMAN</string>
 
     <string name="calc_method_isna">ISNA - Islamic Society of North America</string>
     <string name="calc_method_mwl">MWL - Muslim World League</string>

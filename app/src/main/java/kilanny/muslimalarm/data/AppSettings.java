@@ -3,10 +3,14 @@ package kilanny.muslimalarm.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.text.format.DateFormat;
+
+import androidx.annotation.RawRes;
 
 import java.lang.ref.WeakReference;
 
+import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.util.PrayTime;
 
 /*
@@ -344,12 +348,44 @@ public class AppSettings {
         set("iqamahAlarmSoundLevel", level);
     }
 
+    public int getAzanAlarmTune() {
+        return getInt("azanAlarmTune", R.raw.azan_qatami);
+    }
+
+    public void setAzanAlarmTune(@RawRes int tune) {
+        set("azanAlarmTune", tune);
+    }
+
+    public int getAlarmType() {
+        return getInt("alarmType", AudioManager.STREAM_NOTIFICATION);
+    }
+
+    public void setAlarmType(int type) {
+        set("alarmType", type);
+    }
+
+    public int getIqamahAlarmTune() {
+        return getInt("iqamahAlarmTune", R.raw.azan_haya);
+    }
+
+    public void setIqamahAlarmTune(@RawRes int tune) {
+        set("iqamahAlarmTune", tune);
+    }
+
     public boolean isAzanAlarmsEnabled() {
         return getBoolean("azanAlarmsEnabled", true);
     }
 
     public void setAzanAlarmsEnabled(boolean enabled) {
         set("azanAlarmsEnabled", enabled);
+    }
+
+    public boolean isAzanViberationEnabled() {
+        return getBoolean("azanViberationEnabled", false);
+    }
+
+    public void setAzanViberationEnabled(boolean enabled) {
+        set("azanViberationEnabled", enabled);
     }
 
     public boolean isZuhrAzanAlarmEnabled() {
@@ -424,12 +460,12 @@ public class AppSettings {
         set("magribAzanAlarmOffsetMins", OffsetMins);
     }
 
-    public int getgethaAzanAlarmOffsetMins() {
-        return getInt("gethaAzanAlarmOffsetMins", 0);
+    public int getIshaAzanAlarmOffsetMins() {
+        return getInt("ishaAzanAlarmOffsetMins", 0);
     }
 
-    public void setgethaAzanAlarmOffsetMins(int OffsetMins) {
-        set("gethaAzanAlarmOffsetMins", OffsetMins);
+    public void setIshaAzanAlarmOffsetMins(int OffsetMins) {
+        set("ishaAzanAlarmOffsetMins", OffsetMins);
     }
 
     public int getFajrAzanAlarmOffsetMins() {
@@ -449,11 +485,19 @@ public class AppSettings {
     }
 
     public boolean isIqamahAlarmsEnabled() {
-        return getBoolean("iqamahAlarmsEnabled", true);
+        return getBoolean("iqamahAlarmsEnabled", false);
     }
 
     public void setIqamahAlarmsEnabled(boolean enabled) {
         set("iqamahAlarmsEnabled", enabled);
+    }
+
+    public boolean isIqamahViberationEnabled() {
+        return getBoolean("iqamahViberationEnabled", false);
+    }
+
+    public void setIqamahViberationEnabled(boolean enabled) {
+        set("iqamahViberationEnabled", enabled);
     }
 
     public boolean isZuhrIqamahAlarmEnabled() {
@@ -524,16 +568,16 @@ public class AppSettings {
         return getInt("magribIqamahAlarmPeriodMins", 10);
     }
 
-    public void setMafribIqamahAlarmPeriodMins(int periodMins) {
+    public void setMagribIqamahAlarmPeriodMins(int periodMins) {
         set("magribIqamahAlarmPeriodMins", periodMins);
     }
 
     public int getIshaIqamahAlarmPeriodMins() {
-        return getInt("gethaIqamahAlarmPeriodMins", 10);
+        return getInt("ishaIqamahAlarmPeriodMins", 10);
     }
 
     public void setIshaIqamahAlarmPeriodMins(int periodMins) {
-        set("gethaIqamahAlarmPeriodMins", periodMins);
+        set("ishaIqamahAlarmPeriodMins", periodMins);
     }
 
     public int getFajrIqamahAlarmPeriodMins() {

@@ -26,6 +26,7 @@ import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.AppSettings;
 import kilanny.muslimalarm.fragments.AlarmsHomeFragment;
 import kilanny.muslimalarm.fragments.PrayerTimesHomeFragment;
+import kilanny.muslimalarm.services.AlarmRingingService;
 import kilanny.muslimalarm.util.AnalyticsTrackers;
 import kilanny.muslimalarm.util.Utils;
 
@@ -94,16 +95,13 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, REQUEST_ONBOARDING);
     }
 
-    private ImageButton getNavButtonView(Toolbar toolbar) {
-        for (int i = 0; i < toolbar.getChildCount(); i++)
-            if (toolbar.getChildAt(i) instanceof ImageButton)
-                return (ImageButton) toolbar.getChildAt(i);
-        return null;
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
+        if (Utils.isServiceRunning(this, AlarmRingingService.class)) {
+            startActivity(new Intent(this, ShowAlarmActivity.class));
+            return;
+        }
         //TODO: show message first
         AppSettings appSettings = AppSettings.getInstance(getApplicationContext());
         if (!appSettings.isDefaultSet()) {

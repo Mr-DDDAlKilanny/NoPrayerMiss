@@ -43,6 +43,7 @@
     <string name="asr_method">Asr Juristic</string>
     <string name="asr_method_explain">Shafii est la norme la plus utilisée. Veuillez sélectionner la méthode qui vous convient le mieux. Si vous n\'êtes pas sûr, laissez Shafii sélectionné, vous pouvez toujours le changer plus tard.</string>
     <string name="calc_method_karachi">KARACHI - Université des sciences islamiques</string>
+    <string name="calc_method_oman">OMAN</string>
     <string name="calc_method_isna">ISNA - Société islamique d\'Amérique du Nord</string>
     <string name="calc_method_mwl">MWL - Ligue mondiale musulmane</string>
     <string name="calc_method_makkah">MAKKAH - Umm al-Qura</string>

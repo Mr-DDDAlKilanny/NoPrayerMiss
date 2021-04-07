@@ -59,10 +59,11 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     private final BroadcastReceiver mAlarmReplaceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (AlarmRingingService.ACTION_REPLACE_ALARM.equals(intent.getAction())) {
-                mAlarm = intent.getParcelableExtra(AlarmRingingService.ARG_ALARM);
-                currentAlarmFTime = intent.getIntExtra(AlarmRingingService.ARG_ALARM_TIME, 0);
-                mIsPreview = intent.getBooleanExtra(AlarmRingingService.ARG_IS_PREVIEW, false);
+            if (AlarmRingingService.ACTION_ALARM_HAS_BEEN_REPLACED.equals(intent.getAction())) {
+                mAlarm = AlarmRingingService.getCurrentInstance().getAlarm();
+                currentAlarmFTime = AlarmRingingService.getCurrentInstance().getAlarmTime();
+                mIsPreview = false;
+                cancelAttempt();
             }
         }
     };
@@ -70,6 +71,9 @@ public class ShowAlarmActivity extends AppCompatActivity implements
     private boolean checkServiceRunning() {
         if (!Utils.isServiceRunning(this, AlarmRingingService.class)) {
             Toast.makeText(this, R.string.pls_start_from_icon, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
             return false;
         }
@@ -90,7 +94,7 @@ public class ShowAlarmActivity extends AppCompatActivity implements
         //sometimes user can start this activity from history
         if (!checkServiceRunning()) return;
         registerReceiver(mAlarmReplaceBroadcastReceiver,
-                new IntentFilter(AlarmRingingService.ACTION_REPLACE_ALARM));
+                new IntentFilter(AlarmRingingService.ACTION_ALARM_HAS_BEEN_REPLACED));
         if (savedInstanceState == null)
             mIsPreview = getIntent().getBooleanExtra(ARG_IS_PREVIEW, false);
         else

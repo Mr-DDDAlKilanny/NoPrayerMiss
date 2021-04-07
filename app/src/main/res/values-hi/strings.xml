@@ -48,6 +48,7 @@
         Shafii सबसे अधिक बार उपयोग किया जाने वाला मानक है। कृपया वह विधि चुनें जो आपके लिए सबसे उपयुक्त हो। यदि आप निश्चित नहीं हैं, तो चयनित Shafii को छोड़ दें, आप इसे बाद में बदल सकते हैं।
     </string>
     <string name="calc_method_karachi">कराची - इस्लामी विज्ञान विश्वविद्यालय</string>
+    <string name="calc_method_oman">ओमान</string>
     <string name="calc_method_isna">ISNA - उत्तरी अमेरिका की इस्लामिक सोसाइटी</string>
     <string name="calc_method_mwl">MWL - मुस्लिम वर्ल्ड लीग</string>
     <string name="calc_method_makkah">मेकाह - उम्म अल-क़ुरा</string>

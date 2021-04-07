@@ -9,8 +9,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.DataSetObserver;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +36,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -149,24 +150,48 @@ public class AlarmsHomeFragment extends Fragment {
         }, getContext());
     }
 
-    private boolean batteryOptimizationAd(final Context context) {
+    private static boolean batteryOptimizationAd(final Context context) {
+        boolean not = false;
+        final SerializableInFile<Integer> response2 = new SerializableInFile<>(
+                context, "battery__st2", 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            if (pm.isIgnoringBatteryOptimizations(context.getPackageName())) {
+                return false;
+            } else {
+                not = response2.getData() < 10;
+            }
+        }
         final SerializableInFile<Integer> response = new SerializableInFile<>(
                 context, "battery__st", 0);
-        if (response.getData() == 0) {
-            new AlertDialog.Builder(context)
+        if (not || response.getData() == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle(R.string.battery_opts)
                     .setMessage(R.string.battery_msg)
                     .setPositiveButton(R.string.open_settings, (dialogInterface, i) -> {
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
-                        intent.setData(uri);
-                        context.startActivity(intent);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            try {
+                                context.startActivity(new Intent(
+                                        Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                                        Uri.parse("package:" + context.getPackageName())));
+                                return;
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        context.startActivity(new Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", context.getPackageName(), null)));
                     })
-                    .setNeutralButton(android.R.string.cancel, null)
-                    .setNegativeButton(R.string.no_not_ask, (dialogInterface, i) -> response.setData(-1, context))
-                    .show();
+                    .setNeutralButton(android.R.string.cancel, null);
+            if (!not) {
+                builder.setNegativeButton(R.string.no_not_ask,
+                        (dialogInterface, i) -> response.setData(-1, context));
+            } else {
+                response2.setData(response2.getData() + 1, context);
+            }
+            builder.show();
             return true;
         } else
             return false;

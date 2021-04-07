@@ -68,6 +68,15 @@
                 android:text="@string/calc_method_egypt" />
 
             <TextView
+                android:id="@+id/oman"
+                style="@style/Widget.TimeRow.Separator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:tag="7"
+                android:text="@string/calc_method_oman" />
+
+            <TextView
                 android:id="@+id/tehran"
                 style="@style/Widget.TimeRow.Separator"
                 android:layout_width="match_parent"

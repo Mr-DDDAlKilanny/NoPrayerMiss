@@ -50,6 +50,7 @@
         শফিই বেশিরভাগ ব্যবহৃত হয়। যে পদ্ধতিটি আপনার পক্ষে সবচেয়ে উপযুক্ত তা দয়া করে নির্বাচন করুন। আপনি যদি নিশ্চিত না হন তবে শফিকে বাছাই করুন, আপনি পরে সর্বদা এটি পরিবর্তন করতে পারেন।
     </string>
     <string name="calc_method_karachi">করাচি - ইসলামিক সায়েন্সেস বিশ্ববিদ্যালয়</string>
+    <string name="calc_method_oman">ওমান</string>
     <string name="calc_method_isna">আইএসএনএ - উত্তর আমেরিকার ইসলামিক সোসাইটি</string>
     <string name="calc_method_mwl">এমডব্লিউএল - মুসলিম ওয়ার্ল্ড লিগ</string>
     <string name="calc_method_makkah">মক্কাঃ উম্মুল কুরআ</string>

@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -32,7 +33,9 @@ import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,12 +47,15 @@ import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.Tune;
 import kilanny.muslimalarm.data.Weekday;
 import kilanny.muslimalarm.util.AnalyticsTrackers;
+import kilanny.muslimalarm.util.AppExecutors;
 import kilanny.muslimalarm.util.Utils;
 
 public class AlarmRingingService extends Service {
 
     public static final String ACTION_REPLACE_ALARM
             = "kilanny.muslimalarm.services.AlarmRingingService.ACTION_REPLACE_ALARM";
+    public static final String ACTION_ALARM_HAS_BEEN_REPLACED
+            = "kilanny.muslimalarm.services.AlarmRingingService.ACTION_ALARM_HAS_BEEN_REPLACED";
     public static final String ARG_IS_PREVIEW = "isPreview";
     public static final String ARG_ALARM = "alarm";
     public static final String ARG_ALARM_TIME = "mAlarmTime";
@@ -107,9 +113,16 @@ public class AlarmRingingService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (ACTION_REPLACE_ALARM.equals(intent.getAction())) {
                 Alarm alarm = intent.getParcelableExtra(ARG_ALARM);
-                int alarmTime = intent.getIntExtra(ARG_ALARM_TIME, 0);
-                boolean isPreview = intent.getBooleanExtra(ARG_IS_PREVIEW, false);
-                cancelAttemptingDismissAlarm(true);
+                int alarmTime = intent.getIntExtra(ARG_ALARM_TIME, -1);
+                if (alarm != null && alarmTime != -1 && mAlarm != null && mAlarm.stopForNextAlarm &&
+                        (alarm.id != mAlarm.id || alarmTime != mAlarmTime)) {
+                    cancelAttemptingDismissAlarm(false);
+                    mAlarm = alarm;
+                    mAlarmTime = alarmTime;
+                    mIsPreview = false;
+                    initAlarm();
+                    sendBroadcast(new Intent(ACTION_ALARM_HAS_BEEN_REPLACED));
+                }
             }
         }
     };
@@ -218,25 +231,62 @@ public class AlarmRingingService extends Service {
         mHandler = new Handler();
         startForeground(NOTIFICATION_ID, initNotification(mAlarm.alarmLabel));
         registerReceiver(mDelNotifBroadcastReceiver, new IntentFilter(CHANNEL_ID));
+        registerReceiver(mAlarmReplaceBroadcastReceiver, new IntentFilter(ACTION_REPLACE_ALARM));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        mOldUserSoundVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int level = (int) Math.round((mAlarm.soundLevel / 100.0) * maxVolume);
-        try {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
-        } catch (SecurityException ex) {
-            ex.printStackTrace();
-        }
-        mediaPlayer = MediaPlayer.create(this,
-                Tune.findTuneOrDefault(mAlarm.alarmTune, 1).rawResId);
-        mediaPlayer.setLooping(true);
+        mOldUserSoundVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_ALARM);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        startRinging();
+        initAlarm();
         startDate = new Date();
         AnalyticsTrackers.getInstance(this).logAlarmRing(mAlarm, mIsPreview);
         //startActivity(getStartActivityIntent());
         return START_REDELIVER_INTENT;
+    }
+
+    private void initAlarm() {
+        int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+        int level = (int) Math.round((mAlarm.soundLevel / 100.0) * maxVolume);
+        try {
+            mAudioManager.setStreamVolume(AudioManager.STREAM_ALARM, level, 0);
+        } catch (SecurityException ex) {
+            ex.printStackTrace();
+        }
+        if (mediaPlayer != null) {
+            stopRinging();
+            MediaPlayer m = mediaPlayer;
+            AppExecutors.getInstance().executeOnCachedExecutor(() -> {
+                try {
+                    m.stop();
+                    m.release(); //in sometimes it takes too long
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+        }
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+        try {
+            mediaPlayer.setDataSource(this, Uri.parse(String.format(Locale.ENGLISH,
+                    "android.resource://%s/%d",
+                    getPackageName(),
+                    Tune.findTuneOrDefault(mAlarm.alarmTune, 1).rawResId)));
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO: can it happen ?! what if happened???
+        }
+        mediaPlayer.setLooping(true);
+        startRinging();
+
+        if (mAlarm.stopForNextAlarm) {
+            Utils.runInBackground(input -> {
+                AlarmDao alarmDao = AppDb.getInstance(input).alarmDao();
+                return new Pair<>(input, alarmDao.getAll());
+            }, input -> {
+                Utils.scheduleAndDeletePrevious(input.first, input.second);
+                return null;
+            }, getApplicationContext());
+        }
     }
 
     private void stopRinging() {
@@ -253,7 +303,6 @@ public class AlarmRingingService extends Service {
             mMaxRingingTimeTimer = null;
         }
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        pref.edit().remove("currentRingingAlarm").commit();
     }
 
     private void startRinging() {
@@ -285,12 +334,6 @@ public class AlarmRingingService extends Service {
                     }
                 }
             }, 1000, 1000);
-        }
-        try {
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-            pref.edit().putString("currentRingingAlarm", mAlarm.toJson()).commit();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 
@@ -357,7 +400,7 @@ public class AlarmRingingService extends Service {
         }
         stopRinging();
         try {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mOldUserSoundVolume, 0);
+            mAudioManager.setStreamVolume(AudioManager.STREAM_ALARM, mOldUserSoundVolume, 0);
         } catch (SecurityException ex) {
             ex.printStackTrace();
         }
@@ -395,6 +438,11 @@ public class AlarmRingingService extends Service {
             Utils.scheduleAndDeletePrevious(input.first, input.second);
             try {
                 unregisterReceiver(mDelNotifBroadcastReceiver);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            try {
+                unregisterReceiver(mAlarmReplaceBroadcastReceiver);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

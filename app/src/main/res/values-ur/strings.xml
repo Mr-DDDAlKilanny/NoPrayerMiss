@@ -49,6 +49,7 @@
         شفیع وہ معیار ہے جو اکثر استعمال ہوتا ہے۔ براہ کرم وہ طریقہ منتخب کریں جو آپ کے لئے مناسب ہے۔ اگر آپ کو یقین نہیں ہے تو ، شفیع کو منتخب چھوڑیں ، آپ اسے بعد میں ہمیشہ تبدیل کرسکتے ہیں۔
     </string>
     <string name="calc_method_karachi">کراچی - یونیورسٹی آف اسلامک سائنسز</string>
+    <string name="calc_method_oman">عمان</string>
     <string name="calc_method_isna">ISNA - اسلامی سوسائٹی آف شمالی امریکہ</string>
     <string name="calc_method_mwl">MWL - مسلم ورلڈ لیگ</string>
     <string name="calc_method_makkah">مکہ - ام القراء</string>

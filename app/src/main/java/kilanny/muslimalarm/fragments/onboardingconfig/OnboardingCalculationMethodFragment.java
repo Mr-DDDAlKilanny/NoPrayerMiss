@@ -31,7 +31,7 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
 
     private OnOnboardingOptionSelectedListener mListener;
 
-    private TextView[] options = new TextView[7];
+    private TextView[] options = new TextView[8];
 
     /**
      * Use this factory method to create a new instance of
@@ -81,8 +81,9 @@ public class OnboardingCalculationMethodFragment extends OnboardingBaseFragment 
         options[2] = (TextView) view.findViewById(R.id.mwl);
         options[3] = (TextView) view.findViewById(R.id.makkah);
         options[4] = (TextView) view.findViewById(R.id.egypt);
-        options[5] = (TextView) view.findViewById(R.id.tehran);
-        options[6] = (TextView) view.findViewById(R.id.jafri);
+        options[5] = (TextView) view.findViewById(R.id.oman);
+        options[6] = (TextView) view.findViewById(R.id.tehran);
+        options[7] = (TextView) view.findViewById(R.id.jafri);
 
         AppSettings settings = AppSettings.getInstance(getActivity());
         int method = settings.getCalcMethodSetFor(mCalculationIdx);

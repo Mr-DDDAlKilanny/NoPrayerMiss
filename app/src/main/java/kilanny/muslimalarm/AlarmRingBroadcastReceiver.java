@@ -3,14 +3,9 @@ package kilanny.muslimalarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.preference.PreferenceManager;
-
-import org.json.JSONException;
 
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.services.AlarmRingingService;
@@ -38,21 +33,16 @@ public class AlarmRingBroadcastReceiver extends BroadcastReceiver {
                 context.startService(intent);
         } else {
             if (!isPreview) {
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-                String curAlarmJson = pref.getString("currentRingingAlarm", null);
-                if (curAlarmJson != null) {
-                    try {
-                        Alarm curAlarm = Alarm.fromJson(curAlarmJson);
-                        if (curAlarm.stopForNextAlarm) {
-                            Intent replaceIntent = new Intent(AlarmRingingService.ACTION_REPLACE_ALARM);
-                            replaceIntent.putExtra(AlarmRingingService.ARG_ALARM, alarm);
-                            replaceIntent.putExtra(AlarmRingingService.ARG_ALARM_TIME, alarmTime);
-                            replaceIntent.putExtra(AlarmRingingService.ARG_IS_PREVIEW, false);
-                            context.sendBroadcast(replaceIntent);
-                            return;
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if (AlarmRingingService.getCurrentInstance() != null) {
+                    Alarm curAlarm = AlarmRingingService.getCurrentInstance().getAlarm();
+                    if (curAlarm.stopForNextAlarm) {
+                        //TODO: untested; causing math problems count-down timer to stop
+                        Intent replaceIntent = new Intent(AlarmRingingService.ACTION_REPLACE_ALARM);
+                        replaceIntent.putExtra(AlarmRingingService.ARG_ALARM, alarm);
+                        replaceIntent.putExtra(AlarmRingingService.ARG_ALARM_TIME, alarmTime);
+                        replaceIntent.putExtra(AlarmRingingService.ARG_IS_PREVIEW, false);
+                        context.sendBroadcast(replaceIntent);
+                        return;
                     }
                 }
             }

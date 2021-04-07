@@ -61,8 +61,9 @@ public class PrayTime {
     public static final int MWL = 3; // Muslim World League (MWL)
     public static final int MAKKAH = 4; // Umm al-Qura, MAKKAH
     public static final int EGYPT = 5; // Egyptian General Authority of Survey
-    public static final int CUSTOM = 7; // CUSTOM Setting
+    public static final int CUSTOM = 8; // CUSTOM Setting
     public static final int TEHRAN = 6; // Institute of Geophysics, University of TEHRAN
+    public static final int OMAN = 7; // OMAN
     // Juristic Methods
     public static final int SHAFII = 0; // SHAFII (standard)
     public static final int HANAFI = 1; // HANAFI
@@ -146,6 +147,8 @@ public class PrayTime {
         // KARACHI
         double[] Kvalues = {18, 1, 0, 0, 18};
         methodParams.put(KARACHI, Kvalues);
+        // OMAN
+        methodParams.put(OMAN, Kvalues);
 
         // ISNA
         double[] Ivalues = {17.5, 1, 0, 0, 15};
@@ -454,7 +457,7 @@ public class PrayTime {
     }
 
     // convert double hours to 12h format
-    public String floatToTime12(double time, boolean noSuffix) {
+    public String floatToTime12(double time, boolean noSuffix, int incMinutes) {
         if (Double.isNaN(time)) {
             return InvalidTime;
         }
@@ -465,12 +468,7 @@ public class PrayTime {
         DateFormat outputFormat = new SimpleDateFormat("hh:mm " + (noSuffix ? "" : "aa"),
                 Locale.getDefault());
         return outputFormat.format(new DateTime(2019, 10, 19,
-                (int) hours, (int) Math.round(minutes), 0).toDate());
-    }
-
-    // convert double hours to 12h format with no suffix
-    public String floatToTime12NS(double time) {
-        return floatToTime12(time, true);
+                hours, (int) Math.round(minutes), 0).plusMinutes(incMinutes).toDate());
     }
 
     // ---------------------- Compute Prayer Times -----------------------
@@ -550,9 +548,11 @@ public class PrayTime {
 
         for (int i = 0; i < 7; i++) {
             if (this.getTimeFormat() == TIME_12) {
-                result.add(floatToTime12(times[i], false));
+                result.add(floatToTime12(times[i], false,
+                        calcMethod == OMAN && i >= 2 && i <= 5 ? 5 : 0));
             } else if (this.getTimeFormat() == TIME_12_NS) {
-                result.add(floatToTime12(times[i], true));
+                result.add(floatToTime12(times[i], true,
+                        calcMethod == OMAN && i >= 2 && i <= 5 ? 5 : 0));
             } else {
                 result.add(floatToTime24(times[i]));
             }

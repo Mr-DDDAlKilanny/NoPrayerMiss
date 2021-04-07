@@ -85,7 +85,8 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
                     Double[] res;
                     try {
                         url11 = url11.substring(idx + 2);
-                        url11 = url11.substring(0, url11.indexOf('/'));
+                        url11 = url11.substring(0,
+                                url11.indexOf('/') == -1 ? url11.length() : url11.indexOf('/'));
                         String[] strs = url11.split(",");
                         res = new Double[]{Double.parseDouble(strs[0]), Double.parseDouble(strs[1])};
                     } catch (Throwable e) {
@@ -162,6 +163,8 @@ public class OnboardingLocationFragment extends OnboardingBaseFragment
                     settings.getDouble(settings.getKeyFor(AppSettings.Key.LAT_FOR, 0))));
             txtLng.setText(String.format(Locale.ENGLISH, "%f",
                     settings.getDouble(settings.getKeyFor(AppSettings.Key.LNG_FOR, 0))));
+            //txtLat.clearFocus();
+            //txtLng.clearFocus();
         }
         return mView = root;
     }

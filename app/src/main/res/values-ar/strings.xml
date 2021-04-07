@@ -45,6 +45,7 @@
     <string name="calc_method_isna">إسنا - الجمعية الإسلامية بأمريكا الشمالية</string>
     <string name="calc_method_jafari">إثنا عشري</string>
     <string name="calc_method_karachi">كراتشي - جامعة العلوم الإسلامية</string>
+    <string name="calc_method_oman">عمان</string>
     <string name="calc_method_makkah">أم القرى، السعودية</string>
     <string name="calc_method_mwl">رابطة العالم الإسلامي</string>
     <string name="calc_method_tehran">طهران، معهد الجيوفيزياء جامعة طهران</string>
