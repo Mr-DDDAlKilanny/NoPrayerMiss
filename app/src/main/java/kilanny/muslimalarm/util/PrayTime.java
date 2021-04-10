@@ -446,14 +446,17 @@ public class PrayTime {
     }
 
     // convert double hours to 24h format
-    public String floatToTime24(double time) {
+    public String floatToTime24(double time, int incMinutes) {
         if (Double.isNaN(time)) {
             return InvalidTime;
         }
         time = fixhour(time + 0.5 / 60.0); // add 0.5 minutes to round
         int hours = (int) Math.floor(time);
         double minutes = Math.floor((time - hours) * 60.0);
-        return String.format(Locale.ENGLISH, "%02d:%02d", hours, (int) Math.round(minutes));
+        DateTime dateTime = new DateTime(2019, 10, 19,
+                hours, (int) Math.round(minutes), 0).plusMinutes(incMinutes);
+        return String.format(Locale.ENGLISH, "%02d:%02d",
+                dateTime.getHourOfDay(), dateTime.getMinuteOfHour());
     }
 
     // convert double hours to 12h format
@@ -554,7 +557,7 @@ public class PrayTime {
                 result.add(floatToTime12(times[i], true,
                         calcMethod == OMAN && i >= 2 && i <= 5 ? 5 : 0));
             } else {
-                result.add(floatToTime24(times[i]));
+                result.add(floatToTime24(times[i], calcMethod == OMAN && i >= 2 && i <= 5 ? 5 : 0));
             }
         }
         return result;
