@@ -363,4 +363,10 @@
     <string name="min_5_per_night">Le pourcentage doit être d\'au moins %%5</string>
     <string name="actions">Actions</string>
     <string name="custom_time">Heure personnalisée</string>
+    <string name="islamic_academy">Académie islamique</string>
+    <string name="safeer_al_islam">Safeer Al-Islam</string>
+    <string name="islamic_academy_descr">Une académie islamique gratuite en ligne, pour enseigner le Coran, les hadiths et d\'autres sujets islamiques</string>
+    <string name="islamic_academy_ad_overview">Nous invitons les étudiants et les enseignants à s\'inscrire dans notre académie. Nous acceptons que tous les étudiants doivent étudier l\'islam. Nous recrutons des enseignants qui ont les connaissances requises et qui souhaitent enseigner aux autres (sans salaire)</string>
+    <string name="register_for_free">Inscription gratuite</string>
+    <string name="browser_not_found_paste_link">Impossible d\'ouvrir le lien, il a été copié dans le presse-papiers</string>
 </resources>

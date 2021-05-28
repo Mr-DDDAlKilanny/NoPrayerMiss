@@ -149,6 +149,16 @@ public final class AnalyticsTrackers {
         }
     }
 
+    public void logAdShow() {
+        if (!canMakeAnalytics()) return;
+        try {
+            Bundle bundle = new Bundle();
+            mFirebaseAnalytics.logEvent("AlarmShown", bundle);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void putAlarm(Alarm alarm, Bundle bundle) {
         bundle.putInt("alarm_dismissAlarmType", alarm.dismissAlarmType);
         bundle.putInt("alarm_alarmTone", alarm.alarmTune);

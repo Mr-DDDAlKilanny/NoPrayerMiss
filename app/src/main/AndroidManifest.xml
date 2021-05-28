@@ -26,6 +26,8 @@
     <uses-permission-sdk-23 android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <!-- Needed for full screen intent in notifications (API 29) -->
     <uses-permission-sdk-23 android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <!-- Needed for android 12 -->
+    <uses-permission-sdk-23 android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".App"
@@ -85,21 +87,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="mpta.com"
-                    android:path="/test"
-                    android:scheme="https" />
-                <data
-                    android:host="mpta.com"
-                    android:path="/test"
-                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity

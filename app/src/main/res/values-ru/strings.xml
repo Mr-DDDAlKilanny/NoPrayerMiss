@@ -365,4 +365,10 @@
     <string name="min_5_per_night">Процент должен быть не менее %%5</string>
     <string name="actions">действия</string>
     <string name="custom_time">Пользовательское время</string>
+    <string name="islamic_academy">Исламская Академия</string>
+    <string name="safeer_al_islam">Safeer Al-Islam</string>
+    <string name="islamic_academy_descr">Бесплатная онлайн-исламская академия для преподавания Корана, хадисов и других исламских тем.</string>
+    <string name="islamic_academy_ad_overview">Приглашаем студентов и преподавателей зарегистрироваться в нашей академии. Мы принимаем всех студентов, которые должны изучать ислам. Мы нанимаем учителей, которые обладают необходимыми знаниями и хотят учить других (без зарплаты)</string>
+    <string name="register_for_free">Бесплатная регистрация</string>
+    <string name="browser_not_found_paste_link">Не удается открыть ссылку, она скопирована в буфер обмена</string>
 </resources>

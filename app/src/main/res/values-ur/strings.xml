@@ -367,4 +367,10 @@
     <string name="min_5_per_night">فیصد کم از کم %%5 ہونا ضروری ہے</string>
     <string name="actions">عمل</string>
     <string name="custom_time">کسٹم ٹائم</string>
+    <string name="islamic_academy">اسلامی اکیڈمی</string>
+    <string name="safeer_al_islam">سفير الإسلام</string>
+    <string name="islamic_academy_descr">قرآن ، حدیث اور دیگر اسلامی موضوعات کی تعلیم کے لئے ایک آن لائن مفت اسلامی اکیڈمی</string>
+    <string name="islamic_academy_ad_overview">ہم طلبہ اور اساتذہ کو اپنی اکیڈمی میں اندراج کرنے کی دعوت دے رہے ہیں۔ ہم قبول کر رہے ہیں تمام طلباء کو اسلام کی تعلیم حاصل کرنے کی ضرورت ہے۔ ہم ایسے اساتذہ کی خدمات حاصل کر رہے ہیں جن کے پاس مطلوبہ علم ہے اور وہ دوسروں کو (تنخواہ کے بغیر) پڑھانا چاہتے ہیں</string>
+    <string name="register_for_free">مفت میں رجسٹر ہوں</string>
+    <string name="browser_not_found_paste_link">لنک نہیں کھول سکتا ، اسے کلپ بورڈ میں کاپی کر لیا گیا ہے</string>
 </resources>

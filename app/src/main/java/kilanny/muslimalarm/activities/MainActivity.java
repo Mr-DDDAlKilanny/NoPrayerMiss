@@ -7,7 +7,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +18,15 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Date;
+
 import kilanny.muslimalarm.R;
 import kilanny.muslimalarm.data.Alarm;
 import kilanny.muslimalarm.data.AlarmDao;
 import kilanny.muslimalarm.data.AppDb;
 import kilanny.muslimalarm.data.AppSettings;
+import kilanny.muslimalarm.data.SerializableInFile;
+import kilanny.muslimalarm.fragments.AcademyAdFragment;
 import kilanny.muslimalarm.fragments.AlarmsHomeFragment;
 import kilanny.muslimalarm.fragments.PrayerTimesHomeFragment;
 import kilanny.muslimalarm.services.AlarmRingingService;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private PrayerTimesHomeFragment prayerTimesHomeFragment;
     private AlarmsHomeFragment alarmsHomeFragment;
     private int mSelectedFragmentItemId;
+    SerializableInFile<Integer> appResponse;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -112,6 +116,28 @@ public class MainActivity extends AppCompatActivity
         if (!Utils.isValidTimes(this)) {
             Utils.showAlert(this, getString(R.string.prayer_times),
                     getString(R.string.times_invalid), dialog -> startOnbroading());
+            return;
+        } /*else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            //// https://developer.android.com/about/versions/12/behavior-changes-12#exact-alarm-check-for-permission
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.canScheduleExactAlarms();
+            Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+            intent.setData(Uri.parse(getPackageName()));
+            startActivityForResult(intent, 1);
+        }*/
+
+        if (Utils.isConnected(this) == Utils.CONNECTION_STATUS_CONNECTED) {
+            Date date = appResponse.getFileLastModifiedDate(getApplicationContext());
+            boolean display;
+            if (date != null) {
+                long diffTime = new Date().getTime() - date.getTime();
+                long diffDays = diffTime / (1000 * 60 * 60 * 24);
+                display = diffDays >= 7;
+            } else
+                display = true;
+            if (display) {
+                displayAcademyAd();
+            }
         }
     }
 
@@ -122,6 +148,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        appResponse = new SerializableInFile<>(
+                getApplicationContext(), "ad_ac__st", 0);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -176,6 +204,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             Utils.displayShareActivity(this);
             return true;
+        } else if (id == R.id.nav_academy) {
+            displayAcademyAd();
         }
 
         return super.onOptionsItemSelected(item);
@@ -217,5 +247,12 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, EditAlarmOnboardingActivity.class);
         intent.putExtra(EditAlarmOnboardingActivity.ARG_ALARM, alarm);
         startActivityForResult(intent, REQUEST_EDIT_ALARM);
+    }
+
+    private void displayAcademyAd() {
+        FragmentManager fm = getSupportFragmentManager();
+        AcademyAdFragment fragment = AcademyAdFragment.newInstance();
+        fragment.show(fm, "fragment_ads");
+        appResponse.setData(appResponse.getData() + 1, getApplicationContext());
     }
 }

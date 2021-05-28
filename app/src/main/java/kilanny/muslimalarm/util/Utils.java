@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +14,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -25,6 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -135,11 +140,15 @@ public class Utils {
     }
 
     public static void displayShareActivity(Context context) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT,
+        displayShareActivity(context,
                 context.getString(R.string.share_msg)
                         + " https://play.google.com/store/apps/details?id=kilanny.muslimalarm");
+    }
+
+    public static void displayShareActivity(@NonNull Context context, @NonNull String content) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, content);
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }
@@ -541,6 +550,30 @@ public class Utils {
                 AlarmManager.RTC_WAKEUP, nearestAlarm.date.getTime(),
                 getAlarmPendingIntent(context, nearestAlarm.alarm, timeFlag));
         Log.v("schNext", "Scheduled next alarm at " + nearestAlarm.date);
+    }
+
+    public static void openUrlInChromeOrDefault(Context context, String urlString) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage("com.android.chrome");
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            // Chrome browser presumably not installed so allow user to choose instead
+            intent.setPackage(null);
+            try {
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException ex2) {
+                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboardManager != null) {
+                    clipboardManager.setPrimaryClip(ClipData.newPlainText(
+                            context.getString(R.string.app_name), urlString));
+                    Toast.makeText(context,
+                            R.string.browser_not_found_paste_link,
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     /**

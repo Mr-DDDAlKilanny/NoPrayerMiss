@@ -367,4 +367,10 @@
     <string name="min_5_per_night">শতাংশ অবশ্যই কমপক্ষে %%5 হতে হবে</string>
     <string name="actions">ক্রিয়াকলাপ</string>
     <string name="custom_time">কাস্টম সময়</string>
+    <string name="islamic_academy">ইসলামী একাডেমি</string>
+    <string name="safeer_al_islam">Safeer Al-Islam</string>
+    <string name="islamic_academy_descr">কুরআন, হাদিস এবং অন্যান্য ইসলামিক বিষয় পড়ানোর জন্য একটি অনলাইন ফ্রি ইসলামিক একাডেমি</string>
+    <string name="islamic_academy_ad_overview">আমরা আমাদের একাডেমিতে নিবন্ধনের জন্য ছাত্র এবং শিক্ষকদের আমন্ত্রণ জানাচ্ছি। আমরা ইসলাম গ্রহণ করার জন্য সকল শিক্ষার্থীর প্রয়োজন গ্রহণ করছি। আমরা এমন শিক্ষক নিয়োগ দিচ্ছি যাঁদের প্রয়োজনীয় জ্ঞান রয়েছে এবং অন্যকে (বেতন ছাড়াই) শিক্ষা দিতে চান</string>
+    <string name="register_for_free">বিনামূল্যে নিবন্ধন</string>
+    <string name="browser_not_found_paste_link">লিঙ্কটি খুলতে পারে না, এটি এটি ক্লিপবোর্ডে অনুলিপি করা হয়েছে</string>
 </resources>
